@@ -1,0 +1,112 @@
+<mujoco model="lift_tower">
+  <!-- MuJoCo defaults to angle="degree". Without this line the hinge
+       range below is read as +/-3.14 DEGREES and the tower barely turns. -->
+  <compiler angle="radian" autolimits="true"/>
+  <!-- Cylindrical lift tower: rotary joint at the base, prismatic joint up the
+       tower axis. Hand-edit this file freely - scene.py never generates it.
+
+       Chain:  base plate (fixed) -> ROTARY (hinge z) -> mast -> PRISMATIC
+               (slide z) -> carriage -> arm_mount site -->
+
+  <default>
+    <default class="tower">
+      <geom contype="1" conaffinity="2" rgba="0.26 0.28 0.31 1"
+            solref="0.004 1" solimp="0.95 0.99 0.001"/>
+    </default>
+  </default>
+
+  <worldbody>
+    <body name="tower_base" pos="0 0 0">
+      <geom name="base_plate" class="tower" type="cylinder"
+            pos="0 0 0.02" size="0.20 0.02" rgba="0.18 0.18 0.20 1"/>
+
+      <!-- ===== ROTARY JOINT ===== -->
+      <body name="tower_column" pos="0 0 0.04">
+        <joint name="tower_yaw" type="hinge" axis="0 0 1"
+               range="-3.14159 3.14159" damping="12" armature="0.25"/>
+        <inertial pos="0 0 0.55" mass="28" diaginertia="3.2 3.2 0.45"/>
+        <!-- Mast height is set by the lift, not the other way round. At the
+             full 0.70 m of travel the collar top reaches 1.575 m; a 1.24 m
+             mast left the carriage hanging 335 mm off the end of it. Mast top
+             is now 1.60 m, so the collar always rides on the column with
+             25 mm to spare, and the 0.70 m travel is kept intact. -->
+        <geom name="column" class="tower" type="cylinder"
+              pos="0 0 0.78" size="0.090 0.78"/>
+        <!-- fin makes the rotation legible on camera -->
+        <geom name="column_fin" class="tower" type="box"
+              pos="0 -0.085 0.78" size="0.010 0.012 0.76"
+              rgba="0.75 0.35 0.12 1"/>
+
+        <!-- ===== PRISMATIC JOINT ===== -->
+        <body name="carriage" pos="0 0 0.75">
+          <joint name="tower_lift" type="slide" axis="0 0 1"
+                 range="0 0.70" damping="220" armature="0.6"/>
+          <inertial pos="0 0.10 0" mass="9" diaginertia="0.14 0.14 0.11"/>
+          <!-- collar rides the column -->
+          <geom name="carriage_collar" class="tower" type="cylinder"
+                pos="0 0 0" size="0.100 0.085" rgba="0.42 0.44 0.47 1"/>
+          <!-- Bracket carries the shoulders clear of the column. Mounted at the
+               column axis instead, the arm base_link collision geoms sit 59 mm
+               from the axis, i.e. 31 mm INSIDE a 90 mm column. MuJoCo generates
+               no contact for that (parent-child pair is excluded), so it is a
+               silent interpenetration: check geometric clearance, not ncon.
+
+               Standoff is 190 mm, shortened from 285 mm on request because the
+               T-piece stood too far off the column. Measured consequence:
+               base_link lands 198.4 mm from the axis, 108.4 mm clear of the
+               90 mm column. That is below the 126 mm the 285 mm standoff gave,
+               so verify.py's clearance invariant is 100 mm, not 120 mm. Going
+               much below 190 mm walks back toward the interpenetration above:
+               at 142 mm the clearance is only 68 mm.
+
+               Bar spans y 0.060..0.130, so it stays buried in the 100 mm collar
+               at one end and overlaps the plate at the other. Its cross-section
+               is also half the original (was 0.055 x 0.045). -->
+          <geom name="carriage_arm" class="tower" type="box"
+                pos="0 0.095 0" size="0.0275 0.035 0.0225" rgba="0.55 0.57 0.60 1"/>
+          <geom name="shoulder_plate" class="tower" type="box"
+                pos="0 0.150 0" size="0.085 0.022 0.070" rgba="0.55 0.57 0.60 1"/>
+          <site name="arm_mount" pos="0 0.190 0" size="0.012" rgba="0.95 0.4 0.1 1"/>
+
+          <!-- Head camera, bolted to the top of the shoulder plate directly
+               between the two arms: a head sitting on the shoulders rather than
+               a sensor floating on a stick. It rides the carriage, so it yaws
+               and lifts with the arms and always faces whatever they face.
+               RGB and depth come from the same camera: see render_rgbd().
+
+               Body is a RealSense-style bar, 90 x 25 x 25 mm, which fits in the
+               118 mm gap between the two arm bases.
+
+               All the geometry here is contype=0 conaffinity=0: it exists to be
+               seen and must not add contacts or change the carriage dynamics. -->
+          <geom name="camera_body" type="box" contype="0" conaffinity="0"
+                pos="0 0.178 0.080" size="0.045 0.0125 0.0125"
+                rgba="0.13 0.14 0.16 1"/>
+          <geom name="camera_lens_left" type="cylinder" contype="0" conaffinity="0"
+                pos="-0.030 0.1908 0.080" euler="1.5708 0 0" size="0.0065 0.0022"
+                rgba="0.05 0.07 0.13 1"/>
+          <geom name="camera_lens_rgb" type="cylinder" contype="0" conaffinity="0"
+                pos="0 0.1908 0.080" euler="1.5708 0 0" size="0.0050 0.0022"
+                rgba="0.02 0.02 0.03 1"/>
+          <geom name="camera_lens_right" type="cylinder" contype="0" conaffinity="0"
+                pos="0.030 0.1908 0.080" euler="1.5708 0 0" size="0.0065 0.0022"
+                rgba="0.05 0.07 0.13 1"/>
+          <!-- 12 deg down, 75 deg fovy: swept over pitch 6-24 and fovy 55-75.
+               Pitch barely matters at this standoff (product coverage moves
+               7.63-7.75%); fovy is what counts, because 260 mm from the shelf
+               face the deck fills the frame whatever the angle. -->
+          <camera name="tower_eye" pos="0 0.190 0.080"
+                  xyaxes="1 0 0  0 0.208 0.978" fovy="75"
+                  resolution="640 480"/>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <position name="tower_yaw_ctrl"  joint="tower_yaw"
+              kp="900" kv="60"  ctrlrange="-3.14159 3.14159" forcerange="-320 320"/>
+    <position name="tower_lift_ctrl" joint="tower_lift"
+              kp="120000" kv="3000" ctrlrange="0 0.70" forcerange="-4000 4000"/>
+  </actuator>
+</mujoco>

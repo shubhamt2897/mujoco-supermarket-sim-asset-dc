@@ -1,0 +1,46 @@
+# Dual-Arm Supermarket -- runtime dependencies.
+#
+#   python -m venv .venv
+#   .venv/Scripts/activate          # Windows;  source .venv/bin/activate elsewhere
+#   pip install -r requirements.txt
+#
+# Needs Python 3.11. Conda users: see environment.yml instead.
+#
+# CPU only by design -- no torch, jax, warp or CUDA anywhere in this project.
+# tkinter, used by live.py for the live camera windows, ships with CPython and
+# is not installable from pip.
+
+mujoco==3.13.0
+openarm_mujoco==2.2.0
+numpy==2.4.6
+imageio==2.37.4
+pillow==12.3.0
+
+
+# ---------------------------------------------------------------------------
+# robocasa -- deliberately NOT a dependency. Do not add it here.
+# ---------------------------------------------------------------------------
+# The product meshes in assets/products/ were extracted from RoboCasa's
+# objaverse pack, but they are committed to this repository and rewritten with
+# relative mesh paths. Nothing at runtime imports or needs robocasa.
+#
+# Installing it actively breaks this environment:
+#
+#     pip install -e robocasa
+#       -> pins   mujoco==3.3.1   (downgrades the 3.13.0 pinned above)
+#       -> pins   numpy==2.2.5    (downgrades)
+#       -> pulls  torch           (via lerobot==0.3.3 and tianshou==0.4.10)
+#
+# You only need a robocasa checkout to REBUILD assets/products/ from scratch,
+# which a normal clone never has to do. If you do:
+#
+#     git clone --depth 1 https://github.com/robocasa/robocasa.git
+#     python tools/build_products.py <path-to-objs_objaverse.zip>
+#
+# tools/build_products.py reads robocasa's kitchen_objects.py by parsing it with
+# `ast` rather than importing it, precisely so the package never has to be
+# installed. robocasa/ is gitignored.
+#
+# Note also that robocasa's own download_kitchen_assets.py probes the asset host
+# with an HTTP HEAD request, and that host answers 404 to HEAD while serving GET
+# normally -- so the script reports the host as unreachable when it is fine.

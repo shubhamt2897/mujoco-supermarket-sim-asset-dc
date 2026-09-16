@@ -1,0 +1,33 @@
+<mujoco model="tower_bench">
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep="0.002" integrator="implicitfast" cone="elliptic" impratio="10"/>
+  <visual>
+    <headlight ambient="0.42 0.42 0.43" diffuse="0.25 0.25 0.25" specular="0.08 0.08 0.08"/>
+    <quality shadowsize="2048" offsamples="4"/>
+    <global offwidth="1920" offheight="1080"/>
+    <map znear="0.003" zfar="5"/>
+  </visual>
+  <asset>
+    <texture name="sky" type="skybox" builtin="gradient"
+             rgb1="0.93 0.94 0.95" rgb2="0.82 0.84 0.86" width="256" height="256"/>
+    <texture name="grid" type="2d" builtin="checker"
+             rgb1="0.82 0.82 0.81" rgb2="0.74 0.74 0.73" width="512" height="512"/>
+    <material name="grid_mat" texture="grid" texrepeat="8 8" texuniform="true"
+              specular="0.2" shininess="0.3"/>
+  </asset>
+  <worldbody>
+    <light name="key" pos="1.2 -1.2 3.0" dir="-0.35 0.35 -1" directional="true"
+           diffuse="0.45 0.45 0.45" castshadow="true"/>
+    <light name="fill" pos="-1.5 1.5 2.5" dir="0.4 -0.4 -1" directional="true"
+           diffuse="0.25 0.25 0.25" castshadow="false"/>
+    <geom name="floor" type="plane" material="grid_mat" size="6 6 0.1"
+          contype="1" conaffinity="2"/>
+    <camera name="bench_front" mode="fixed" pos="0 -2.6 1.5"
+            xyaxes="1 0 0  0 0.42 0.91" fovy="48"/>
+    <camera name="bench_side" mode="fixed" pos="2.6 0 1.5"
+            xyaxes="0 1 0  -0.42 0 0.91" fovy="48"/>
+    <camera name="bench_top" mode="fixed" pos="0 0 3.6"
+            xyaxes="1 0 0  0 1 0" fovy="55"/>
+    <site name="tower_base_site" pos="0 0 0" size="0.010" rgba="0.95 0.4 0.1 0.35"/>
+  </worldbody>
+</mujoco>

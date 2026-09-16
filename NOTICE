@@ -1,0 +1,58 @@
+Dual-Arm Supermarket
+Copyright 2026 Shubham T
+
+This product includes software developed as part of the Dual-Arm Supermarket
+project, licensed under the Apache License, Version 2.0.
+
+--------------------------------------------------------------------------
+Third-party components
+--------------------------------------------------------------------------
+
+Product meshes under assets/products/
+    Extracted from RoboCasa's objaverse asset pack and modified: mesh paths
+    rewritten relative, per-category scale baked in, and mass overridden per
+    category (RoboCasa ships every object at density=100 kg/m^3).
+    RoboCasa -- https://github.com/robocasa/robocasa
+    Those meshes derive in turn from Objaverse
+    (https://objaverse.allenai.org/), licensed ODC-By 1.0.
+
+    This repository redistributes a substantial portion of RoboCasa's assets,
+    so its MIT licence requires that the following notice travel with them:
+
+        MIT License
+
+        Copyright (c) 2026 the RoboCasa Team
+
+        Permission is hereby granted, free of charge, to any person obtaining
+        a copy of this software and associated documentation files (the
+        "Software"), to deal in the Software without restriction, including
+        without limitation the rights to use, copy, modify, merge, publish,
+        distribute, sublicense, and/or sell copies of the Software, and to
+        permit persons to whom the Software is furnished to do so, subject to
+        the following conditions:
+
+        The above copyright notice and this permission notice shall be
+        included in all copies or substantial portions of the Software.
+
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+        EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+        MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+        NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+        BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+        ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+        CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+
+OpenArm v2 bimanual arm model
+    Resolved at runtime from the installed openarm_mujoco package. Not
+    redistributed in this repository. Its camera poses are overridden in
+    memory at assembly time; the installed files are never modified.
+    https://github.com/enactic/openarm_mujoco
+    Licensed under the Apache License, Version 2.0.
+
+MuJoCo
+    https://github.com/google-deepmind/mujoco
+    Licensed under the Apache License, Version 2.0.
+
+tower.xml, scene.py, robot.py, bench.py, view.py, live.py and tools/
+    Original to this project.

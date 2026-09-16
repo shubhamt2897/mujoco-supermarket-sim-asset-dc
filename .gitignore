@@ -1,0 +1,42 @@
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# ---------------------------------------------------------------------------
+# Upstream checkout, not ours to commit
+# ---------------------------------------------------------------------------
+# robocasa/ is a shallow clone of github.com/robocasa/robocasa, ~81 MB with its
+# own .git inside. A nested repository cannot be committed as ordinary files,
+# and it is only needed once, to build assets/products/. See the README.
+robocasa/
+
+# ---------------------------------------------------------------------------
+# Generated artifacts
+# ---------------------------------------------------------------------------
+# out/scene.xml and out/bench.xml ARE committed. They are generated, but the
+# generator is seeded so they are byte-identical run to run, they are small
+# (192 kB and 2 kB), and because assets/products/ is committed too they open in
+# any MuJoCo viewer straight from a clone. Committing them also makes scene
+# changes show up as a reviewable diff. Regenerate after touching scene.py.
+#
+# Depth arrays are large and rebuildable from any scene.
+out/**/*.npy
+# Scratch renders. docs/figures/ holds the curated ones.
+out/shots/
+
+# ---------------------------------------------------------------------------
+# Logs, editors, OS
+# ---------------------------------------------------------------------------
+MUJOCO_LOG.TXT
+*.log
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="canned_food_7">
+  <asset>
+    <mesh file="visual/model_normalized_0.obj" name="model_normalized_0_vis" scale="0.06299999999999996 0.06299999999999996 0.06299999999999996" refquat="1.0 0.0 0.0 0.0" />
+    <texture type="2d" name="image0" file="visual/image0.png" />
+    <material name="01___Default" texture="image0" specular="0.5" shininess="0.25" />
+    <mesh file="collision/collision_mesh_collision_0.obj" name="canned_collision_mesh_0" scale="0.06299999999999996 0.06299999999999996 0.06299999999999996" refquat="1.0 0.0 0.0 0.0" />
+    <mesh file="collision/collision_mesh_collision_1.obj" name="canned_collision_mesh_1" scale="0.06299999999999996 0.06299999999999996 0.06299999999999996" refquat="1.0 0.0 0.0 0.0" />
+    <mesh file="collision/collision_mesh_collision_2.obj" name="canned_collision_mesh_2" scale="0.06299999999999996 0.06299999999999996 0.06299999999999996" refquat="1.0 0.0 0.0 0.0" />
+    <mesh file="collision/collision_mesh_collision_3.obj" name="canned_collision_mesh_3" scale="0.06299999999999996 0.06299999999999996 0.06299999999999996" refquat="1.0 0.0 0.0 0.0" />
+  </asset>
+  <default>
+    <default class="region">
+      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0" mass="0" />
+    </default>
+    <default class="collision">
+      <geom group="0" rgba="0.5 0 0 0.5" density="1681.968436525" />
+    </default>
+  </default>
+  <worldbody>
+    <body>
+      <body name="object">
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="168.196843652" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="01___Default" />
+        <geom class="region" name="reg_bbox" type="box" pos="0.0 0.0 0.0" size="0.029603287979999983 0.029603287979999983 0.03149999999999998" />
+        <geom mesh="canned_collision_mesh_0" type="mesh" class="collision" />
+        <geom mesh="canned_collision_mesh_1" type="mesh" class="collision" />
+        <geom mesh="canned_collision_mesh_2" type="mesh" class="collision" />
+        <geom mesh="canned_collision_mesh_3" type="mesh" class="collision" />
+      </body>
+    </body>
+  </worldbody>
+</mujoco>

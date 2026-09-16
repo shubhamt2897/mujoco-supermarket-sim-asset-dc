@@ -1,0 +1,19 @@
+# Reproducible environment for the dual-arm supermarket scene.
+#   conda env create -f environment.yml
+#   conda activate shelf_sim
+#
+# CPU only by design: no torch, jax, warp or CUDA anywhere. Installing
+# robocasa itself would pull torch in and pin mujoco back to 3.3.1, so this
+# project never installs it -- see the README for how its assets are used.
+name: shelf_sim
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - mujoco==3.13.0
+      - openarm_mujoco==2.2.0
+      - numpy==2.4.6
+      - imageio==2.37.4
+      - pillow==12.3.0

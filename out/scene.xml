@@ -1,0 +1,1685 @@
+<mujoco model="supermarket_aisle">
+  <compiler angle="radian" autolimits="true" meshdir="../assets/products" texturedir="../assets/products" />
+  <option timestep="0.002" integrator="implicitfast" cone="elliptic" impratio="10" />
+  <default>
+    <default class="structure">
+      <geom contype="1" conaffinity="2" />
+    </default>
+    <default class="dyn_stock">
+      <geom contype="2" conaffinity="7" />
+    </default>
+    <default class="static_stock">
+      <geom contype="4" conaffinity="2" />
+    </default>
+  </default>
+  <visual>
+    <headlight ambient="0.42 0.42 0.43" diffuse="0.2 0.2 0.2" specular="0.06 0.06 0.06" />
+    <quality shadowsize="4096" offsamples="8" />
+    <global offwidth="1920" offheight="1080" />
+    <map znear="0.003" zfar="5" />
+  </visual>
+  <asset>
+    <texture name="sky" type="skybox" builtin="gradient" rgb1="0.93 0.94 0.95" rgb2="0.82 0.84 0.86" width="256" height="256" />
+    <texture name="tile_tex" type="2d" builtin="checker" rgb1="0.855 0.855 0.845" rgb2="0.838 0.838 0.828" width="512" height="512" />
+    <material name="floor_tile" texture="tile_tex" texrepeat="30 30" texuniform="true" specular="0.3" shininess="0.5" reflectance="0.04" />
+    <material name="shelf_metal" rgba="0.91 0.91 0.92 1" specular="0.35" shininess="0.35" />
+    <material name="shelf_dark" rgba="0.33 0.35 0.38 1" />
+    <material name="price_rail" rgba="0.16 0.17 0.19 1" />
+    <material name="cage_metal" rgba="0.58 0.6 0.63 1" specular="0.4" shininess="0.4" />
+    <material name="cage_dark" rgba="0.18 0.18 0.2 1" />
+    <texture name="canned_food__canned_food_9__image0" file="canned_food/canned_food_9/visual/image0.png" type="2d" />
+    <material name="canned_food__canned_food_9__material0.001" texture="canned_food__canned_food_9__image0" specular="0.5" shininess="0.001788855" />
+    <mesh name="canned_food__canned_food_9__model_normalized_0_vis" file="canned_food/canned_food_9/visual/model_normalized_0.obj" scale="0.10349999999999997 0.10349999999999997 0.10349999999999997" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="can__can_3__image0" file="can/can_3/visual/image0.png" type="2d" />
+    <material name="can__can_3__bodyblinn1SG" texture="can__can_3__image0" specular="0.5" shininess="0.630875523" />
+    <mesh name="can__can_3__model_normalized_0_vis" file="can/can_3/visual/model_normalized_0.obj" scale="0.11 0.11 0.11" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="jam__jam_4__image0" file="jam/jam_4/visual/image0.png" type="2d" />
+    <material name="jam__jam_4__Material.187" texture="jam__jam_4__image0" specular="0.5" shininess="0.032000008" />
+    <mesh name="jam__jam_4__model_normalized_0_vis" file="jam/jam_4/visual/model_normalized_0.obj" scale="0.06749999999999998 0.06749999999999998 0.06749999999999998" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="canned_food__canned_food_10__image0" file="canned_food/canned_food_10/visual/image0.png" type="2d" />
+    <material name="canned_food__canned_food_10__material.004" texture="canned_food__canned_food_10__image0" specular="0.5" shininess="0.25" />
+    <mesh name="canned_food__canned_food_10__model_normalized_0_vis" file="canned_food/canned_food_10/visual/model_normalized_0.obj" scale="0.09449999999999995 0.09449999999999995 0.09449999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="can__can_11__image0" file="can/can_11/visual/image0.png" type="2d" />
+    <material name="can__can_11__01_-_Default.016" texture="can__can_11__image0" specular="0.5" shininess="0.15999998099999999" />
+    <mesh name="can__can_11__model_normalized_0_vis" file="can/can_11/visual/model_normalized_0.obj" scale="0.11 0.11 0.11" refquat="-0.7071067811865476 0.0 0.0 -0.7071067811865475" />
+    <texture name="canned_food__canned_food_19__image0" file="canned_food/canned_food_19/visual/image0.png" type="2d" />
+    <material name="canned_food__canned_food_19__ConserveThon" texture="canned_food__canned_food_19__image0" specular="0.5" shininess="0.038399988999999995" />
+    <mesh name="canned_food__canned_food_19__model_normalized_0_vis" file="canned_food/canned_food_19/visual/model_normalized_0.obj" scale="0.06299999999999997 0.06299999999999997 0.06299999999999997" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="can__can_18__image0" file="can/can_18/visual/image0.png" type="2d" />
+    <material name="can__can_18__Colatex" texture="can__can_18__image0" specular="0.5" shininess="0.55191553" />
+    <mesh name="can__can_18__model_normalized_0_vis" file="can/can_18/visual/model_normalized_0.obj" scale="0.1 0.1 0.1" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="jam__jam_5__image0" file="jam/jam_5/visual/image0.png" type="2d" />
+    <texture name="jam__jam_5__image3" file="jam/jam_5/visual/image3.png" type="2d" />
+    <material name="jam__jam_5__Glass" texture="jam__jam_5__image0" specular="0.5" shininess="0.25" />
+    <material name="jam__jam_5__recheio" texture="jam__jam_5__image3" specular="0.5" shininess="0.25" />
+    <mesh name="jam__jam_5__model_normalized_0_vis" file="jam/jam_5/visual/model_normalized_0.obj" scale="0.06749999999999998 0.06749999999999998 0.06749999999999998" refquat="1.0 0.0 0.0 0.0" />
+    <mesh name="jam__jam_5__model_normalized_1_vis" file="jam/jam_5/visual/model_normalized_1.obj" scale="0.06749999999999998 0.06749999999999998 0.06749999999999998" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="yogurt__yogurt_3__image0" file="yogurt/yogurt_3/visual/image0.png" type="2d" />
+    <material name="yogurt__yogurt_3__material_0.013" texture="yogurt__yogurt_3__image0" specular="0.5" shininess="0.359999993" />
+    <mesh name="yogurt__yogurt_3__model_normalized_0_vis" file="yogurt/yogurt_3/visual/model_normalized_0.obj" scale="0.09025000000000002 0.09025000000000002 0.09025000000000002" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="cereal__cereal_2__image0" file="cereal/cereal_2/visual/image0.png" type="2d" />
+    <material name="cereal__cereal_2__Cube.1" texture="cereal__cereal_2__image0" specular="0.5" shininess="0.359999993" />
+    <mesh name="cereal__cereal_2__model_normalized_0_vis" file="cereal/cereal_2/visual/model_normalized_0.obj" scale="0.16999999999999998 0.16999999999999998 0.16999999999999998" refquat="0.7071067811865476 0.0 -0.0 -0.7071067811865476" />
+    <texture name="boxed_food__boxed_food_1__image0" file="boxed_food/boxed_food_1/visual/image0.png" type="2d" />
+    <material name="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" texture="boxed_food__boxed_food_1__image0" specular="0.5" shininess="0.359999993" />
+    <mesh name="boxed_food__boxed_food_1__model_normalized_0_vis" file="boxed_food/boxed_food_1/visual/model_normalized_0.obj" scale="0.14299999999999996 0.14299999999999996 0.14299999999999996" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="milk__milk_9__image0" file="milk/milk_9/visual/image0.png" type="2d" />
+    <material name="milk__milk_9__lambert2.003" texture="milk__milk_9__image0" specular="0.5" shininess="0.359999993" />
+    <mesh name="milk__milk_9__model_normalized_0_vis" file="milk/milk_9/visual/model_normalized_0.obj" scale="0.16499999999999995 0.16499999999999995 0.16499999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="boxed_drink__boxed_drink_5__image0" file="boxed_drink/boxed_drink_5/visual/image0.png" type="2d" />
+    <material name="boxed_drink__boxed_drink_5__Cylinder.003__0" texture="boxed_drink__boxed_drink_5__image0" specular="0.5" shininess="0.15999998099999999" />
+    <material name="boxed_drink__boxed_drink_5__Material.066" texture="boxed_drink__boxed_drink_5__image0" specular="0.5" shininess="0.032000008" />
+    <mesh name="boxed_drink__boxed_drink_5__model_normalized_0_vis" file="boxed_drink/boxed_drink_5/visual/model_normalized_0.obj" scale="0.11999999999999998 0.11999999999999998 0.11999999999999998" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh name="boxed_drink__boxed_drink_5__model_normalized_1_vis" file="boxed_drink/boxed_drink_5/visual/model_normalized_1.obj" scale="0.11999999999999998 0.11999999999999998 0.11999999999999998" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="cereal__cereal_1__image0" file="cereal/cereal_1/visual/image0.png" type="2d" />
+    <material name="cereal__cereal_1__lambert2SG.010" texture="cereal__cereal_1__image0" specular="0.5" shininess="0.0" />
+    <mesh name="cereal__cereal_1__model_normalized_0_vis" file="cereal/cereal_1/visual/model_normalized_0.obj" scale="0.14999999999999997 0.14999999999999997 0.14999999999999997" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="boxed_food__boxed_food_9__image0" file="boxed_food/boxed_food_9/visual/image0.png" type="2d" />
+    <material name="boxed_food__boxed_food_9__Qeema_Macroni_mtl" texture="boxed_food__boxed_food_9__image0" specular="0.5" shininess="0.359999993" />
+    <mesh name="boxed_food__boxed_food_9__model_normalized_0_vis" file="boxed_food/boxed_food_9/visual/model_normalized_0.obj" scale="0.14299999999999996 0.14299999999999996 0.14299999999999996" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="cereal__cereal_9__image0" file="cereal/cereal_9/visual/image0.png" type="2d" />
+    <material name="cereal__cereal_9__Material__25.007" texture="cereal__cereal_9__image0" specular="0.5" shininess="0.359999993" />
+    <mesh name="cereal__cereal_9__model_normalized_0_vis" file="cereal/cereal_9/visual/model_normalized_0.obj" scale="0.15499999999999997 0.15499999999999997 0.15499999999999997" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="cereal__cereal_4__image0" file="cereal/cereal_4/visual/image0.png" type="2d" />
+    <material name="cereal__cereal_4__aiStandardSurface1.007" texture="cereal__cereal_4__image0" specular="0.5" shininess="0.15999998099999999" />
+    <mesh name="cereal__cereal_4__model_normalized_0_vis" file="cereal/cereal_4/visual/model_normalized_0.obj" scale="0.13499999999999995 0.13499999999999995 0.13499999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="boxed_food__boxed_food_6__image0" file="boxed_food/boxed_food_6/visual/image0.png" type="2d" />
+    <material name="boxed_food__boxed_food_6__Tikka_Macroni_mtl" texture="boxed_food__boxed_food_6__image0" specular="0.5" shininess="0.359999993" />
+    <mesh name="boxed_food__boxed_food_6__model_normalized_0_vis" file="boxed_food/boxed_food_6/visual/model_normalized_0.obj" scale="0.14299999999999996 0.14299999999999996 0.14299999999999996" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="cereal__cereal_13__image0" file="cereal/cereal_13/visual/image0.png" type="2d" />
+    <material name="cereal__cereal_13__aiStandardSurface1.004" texture="cereal__cereal_13__image0" specular="0.5" shininess="0.15999998099999999" />
+    <mesh name="cereal__cereal_13__model_normalized_0_vis" file="cereal/cereal_13/visual/model_normalized_0.obj" scale="0.13999999999999996 0.13999999999999996 0.13999999999999996" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="boxed_food__boxed_food_4__image0" file="boxed_food/boxed_food_4/visual/image0.png" type="2d" />
+    <material name="boxed_food__boxed_food_4__default_tex0" texture="boxed_food__boxed_food_4__image0" specular="0.5" shininess="0.0" />
+    <mesh name="boxed_food__boxed_food_4__model_normalized_0_vis" file="boxed_food/boxed_food_4/visual/model_normalized_0.obj" scale="0.14299999999999996 0.14299999999999996 0.14299999999999996" refquat="0.8314696123025451 0.0 0.0 0.5555702330196022" />
+    <texture name="jam__jam_2__image0" file="jam/jam_2/visual/image0.png" type="2d" />
+    <material name="jam__jam_2__Material.188" texture="jam__jam_2__image0" specular="0.5" shininess="0.032000008" />
+    <mesh name="jam__jam_2__model_normalized_0_vis" file="jam/jam_2/visual/model_normalized_0.obj" scale="0.06749999999999998 0.06749999999999998 0.06749999999999998" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="boxed_food__boxed_food_0__image0" file="boxed_food/boxed_food_0/visual/image0.png" type="2d" />
+    <material name="boxed_food__boxed_food_0__auto" texture="boxed_food__boxed_food_0__image0" specular="0.5" shininess="1.0" />
+    <mesh name="boxed_food__boxed_food_0__model_normalized_0_vis" file="boxed_food/boxed_food_0/visual/model_normalized_0.obj" scale="0.13199999999999995 0.13199999999999995 0.13199999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="boxed_drink__boxed_drink_0__image0" file="boxed_drink/boxed_drink_0/visual/image0.png" type="2d" />
+    <material name="boxed_drink__boxed_drink_0__lambert1.006" texture="boxed_drink__boxed_drink_0__image0" specular="0.5" shininess="0.25" />
+    <mesh name="boxed_drink__boxed_drink_0__model_normalized_0_vis" file="boxed_drink/boxed_drink_0/visual/model_normalized_0.obj" scale="0.08399999999999998 0.08399999999999998 0.08399999999999998" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="milk__milk_4__image0" file="milk/milk_4/visual/image0.png" type="2d" />
+    <material name="milk__milk_4__lambert2" texture="milk__milk_4__image0" specular="0.5" shininess="0.15999998099999999" />
+    <material name="milk__milk_4__lambert3.001" texture="milk__milk_4__image0" specular="0.5" shininess="0.15999998099999999" />
+    <mesh name="milk__milk_4__model_normalized_0_vis" file="milk/milk_4/visual/model_normalized_0.obj" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh name="milk__milk_4__model_normalized_1_vis" file="milk/milk_4/visual/model_normalized_1.obj" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="canned_food__canned_food_6__image0" file="canned_food/canned_food_6/visual/image0.png" type="2d" />
+    <material name="canned_food__canned_food_6__lambert1" texture="canned_food__canned_food_6__image0" specular="0.5" shininess="0.25" />
+    <mesh name="canned_food__canned_food_6__model_normalized_0_vis" file="canned_food/canned_food_6/visual/model_normalized_0.obj" scale="0.08099999999999997 0.08099999999999997 0.08099999999999997" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="yogurt__yogurt_2__image0" file="yogurt/yogurt_2/visual/image0.png" type="2d" />
+    <material name="yogurt__yogurt_2__Object001_mtl" texture="yogurt__yogurt_2__image0" specular="0.5" shininess="0.011455135" />
+    <mesh name="yogurt__yogurt_2__model_normalized_0_vis" file="yogurt/yogurt_2/visual/model_normalized_0.obj" scale="0.08075000000000002 0.08075000000000002 0.08075000000000002" refquat="0.7730104533627369 0.0 0.0 0.6343932841636455" />
+    <texture name="boxed_drink__boxed_drink_4__image0" file="boxed_drink/boxed_drink_4/visual/image0.png" type="2d" />
+    <material name="boxed_drink__boxed_drink_4__Material.069" texture="boxed_drink__boxed_drink_4__image0" specular="0.5" shininess="0.032000008" />
+    <material name="boxed_drink__boxed_drink_4__Material.070" texture="boxed_drink__boxed_drink_4__image0" specular="0.5" shininess="0.0052724140000000004" />
+    <mesh name="boxed_drink__boxed_drink_4__model_normalized_0_vis" file="boxed_drink/boxed_drink_4/visual/model_normalized_0.obj" scale="0.09999999999999996 0.09999999999999996 0.09999999999999996" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh name="boxed_drink__boxed_drink_4__model_normalized_1_vis" file="boxed_drink/boxed_drink_4/visual/model_normalized_1.obj" scale="0.09999999999999996 0.09999999999999996 0.09999999999999996" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="milk__milk_3__image0" file="milk/milk_3/visual/image0.png" type="2d" />
+    <material name="milk__milk_3__basic" texture="milk__milk_3__image0" specular="0.5" shininess="1.0" />
+    <mesh name="milk__milk_3__model_normalized_0_vis" file="milk/milk_3/visual/model_normalized_0.obj" scale="0.11999999999999993 0.11999999999999993 0.11999999999999993" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="boxed_drink__boxed_drink_3__image0" file="boxed_drink/boxed_drink_3/visual/image0.png" type="2d" />
+    <material name="boxed_drink__boxed_drink_3__Pack" texture="boxed_drink__boxed_drink_3__image0" specular="0.5" shininess="0.25" />
+    <material name="boxed_drink__boxed_drink_3__Tappo" texture="boxed_drink__boxed_drink_3__image0" specular="0.5" shininess="0.15999998099999999" />
+    <mesh name="boxed_drink__boxed_drink_3__model_normalized_0_vis" file="boxed_drink/boxed_drink_3/visual/model_normalized_0.obj" scale="0.13599999999999998 0.13599999999999998 0.13599999999999998" refquat="1.0 0.0 0.0 0.0" />
+    <mesh name="boxed_drink__boxed_drink_3__model_normalized_1_vis" file="boxed_drink/boxed_drink_3/visual/model_normalized_1.obj" scale="0.13599999999999998 0.13599999999999998 0.13599999999999998" refquat="1.0 0.0 0.0 0.0" />
+    <material name="milk__milk_7__Material.171" specular="0.5" shininess="0.119339151" rgba="0.228248 0.333787 0.800000 1.0" />
+    <material name="milk__milk_7__material_0.012" specular="0.5" shininess="0.15999998099999999" rgba="1.000000 1.000000 1.000000 1.0" />
+    <mesh name="milk__milk_7__model_normalized_0_vis" file="milk/milk_7/visual/model_normalized_0.obj" scale="0.16999999999999996 0.16999999999999996 0.16999999999999996" refquat="1.0 0.0 0.0 0.0" />
+    <mesh name="milk__milk_7__model_normalized_1_vis" file="milk/milk_7/visual/model_normalized_1.obj" scale="0.16999999999999996 0.16999999999999996 0.16999999999999996" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="canned_food__canned_food_17__image0" file="canned_food/canned_food_17/visual/image0.png" type="2d" />
+    <material name="canned_food__canned_food_17__01___Default" texture="canned_food__canned_food_17__image0" specular="0.5" shininess="0.25" />
+    <mesh name="canned_food__canned_food_17__model_normalized_0_vis" file="canned_food/canned_food_17/visual/model_normalized_0.obj" scale="0.06299999999999996 0.06299999999999996 0.06299999999999996" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="cereal__cereal_6__image0" file="cereal/cereal_6/visual/image0.png" type="2d" />
+    <material name="cereal__cereal_6__Material.369" texture="cereal__cereal_6__image0" specular="0.5" shininess="0.103378196" />
+    <mesh name="cereal__cereal_6__model_normalized_0_vis" file="cereal/cereal_6/visual/model_normalized_0.obj" scale="0.14999999999999997 0.14999999999999997 0.14999999999999997" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="boxed_food__boxed_food_2__image0" file="boxed_food/boxed_food_2/visual/image0.png" type="2d" />
+    <material name="boxed_food__boxed_food_2__Box003_mtl" texture="boxed_food__boxed_food_2__image0" specular="0.5" shininess="0.359999993" />
+    <mesh name="boxed_food__boxed_food_2__model_normalized_0_vis" file="boxed_food/boxed_food_2/visual/model_normalized_0.obj" scale="0.16499999999999998 0.16499999999999998 0.16499999999999998" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="milk__milk_5__image0" file="milk/milk_5/visual/image0.png" type="2d" />
+    <material name="milk__milk_5__lambert1.004" texture="milk__milk_5__image0" specular="0.5" shininess="0.25" />
+    <mesh name="milk__milk_5__model_normalized_0_vis" file="milk/milk_5/visual/model_normalized_0.obj" scale="0.16999999999999996 0.16999999999999996 0.16999999999999996" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="boxed_drink__boxed_drink_2__image0" file="boxed_drink/boxed_drink_2/visual/image0.png" type="2d" />
+    <material name="boxed_drink__boxed_drink_2__Material.067" texture="boxed_drink__boxed_drink_2__image0" specular="0.5" shininess="0.032000008" />
+    <material name="boxed_drink__boxed_drink_2__Material.068" texture="boxed_drink__boxed_drink_2__image0" specular="0.5" shininess="0.0052724140000000004" />
+    <mesh name="boxed_drink__boxed_drink_2__model_normalized_0_vis" file="boxed_drink/boxed_drink_2/visual/model_normalized_0.obj" scale="0.10799999999999997 0.10799999999999997 0.10799999999999997" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh name="boxed_drink__boxed_drink_2__model_normalized_1_vis" file="boxed_drink/boxed_drink_2/visual/model_normalized_1.obj" scale="0.10799999999999997 0.10799999999999997 0.10799999999999997" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture name="can__can_15__image0" file="can/can_15/visual/image0.png" type="2d" />
+    <material name="can__can_15__Material.351" texture="can__can_15__image0" specular="0.5" shininess="0.25" />
+    <mesh name="can__can_15__model_normalized_0_vis" file="can/can_15/visual/model_normalized_0.obj" scale="0.1 0.1 0.1" refquat="1.0 0.0 0.0 0.0" />
+  </asset>
+  <worldbody>
+    <geom name="floor" type="plane" material="floor_tile" class="structure" pos="0 0 0" size="9 9 0.1" condim="3" friction="1 0.005 0.0001" />
+    <light name="shop_fill" directional="true" pos="0 -0.65 6" dir="0 0 -1" castshadow="false" diffuse="0.45 0.45 0.45" specular="0.02 0.02 0.02" />
+    <light name="strip_0" pos="-1.78125 -0.65 2.7" dir="0 0 -1" directional="false" castshadow="false" diffuse="0.26 0.26 0.255" specular="0.07 0.07 0.07" attenuation="1 0.08 0.02" />
+    <light name="strip_1" pos="-0.59375 -0.65 2.7" dir="0 0 -1" directional="false" castshadow="true" diffuse="0.26 0.26 0.255" specular="0.07 0.07 0.07" attenuation="1 0.08 0.02" />
+    <light name="strip_2" pos="0.59375 -0.65 2.7" dir="0 0 -1" directional="false" castshadow="false" diffuse="0.26 0.26 0.255" specular="0.07 0.07 0.07" attenuation="1 0.08 0.02" />
+    <light name="strip_3" pos="1.78125 -0.65 2.7" dir="0 0 -1" directional="false" castshadow="false" diffuse="0.26 0.26 0.255" specular="0.07 0.07 0.07" attenuation="1 0.08 0.02" />
+    <light name="fill_near" pos="0 -0.65 1.55" dir="0 1 -0.1" directional="false" castshadow="false" diffuse="0.26 0.26 0.27" specular="0.02 0.02 0.02" />
+    <light name="fill_far" pos="0 -0.65 1.55" dir="0 -1 -0.1" directional="false" castshadow="false" diffuse="0.26 0.26 0.27" specular="0.02 0.02 0.02" />
+    <camera name="aisle" mode="fixed" fovy="55" pos="-3.325 -0.65 1.62" xyaxes="0 -1 0 0.135471 0 0.990781" />
+    <camera name="shelf_front" mode="fixed" fovy="60" pos="0 -1.17 1.72" xyaxes="1 -0 0 0 0.35486 0.934919" />
+    <camera name="overhead" mode="fixed" fovy="62" pos="0 -0.65 3.55" xyaxes="1 -0 0 0 1 0" />
+    <camera name="over_shoulder" mode="fixed" fovy="56" pos="-0.32 -1.04 1.78" xyaxes="0.950871 -0.309586 0 0.130392 0.400489 0.906977" />
+    <body name="gondola_near" pos="0 0 0" quat="1 0 0 0">
+      <geom name="near_back_panel" class="structure" type="box" material="shelf_metal" pos="0 0.461 0.9" size="1.875 0.009 0.9" />
+      <geom name="near_upright_0" class="structure" type="box" material="shelf_metal" pos="-1.855 0.235 0.9" size="0.02 0.235 0.9" />
+      <geom name="near_upright_1" class="structure" type="box" material="shelf_metal" pos="-0.625 0.235 0.9" size="0.02 0.235 0.9" />
+      <geom name="near_upright_2" class="structure" type="box" material="shelf_metal" pos="0.625 0.235 0.9" size="0.02 0.235 0.9" />
+      <geom name="near_upright_3" class="structure" type="box" material="shelf_metal" pos="1.855 0.235 0.9" size="0.02 0.235 0.9" />
+      <geom name="near_kick_plate" class="structure" type="box" material="shelf_dark" pos="0 0.039 0.06" size="1.875 0.009 0.06" />
+      <geom name="deck_near_b0_0" class="structure" type="box" material="shelf_metal" pos="-1.25 0.226 0.141" size="0.585 0.226 0.009" />
+      <geom name="lip_near_b0_0" class="structure" type="box" material="shelf_metal" pos="-1.25 0.006 0.1625" size="0.585 0.006 0.0125" />
+      <geom name="rail_near_b0_0" class="structure" type="box" material="price_rail" pos="-1.25 -0.003 0.141" size="0.585 0.003 0.015" />
+      <geom name="deck_near_b0_1" class="structure" type="box" material="shelf_metal" pos="-1.25 0.226 0.591" size="0.585 0.226 0.009" />
+      <geom name="lip_near_b0_1" class="structure" type="box" material="shelf_metal" pos="-1.25 0.006 0.6125" size="0.585 0.006 0.0125" />
+      <geom name="rail_near_b0_1" class="structure" type="box" material="price_rail" pos="-1.25 -0.003 0.591" size="0.585 0.003 0.015" />
+      <geom name="deck_near_b0_2" class="structure" type="box" material="shelf_metal" pos="-1.25 0.226 1.041" size="0.585 0.226 0.009" />
+      <geom name="lip_near_b0_2" class="structure" type="box" material="shelf_metal" pos="-1.25 0.006 1.0625" size="0.585 0.006 0.0125" />
+      <geom name="rail_near_b0_2" class="structure" type="box" material="price_rail" pos="-1.25 -0.003 1.041" size="0.585 0.003 0.015" />
+      <geom name="deck_near_b0_3" class="structure" type="box" material="shelf_metal" pos="-1.25 0.226 1.491" size="0.585 0.226 0.009" />
+      <geom name="lip_near_b0_3" class="structure" type="box" material="shelf_metal" pos="-1.25 0.006 1.5125" size="0.585 0.006 0.0125" />
+      <geom name="rail_near_b0_3" class="structure" type="box" material="price_rail" pos="-1.25 -0.003 1.491" size="0.585 0.003 0.015" />
+      <geom name="deck_near_b1_0" class="structure" type="box" material="shelf_metal" pos="0 0.226 0.141" size="0.585 0.226 0.009" />
+      <geom name="lip_near_b1_0" class="structure" type="box" material="shelf_metal" pos="0 0.006 0.1625" size="0.585 0.006 0.0125" />
+      <geom name="rail_near_b1_0" class="structure" type="box" material="price_rail" pos="0 -0.003 0.141" size="0.585 0.003 0.015" />
+      <geom name="deck_near_b1_1" class="structure" type="box" material="shelf_metal" pos="0 0.226 0.591" size="0.585 0.226 0.009" />
+      <geom name="lip_near_b1_1" class="structure" type="box" material="shelf_metal" pos="0 0.006 0.6125" size="0.585 0.006 0.0125" />
+      <geom name="rail_near_b1_1" class="structure" type="box" material="price_rail" pos="0 -0.003 0.591" size="0.585 0.003 0.015" />
+      <geom name="deck_near_b1_2" class="structure" type="box" material="shelf_metal" pos="0 0.226 1.041" size="0.585 0.226 0.009" />
+      <geom name="lip_near_b1_2" class="structure" type="box" material="shelf_metal" pos="0 0.006 1.0625" size="0.585 0.006 0.0125" />
+      <geom name="rail_near_b1_2" class="structure" type="box" material="price_rail" pos="0 -0.003 1.041" size="0.585 0.003 0.015" />
+      <geom name="deck_near_b1_3" class="structure" type="box" material="shelf_metal" pos="0 0.226 1.491" size="0.585 0.226 0.009" />
+      <geom name="lip_near_b1_3" class="structure" type="box" material="shelf_metal" pos="0 0.006 1.5125" size="0.585 0.006 0.0125" />
+      <geom name="rail_near_b1_3" class="structure" type="box" material="price_rail" pos="0 -0.003 1.491" size="0.585 0.003 0.015" />
+      <geom name="deck_near_b2_0" class="structure" type="box" material="shelf_metal" pos="1.25 0.226 0.141" size="0.585 0.226 0.009" />
+      <geom name="lip_near_b2_0" class="structure" type="box" material="shelf_metal" pos="1.25 0.006 0.1625" size="0.585 0.006 0.0125" />
+      <geom name="rail_near_b2_0" class="structure" type="box" material="price_rail" pos="1.25 -0.003 0.141" size="0.585 0.003 0.015" />
+      <geom name="deck_near_b2_1" class="structure" type="box" material="shelf_metal" pos="1.25 0.226 0.591" size="0.585 0.226 0.009" />
+      <geom name="lip_near_b2_1" class="structure" type="box" material="shelf_metal" pos="1.25 0.006 0.6125" size="0.585 0.006 0.0125" />
+      <geom name="rail_near_b2_1" class="structure" type="box" material="price_rail" pos="1.25 -0.003 0.591" size="0.585 0.003 0.015" />
+      <geom name="deck_near_b2_2" class="structure" type="box" material="shelf_metal" pos="1.25 0.226 1.041" size="0.585 0.226 0.009" />
+      <geom name="lip_near_b2_2" class="structure" type="box" material="shelf_metal" pos="1.25 0.006 1.0625" size="0.585 0.006 0.0125" />
+      <geom name="rail_near_b2_2" class="structure" type="box" material="price_rail" pos="1.25 -0.003 1.041" size="0.585 0.003 0.015" />
+      <geom name="deck_near_b2_3" class="structure" type="box" material="shelf_metal" pos="1.25 0.226 1.491" size="0.585 0.226 0.009" />
+      <geom name="lip_near_b2_3" class="structure" type="box" material="shelf_metal" pos="1.25 0.006 1.5125" size="0.585 0.006 0.0125" />
+      <geom name="rail_near_b2_3" class="structure" type="box" material="price_rail" pos="1.25 -0.003 1.491" size="0.585 0.003 0.015" />
+    </body>
+    <body name="gondola_far" pos="0 -1.3 0" quat="6.12323e-17 0 0 1">
+      <geom name="far_back_panel" class="structure" type="box" material="shelf_metal" pos="0 0.461 0.9" size="1.875 0.009 0.9" />
+      <geom name="far_upright_0" class="structure" type="box" material="shelf_metal" pos="-1.855 0.235 0.9" size="0.02 0.235 0.9" />
+      <geom name="far_upright_1" class="structure" type="box" material="shelf_metal" pos="-0.625 0.235 0.9" size="0.02 0.235 0.9" />
+      <geom name="far_upright_2" class="structure" type="box" material="shelf_metal" pos="0.625 0.235 0.9" size="0.02 0.235 0.9" />
+      <geom name="far_upright_3" class="structure" type="box" material="shelf_metal" pos="1.855 0.235 0.9" size="0.02 0.235 0.9" />
+      <geom name="far_kick_plate" class="structure" type="box" material="shelf_dark" pos="0 0.039 0.06" size="1.875 0.009 0.06" />
+      <geom name="deck_far_b0_0" class="structure" type="box" material="shelf_metal" pos="-1.25 0.226 0.141" size="0.585 0.226 0.009" />
+      <geom name="lip_far_b0_0" class="structure" type="box" material="shelf_metal" pos="-1.25 0.006 0.1625" size="0.585 0.006 0.0125" />
+      <geom name="rail_far_b0_0" class="structure" type="box" material="price_rail" pos="-1.25 -0.003 0.141" size="0.585 0.003 0.015" />
+      <geom name="deck_far_b0_1" class="structure" type="box" material="shelf_metal" pos="-1.25 0.226 0.591" size="0.585 0.226 0.009" />
+      <geom name="lip_far_b0_1" class="structure" type="box" material="shelf_metal" pos="-1.25 0.006 0.6125" size="0.585 0.006 0.0125" />
+      <geom name="rail_far_b0_1" class="structure" type="box" material="price_rail" pos="-1.25 -0.003 0.591" size="0.585 0.003 0.015" />
+      <geom name="deck_far_b0_2" class="structure" type="box" material="shelf_metal" pos="-1.25 0.226 1.041" size="0.585 0.226 0.009" />
+      <geom name="lip_far_b0_2" class="structure" type="box" material="shelf_metal" pos="-1.25 0.006 1.0625" size="0.585 0.006 0.0125" />
+      <geom name="rail_far_b0_2" class="structure" type="box" material="price_rail" pos="-1.25 -0.003 1.041" size="0.585 0.003 0.015" />
+      <geom name="deck_far_b0_3" class="structure" type="box" material="shelf_metal" pos="-1.25 0.226 1.491" size="0.585 0.226 0.009" />
+      <geom name="lip_far_b0_3" class="structure" type="box" material="shelf_metal" pos="-1.25 0.006 1.5125" size="0.585 0.006 0.0125" />
+      <geom name="rail_far_b0_3" class="structure" type="box" material="price_rail" pos="-1.25 -0.003 1.491" size="0.585 0.003 0.015" />
+      <geom name="deck_far_b1_0" class="structure" type="box" material="shelf_metal" pos="0 0.226 0.141" size="0.585 0.226 0.009" />
+      <geom name="lip_far_b1_0" class="structure" type="box" material="shelf_metal" pos="0 0.006 0.1625" size="0.585 0.006 0.0125" />
+      <geom name="rail_far_b1_0" class="structure" type="box" material="price_rail" pos="0 -0.003 0.141" size="0.585 0.003 0.015" />
+      <geom name="deck_far_b1_1" class="structure" type="box" material="shelf_metal" pos="0 0.226 0.591" size="0.585 0.226 0.009" />
+      <geom name="lip_far_b1_1" class="structure" type="box" material="shelf_metal" pos="0 0.006 0.6125" size="0.585 0.006 0.0125" />
+      <geom name="rail_far_b1_1" class="structure" type="box" material="price_rail" pos="0 -0.003 0.591" size="0.585 0.003 0.015" />
+      <geom name="deck_far_b1_2" class="structure" type="box" material="shelf_metal" pos="0 0.226 1.041" size="0.585 0.226 0.009" />
+      <geom name="lip_far_b1_2" class="structure" type="box" material="shelf_metal" pos="0 0.006 1.0625" size="0.585 0.006 0.0125" />
+      <geom name="rail_far_b1_2" class="structure" type="box" material="price_rail" pos="0 -0.003 1.041" size="0.585 0.003 0.015" />
+      <geom name="deck_far_b1_3" class="structure" type="box" material="shelf_metal" pos="0 0.226 1.491" size="0.585 0.226 0.009" />
+      <geom name="lip_far_b1_3" class="structure" type="box" material="shelf_metal" pos="0 0.006 1.5125" size="0.585 0.006 0.0125" />
+      <geom name="rail_far_b1_3" class="structure" type="box" material="price_rail" pos="0 -0.003 1.491" size="0.585 0.003 0.015" />
+      <geom name="deck_far_b2_0" class="structure" type="box" material="shelf_metal" pos="1.25 0.226 0.141" size="0.585 0.226 0.009" />
+      <geom name="lip_far_b2_0" class="structure" type="box" material="shelf_metal" pos="1.25 0.006 0.1625" size="0.585 0.006 0.0125" />
+      <geom name="rail_far_b2_0" class="structure" type="box" material="price_rail" pos="1.25 -0.003 0.141" size="0.585 0.003 0.015" />
+      <geom name="deck_far_b2_1" class="structure" type="box" material="shelf_metal" pos="1.25 0.226 0.591" size="0.585 0.226 0.009" />
+      <geom name="lip_far_b2_1" class="structure" type="box" material="shelf_metal" pos="1.25 0.006 0.6125" size="0.585 0.006 0.0125" />
+      <geom name="rail_far_b2_1" class="structure" type="box" material="price_rail" pos="1.25 -0.003 0.591" size="0.585 0.003 0.015" />
+      <geom name="deck_far_b2_2" class="structure" type="box" material="shelf_metal" pos="1.25 0.226 1.041" size="0.585 0.226 0.009" />
+      <geom name="lip_far_b2_2" class="structure" type="box" material="shelf_metal" pos="1.25 0.006 1.0625" size="0.585 0.006 0.0125" />
+      <geom name="rail_far_b2_2" class="structure" type="box" material="price_rail" pos="1.25 -0.003 1.041" size="0.585 0.003 0.015" />
+      <geom name="deck_far_b2_3" class="structure" type="box" material="shelf_metal" pos="1.25 0.226 1.491" size="0.585 0.226 0.009" />
+      <geom name="lip_far_b2_3" class="structure" type="box" material="shelf_metal" pos="1.25 0.006 1.5125" size="0.585 0.006 0.0125" />
+      <geom name="rail_far_b2_3" class="structure" type="box" material="price_rail" pos="1.25 -0.003 1.491" size="0.585 0.003 0.015" />
+    </body>
+    <body name="roll_cage" pos="0.86 -0.56 0">
+      <geom name="cage_base_tray" class="structure" type="box" material="cage_metal" pos="0 0 0.18" size="0.4 0.35 0.01" />
+      <geom name="cage_top_tray" class="structure" type="box" material="cage_metal" pos="0 0 1.1" size="0.4 0.35 0.01" />
+      <geom name="cage_upright_00" class="structure" type="box" material="cage_metal" pos="-0.385 -0.335 0.64" size="0.015 0.015 0.46" />
+      <geom name="cage_caster_00" class="structure" type="cylinder" material="cage_dark" euler="0 1.5708 0" pos="-0.33 -0.28 0.05" size="0.05 0.014" />
+      <geom name="cage_upright_01" class="structure" type="box" material="cage_metal" pos="-0.385 0.335 0.64" size="0.015 0.015 0.46" />
+      <geom name="cage_caster_01" class="structure" type="cylinder" material="cage_dark" euler="0 1.5708 0" pos="-0.33 0.28 0.05" size="0.05 0.014" />
+      <geom name="cage_upright_10" class="structure" type="box" material="cage_metal" pos="0.385 -0.335 0.64" size="0.015 0.015 0.46" />
+      <geom name="cage_caster_10" class="structure" type="cylinder" material="cage_dark" euler="0 1.5708 0" pos="0.33 -0.28 0.05" size="0.05 0.014" />
+      <geom name="cage_upright_11" class="structure" type="box" material="cage_metal" pos="0.385 0.335 0.64" size="0.015 0.015 0.46" />
+      <geom name="cage_caster_11" class="structure" type="cylinder" material="cage_dark" euler="0 1.5708 0" pos="0.33 0.28 0.05" size="0.05 0.014" />
+      <geom name="cage_bar_end0_0" class="structure" type="box" material="cage_metal" pos="-0.385 0 0.41" size="0.006 0.335 0.006" />
+      <geom name="cage_bar_end1_0" class="structure" type="box" material="cage_metal" pos="0.385 0 0.41" size="0.006 0.335 0.006" />
+      <geom name="cage_bar_back_0" class="structure" type="box" material="cage_metal" pos="0 0.335 0.41" size="0.385 0.006 0.006" />
+      <geom name="cage_bar_end0_1" class="structure" type="box" material="cage_metal" pos="-0.385 0 0.64" size="0.006 0.335 0.006" />
+      <geom name="cage_bar_end1_1" class="structure" type="box" material="cage_metal" pos="0.385 0 0.64" size="0.006 0.335 0.006" />
+      <geom name="cage_bar_back_1" class="structure" type="box" material="cage_metal" pos="0 0.335 0.64" size="0.385 0.006 0.006" />
+      <geom name="cage_bar_end0_2" class="structure" type="box" material="cage_metal" pos="-0.385 0 0.87" size="0.006 0.335 0.006" />
+      <geom name="cage_bar_end1_2" class="structure" type="box" material="cage_metal" pos="0.385 0 0.87" size="0.006 0.335 0.006" />
+      <geom name="cage_bar_back_2" class="structure" type="box" material="cage_metal" pos="0 0.335 0.87" size="0.385 0.006 0.006" />
+    </body>
+    <site name="tower_base_site" pos="0 -0.45 0" size="0.010" rgba="0.95 0.4 0.1 0.35" />
+    <body name="static_stock" pos="0 0 0">
+      <body name="near_b0_d2_0001_canned_food_canned_food_9" pos="-1.77972 0.0500547 1.07782" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+        <geom name="near_b0_d2_0001_canned_food_canned_food_9_coll" type="box" size="0.0300547 0.0522772 0.0276182" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0002_canned_food_canned_food_9" pos="-1.77972 0.118164 1.07782" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+        <geom name="near_b0_d2_0002_canned_food_canned_food_9_coll" type="box" size="0.0300547 0.0522772 0.0276182" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0003_canned_food_canned_food_9" pos="-1.77972 0.186274 1.07782" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+        <geom name="near_b0_d2_0003_canned_food_canned_food_9_coll" type="box" size="0.0300547 0.0522772 0.0276182" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0004_canned_food_canned_food_9" pos="-1.66917 0.0500547 1.07782" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+        <geom name="near_b0_d2_0004_canned_food_canned_food_9_coll" type="box" size="0.0300547 0.0522772 0.0276182" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0005_canned_food_canned_food_9" pos="-1.66917 0.118164 1.07782" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+        <geom name="near_b0_d2_0005_canned_food_canned_food_9_coll" type="box" size="0.0300547 0.0522772 0.0276182" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0006_canned_food_canned_food_9" pos="-1.66917 0.186274 1.07782" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+        <geom name="near_b0_d2_0006_canned_food_canned_food_9_coll" type="box" size="0.0300547 0.0522772 0.0276182" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0007_canned_food_canned_food_9" pos="-1.55861 0.0500547 1.07782" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+        <geom name="near_b0_d2_0007_canned_food_canned_food_9_coll" type="box" size="0.0300547 0.0522772 0.0276182" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0008_canned_food_canned_food_9" pos="-1.55861 0.118164 1.07782" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+        <geom name="near_b0_d2_0008_canned_food_canned_food_9_coll" type="box" size="0.0300547 0.0522772 0.0276182" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0009_canned_food_canned_food_9" pos="-1.55861 0.186274 1.07782" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+        <geom name="near_b0_d2_0009_canned_food_canned_food_9_coll" type="box" size="0.0300547 0.0522772 0.0276182" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0010_canned_food_canned_food_9" pos="-1.44806 0.0500547 1.07782" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+        <geom name="near_b0_d2_0010_canned_food_canned_food_9_coll" type="box" size="0.0300547 0.0522772 0.0276182" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0011_canned_food_canned_food_9" pos="-1.44806 0.118164 1.07782" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+        <geom name="near_b0_d2_0011_canned_food_canned_food_9_coll" type="box" size="0.0300547 0.0522772 0.0276182" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0012_canned_food_canned_food_9" pos="-1.44806 0.186274 1.07782" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+        <geom name="near_b0_d2_0012_canned_food_canned_food_9_coll" type="box" size="0.0300547 0.0522772 0.0276182" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0013_can_can_3" pos="-1.36011 0.0496689 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0013_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0014_can_can_3" pos="-1.36011 0.117007 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0014_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0015_can_can_3" pos="-1.36011 0.184345 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0015_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0016_can_can_3" pos="-1.29478 0.0496689 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0016_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0017_can_can_3" pos="-1.29478 0.117007 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0017_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0018_can_can_3" pos="-1.29478 0.184345 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0018_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0019_can_can_3" pos="-1.22944 0.0496689 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0019_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0020_can_can_3" pos="-1.22944 0.117007 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0020_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0021_can_can_3" pos="-1.22944 0.184345 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0021_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0022_can_can_3" pos="-1.1641 0.0496689 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0022_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0023_can_can_3" pos="-1.1641 0.117007 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0023_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0024_can_can_3" pos="-1.1641 0.184345 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0024_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0025_can_can_3" pos="-1.09876 0.0496689 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0025_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0026_can_can_3" pos="-1.09876 0.117007 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0026_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0027_can_can_3" pos="-1.09876 0.184345 1.10568" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_3__bodyblinn1SG" />
+        <geom name="near_b0_d2_0027_can_can_3_coll" type="cylinder" size="0.0296689 0.0554753" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0028_jam_jam_4" pos="-1.02912 0.0539708 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0028_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0029_jam_jam_4" pos="-1.02912 0.129912 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0029_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0030_jam_jam_4" pos="-1.02912 0.205854 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0030_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0031_jam_jam_4" pos="-0.955181 0.0539708 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0031_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0032_jam_jam_4" pos="-0.955181 0.129912 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0032_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0033_jam_jam_4" pos="-0.955181 0.205854 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0033_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0034_jam_jam_4" pos="-0.881239 0.0539708 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0034_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0035_jam_jam_4" pos="-0.881239 0.129912 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0035_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0036_jam_jam_4" pos="-0.881239 0.205854 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0036_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0037_jam_jam_4" pos="-0.807298 0.0539708 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0037_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0038_jam_jam_4" pos="-0.807298 0.129912 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0038_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0039_jam_jam_4" pos="-0.807298 0.205854 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0039_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0041_jam_jam_4" pos="-0.733356 0.129912 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0041_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d2_0042_jam_jam_4" pos="-0.733356 0.205854 1.07817" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+        <geom name="near_b0_d2_0042_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0044_canned_food_canned_food_10" pos="-0.534271 0.0983843 1.08815" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+        <geom name="near_b1_d2_0044_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0045_canned_food_canned_food_10" pos="-0.534271 0.153307 1.08815" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+        <geom name="near_b1_d2_0045_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0047_canned_food_canned_food_10" pos="-0.432812 0.0983843 1.08815" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+        <geom name="near_b1_d2_0047_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0048_canned_food_canned_food_10" pos="-0.432812 0.153307 1.08815" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+        <geom name="near_b1_d2_0048_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0050_canned_food_canned_food_10" pos="-0.331353 0.0983843 1.08815" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+        <geom name="near_b1_d2_0050_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0051_canned_food_canned_food_10" pos="-0.331353 0.153307 1.08815" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+        <geom name="near_b1_d2_0051_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0053_canned_food_canned_food_10" pos="0.260729 0.0983843 1.08815" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+        <geom name="near_b1_d2_0053_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0054_canned_food_canned_food_10" pos="0.260729 0.153307 1.08815" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+        <geom name="near_b1_d2_0054_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0056_canned_food_canned_food_10" pos="0.362188 0.0983843 1.08815" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+        <geom name="near_b1_d2_0056_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0057_canned_food_canned_food_10" pos="0.362188 0.153307 1.08815" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+        <geom name="near_b1_d2_0057_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0059_can_can_11" pos="0.444033 0.112346 1.10565" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_11__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_11__01_-_Default.016" />
+        <geom name="near_b1_d2_0059_can_can_11_coll" type="cylinder" size="0.0281153 0.0554513" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0060_can_can_11" pos="0.444033 0.176577 1.10565" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_11__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_11__01_-_Default.016" />
+        <geom name="near_b1_d2_0060_can_can_11_coll" type="cylinder" size="0.0281153 0.0554513" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0062_can_can_11" pos="0.506263 0.112346 1.10565" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_11__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_11__01_-_Default.016" />
+        <geom name="near_b1_d2_0062_can_can_11_coll" type="cylinder" size="0.0281153 0.0554513" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d2_0063_can_can_11" pos="0.506263 0.176577 1.10565" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_11__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_11__01_-_Default.016" />
+        <geom name="near_b1_d2_0063_can_can_11_coll" type="cylinder" size="0.0281153 0.0554513" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0065_canned_food_canned_food_19" pos="0.6995 0.122499 1.05969" quat="1 0 0 0">
+        <geom type="mesh" mesh="canned_food__canned_food_19__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_19__ConserveThon" />
+        <geom name="near_b2_d2_0065_canned_food_canned_food_19_coll" type="cylinder" size="0.0314996 0.00949297" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0066_canned_food_canned_food_19" pos="0.6995 0.193498 1.05969" quat="1 0 0 0">
+        <geom type="mesh" mesh="canned_food__canned_food_19__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_19__ConserveThon" />
+        <geom name="near_b2_d2_0066_canned_food_canned_food_19_coll" type="cylinder" size="0.0314996 0.00949297" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0068_canned_food_canned_food_19" pos="0.768499 0.122499 1.05969" quat="1 0 0 0">
+        <geom type="mesh" mesh="canned_food__canned_food_19__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_19__ConserveThon" />
+        <geom name="near_b2_d2_0068_canned_food_canned_food_19_coll" type="cylinder" size="0.0314996 0.00949297" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0069_canned_food_canned_food_19" pos="0.768499 0.193498 1.05969" quat="1 0 0 0">
+        <geom type="mesh" mesh="canned_food__canned_food_19__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_19__ConserveThon" />
+        <geom name="near_b2_d2_0069_canned_food_canned_food_19_coll" type="cylinder" size="0.0314996 0.00949297" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0070_canned_food_canned_food_19" pos="0.837498 0.0514996 1.05969" quat="1 0 0 0">
+        <geom type="mesh" mesh="canned_food__canned_food_19__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_19__ConserveThon" />
+        <geom name="near_b2_d2_0070_canned_food_canned_food_19_coll" type="cylinder" size="0.0314996 0.00949297" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0071_canned_food_canned_food_19" pos="0.837498 0.122499 1.05969" quat="1 0 0 0">
+        <geom type="mesh" mesh="canned_food__canned_food_19__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_19__ConserveThon" />
+        <geom name="near_b2_d2_0071_canned_food_canned_food_19_coll" type="cylinder" size="0.0314996 0.00949297" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0072_canned_food_canned_food_19" pos="0.837498 0.193498 1.05969" quat="1 0 0 0">
+        <geom type="mesh" mesh="canned_food__canned_food_19__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_19__ConserveThon" />
+        <geom name="near_b2_d2_0072_canned_food_canned_food_19_coll" type="cylinder" size="0.0314996 0.00949297" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0073_canned_food_canned_food_19" pos="0.906497 0.0514996 1.05969" quat="1 0 0 0">
+        <geom type="mesh" mesh="canned_food__canned_food_19__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_19__ConserveThon" />
+        <geom name="near_b2_d2_0073_canned_food_canned_food_19_coll" type="cylinder" size="0.0314996 0.00949297" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0074_canned_food_canned_food_19" pos="0.906497 0.122499 1.05969" quat="1 0 0 0">
+        <geom type="mesh" mesh="canned_food__canned_food_19__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_19__ConserveThon" />
+        <geom name="near_b2_d2_0074_canned_food_canned_food_19_coll" type="cylinder" size="0.0314996 0.00949297" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0075_canned_food_canned_food_19" pos="0.906497 0.193498 1.05969" quat="1 0 0 0">
+        <geom type="mesh" mesh="canned_food__canned_food_19__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_19__ConserveThon" />
+        <geom name="near_b2_d2_0075_canned_food_canned_food_19_coll" type="cylinder" size="0.0314996 0.00949297" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0076_can_can_18" pos="0.973008 0.0490111 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0076_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0077_can_can_18" pos="0.973008 0.115033 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0077_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0078_can_can_18" pos="0.973008 0.181055 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0078_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0079_can_can_18" pos="1.03703 0.0490111 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0079_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0080_can_can_18" pos="1.03703 0.115033 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0080_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0081_can_can_18" pos="1.03703 0.181055 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0081_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0082_can_can_18" pos="1.10105 0.0490111 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0082_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0083_can_can_18" pos="1.10105 0.115033 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0083_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0084_can_can_18" pos="1.10105 0.181055 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0084_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0085_can_can_18" pos="1.16507 0.0490111 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0085_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0086_can_can_18" pos="1.16507 0.115033 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0086_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0087_can_can_18" pos="1.16507 0.181055 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0087_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0088_can_can_18" pos="1.2291 0.0490111 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0088_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0089_can_can_18" pos="1.2291 0.115033 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0089_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0090_can_can_18" pos="1.2291 0.181055 1.1002" quat="1 0 0 0">
+        <geom type="mesh" mesh="can__can_18__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_18__Colatex" />
+        <geom name="near_b2_d2_0090_can_can_18_coll" type="cylinder" size="0.0290111 0.05" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0091_jam_jam_5" pos="1.29558 0.0514755 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0091_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0092_jam_jam_5" pos="1.29558 0.122427 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0092_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0093_jam_jam_5" pos="1.29558 0.193378 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0093_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0094_jam_jam_5" pos="1.36453 0.0514755 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0094_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0095_jam_jam_5" pos="1.36453 0.122427 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0095_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0096_jam_jam_5" pos="1.36453 0.193378 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0096_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0097_jam_jam_5" pos="1.43349 0.0514755 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0097_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0098_jam_jam_5" pos="1.43349 0.122427 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0098_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0099_jam_jam_5" pos="1.43349 0.193378 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0099_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0100_jam_jam_5" pos="1.50244 0.0514755 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0100_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0101_jam_jam_5" pos="1.50244 0.122427 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0101_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0102_jam_jam_5" pos="1.50244 0.193378 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0102_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0103_jam_jam_5" pos="1.57139 0.0514755 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0103_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0104_jam_jam_5" pos="1.57139 0.122427 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0104_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0105_jam_jam_5" pos="1.57139 0.193378 1.08432" quat="1 0 0 0">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+        <geom name="near_b2_d2_0105_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0106_yogurt_yogurt_3" pos="1.63698 0.0481165 1.09508" quat="1 0 0 0">
+        <geom type="mesh" mesh="yogurt__yogurt_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_3__material_0.013" />
+        <geom name="near_b2_d2_0106_yogurt_yogurt_3_coll" type="cylinder" size="0.0281165 0.0448842" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0107_yogurt_yogurt_3" pos="1.63698 0.112349 1.09508" quat="1 0 0 0">
+        <geom type="mesh" mesh="yogurt__yogurt_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_3__material_0.013" />
+        <geom name="near_b2_d2_0107_yogurt_yogurt_3_coll" type="cylinder" size="0.0281165 0.0448842" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0108_yogurt_yogurt_3" pos="1.63698 0.176582 1.09508" quat="1 0 0 0">
+        <geom type="mesh" mesh="yogurt__yogurt_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_3__material_0.013" />
+        <geom name="near_b2_d2_0108_yogurt_yogurt_3_coll" type="cylinder" size="0.0281165 0.0448842" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0109_yogurt_yogurt_3" pos="1.69921 0.0481165 1.09508" quat="1 0 0 0">
+        <geom type="mesh" mesh="yogurt__yogurt_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_3__material_0.013" />
+        <geom name="near_b2_d2_0109_yogurt_yogurt_3_coll" type="cylinder" size="0.0281165 0.0448842" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0110_yogurt_yogurt_3" pos="1.69921 0.112349 1.09508" quat="1 0 0 0">
+        <geom type="mesh" mesh="yogurt__yogurt_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_3__material_0.013" />
+        <geom name="near_b2_d2_0110_yogurt_yogurt_3_coll" type="cylinder" size="0.0281165 0.0448842" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0111_yogurt_yogurt_3" pos="1.69921 0.176582 1.09508" quat="1 0 0 0">
+        <geom type="mesh" mesh="yogurt__yogurt_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_3__material_0.013" />
+        <geom name="near_b2_d2_0111_yogurt_yogurt_3_coll" type="cylinder" size="0.0281165 0.0448842" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0112_yogurt_yogurt_3" pos="1.76145 0.0481165 1.09508" quat="1 0 0 0">
+        <geom type="mesh" mesh="yogurt__yogurt_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_3__material_0.013" />
+        <geom name="near_b2_d2_0112_yogurt_yogurt_3_coll" type="cylinder" size="0.0281165 0.0448842" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0113_yogurt_yogurt_3" pos="1.76145 0.112349 1.09508" quat="1 0 0 0">
+        <geom type="mesh" mesh="yogurt__yogurt_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_3__material_0.013" />
+        <geom name="near_b2_d2_0113_yogurt_yogurt_3_coll" type="cylinder" size="0.0281165 0.0448842" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d2_0114_yogurt_yogurt_3" pos="1.76145 0.176582 1.09508" quat="1 0 0 0">
+        <geom type="mesh" mesh="yogurt__yogurt_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_3__material_0.013" />
+        <geom name="near_b2_d2_0114_yogurt_yogurt_3_coll" type="cylinder" size="0.0281165 0.0448842" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0115_cereal_cereal_2" pos="-1.7794 0.0342882 1.5852" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_2__Cube.1" />
+        <geom name="near_b0_d3_0115_cereal_cereal_2_coll" type="box" size="0.0142882 0.052605 0.085" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0116_cereal_cereal_2" pos="-1.7794 0.0708647 1.5852" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_2__Cube.1" />
+        <geom name="near_b0_d3_0116_cereal_cereal_2_coll" type="box" size="0.0142882 0.052605 0.085" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0117_cereal_cereal_2" pos="-1.7794 0.107441 1.5852" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_2__Cube.1" />
+        <geom name="near_b0_d3_0117_cereal_cereal_2_coll" type="box" size="0.0142882 0.052605 0.085" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0118_cereal_cereal_2" pos="-1.66819 0.0342882 1.5852" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_2__Cube.1" />
+        <geom name="near_b0_d3_0118_cereal_cereal_2_coll" type="box" size="0.0142882 0.052605 0.085" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0119_cereal_cereal_2" pos="-1.66819 0.0708647 1.5852" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_2__Cube.1" />
+        <geom name="near_b0_d3_0119_cereal_cereal_2_coll" type="box" size="0.0142882 0.052605 0.085" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0120_cereal_cereal_2" pos="-1.66819 0.107441 1.5852" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_2__Cube.1" />
+        <geom name="near_b0_d3_0120_cereal_cereal_2_coll" type="box" size="0.0142882 0.052605 0.085" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0121_cereal_cereal_2" pos="-1.55698 0.0342882 1.5852" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_2__Cube.1" />
+        <geom name="near_b0_d3_0121_cereal_cereal_2_coll" type="box" size="0.0142882 0.052605 0.085" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0122_cereal_cereal_2" pos="-1.55698 0.0708647 1.5852" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_2__Cube.1" />
+        <geom name="near_b0_d3_0122_cereal_cereal_2_coll" type="box" size="0.0142882 0.052605 0.085" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0123_cereal_cereal_2" pos="-1.55698 0.107441 1.5852" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_2__Cube.1" />
+        <geom name="near_b0_d3_0123_cereal_cereal_2_coll" type="box" size="0.0142882 0.052605 0.085" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0124_boxed_food_boxed_food_1" pos="-1.42687 0.0404285 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b0_d3_0124_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0125_boxed_food_boxed_food_1" pos="-1.42687 0.0892856 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b0_d3_0125_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0126_boxed_food_boxed_food_1" pos="-1.42687 0.138143 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b0_d3_0126_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0127_boxed_food_boxed_food_1" pos="-1.27787 0.0404285 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b0_d3_0127_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0128_boxed_food_boxed_food_1" pos="-1.27787 0.0892856 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b0_d3_0128_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0129_boxed_food_boxed_food_1" pos="-1.27787 0.138143 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b0_d3_0129_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0130_boxed_food_boxed_food_1" pos="-1.12887 0.0404285 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b0_d3_0130_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0131_boxed_food_boxed_food_1" pos="-1.12887 0.0892856 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b0_d3_0131_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0132_boxed_food_boxed_food_1" pos="-1.12887 0.138143 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b0_d3_0132_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0133_boxed_food_boxed_food_1" pos="-0.979871 0.0404285 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b0_d3_0133_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0134_boxed_food_boxed_food_1" pos="-0.979871 0.0892856 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b0_d3_0134_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0135_boxed_food_boxed_food_1" pos="-0.979871 0.138143 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b0_d3_0135_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0136_milk_milk_9" pos="-0.861111 0.0558595 1.5827" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="milk__milk_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_9__lambert2.003" />
+        <geom name="near_b0_d3_0136_milk_milk_9_coll" type="box" size="0.0358595 0.0412599 0.0825" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0137_milk_milk_9" pos="-0.861111 0.135579 1.5827" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="milk__milk_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_9__lambert2.003" />
+        <geom name="near_b0_d3_0137_milk_milk_9_coll" type="box" size="0.0358595 0.0412599 0.0825" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0138_milk_milk_9" pos="-0.861111 0.215298 1.5827" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="milk__milk_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_9__lambert2.003" />
+        <geom name="near_b0_d3_0138_milk_milk_9_coll" type="box" size="0.0358595 0.0412599 0.0825" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0139_milk_milk_9" pos="-0.772591 0.0558595 1.5827" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="milk__milk_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_9__lambert2.003" />
+        <geom name="near_b0_d3_0139_milk_milk_9_coll" type="box" size="0.0358595 0.0412599 0.0825" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0140_milk_milk_9" pos="-0.772591 0.135579 1.5827" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="milk__milk_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_9__lambert2.003" />
+        <geom name="near_b0_d3_0140_milk_milk_9_coll" type="box" size="0.0358595 0.0412599 0.0825" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0141_milk_milk_9" pos="-0.772591 0.215298 1.5827" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="milk__milk_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_9__lambert2.003" />
+        <geom name="near_b0_d3_0141_milk_milk_9_coll" type="box" size="0.0358595 0.0412599 0.0825" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0143_boxed_drink_boxed_drink_5" pos="-0.701454 0.0891329 1.5608" quat="1 0 0 0">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_5__Cylinder.003__0" />
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_5__Material.066" />
+        <geom name="near_b0_d3_0143_boxed_drink_boxed_drink_5_coll" type="box" size="0.0238772 0.0203776 0.060604" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b0_d3_0144_boxed_drink_boxed_drink_5" pos="-0.701454 0.137888 1.5608" quat="1 0 0 0">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_5__Cylinder.003__0" />
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_5__Material.066" />
+        <geom name="near_b0_d3_0144_boxed_drink_boxed_drink_5_coll" type="box" size="0.0238772 0.0203776 0.060604" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0146_cereal_cereal_1" pos="-0.532 0.103 1.5752" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_1__lambert2SG.010" />
+        <geom name="near_b1_d3_0146_cereal_cereal_1_coll" type="box" size="0.025 0.05 0.075" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0147_cereal_cereal_1" pos="-0.532 0.161 1.5752" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_1__lambert2SG.010" />
+        <geom name="near_b1_d3_0147_cereal_cereal_1_coll" type="box" size="0.025 0.05 0.075" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0149_cereal_cereal_1" pos="-0.426 0.103 1.5752" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_1__lambert2SG.010" />
+        <geom name="near_b1_d3_0149_cereal_cereal_1_coll" type="box" size="0.025 0.05 0.075" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0150_cereal_cereal_1" pos="-0.426 0.161 1.5752" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_1__lambert2SG.010" />
+        <geom name="near_b1_d3_0150_cereal_cereal_1_coll" type="box" size="0.025 0.05 0.075" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0152_cereal_cereal_1" pos="-0.32 0.103 1.5752" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_1__lambert2SG.010" />
+        <geom name="near_b1_d3_0152_cereal_cereal_1_coll" type="box" size="0.025 0.05 0.075" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0153_cereal_cereal_1" pos="-0.32 0.161 1.5752" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_1__lambert2SG.010" />
+        <geom name="near_b1_d3_0153_cereal_cereal_1_coll" type="box" size="0.025 0.05 0.075" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0155_boxed_food_boxed_food_9" pos="-0.1925 0.0892856 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+        <geom name="near_b1_d3_0155_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0156_boxed_food_boxed_food_9" pos="-0.1925 0.138143 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+        <geom name="near_b1_d3_0156_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0158_boxed_food_boxed_food_9" pos="-0.0435001 0.0892856 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+        <geom name="near_b1_d3_0158_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0159_boxed_food_boxed_food_9" pos="-0.0435001 0.138143 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+        <geom name="near_b1_d3_0159_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0161_boxed_food_boxed_food_9" pos="0.1055 0.0892856 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+        <geom name="near_b1_d3_0161_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0162_boxed_food_boxed_food_9" pos="0.1055 0.138143 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+        <geom name="near_b1_d3_0162_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0164_boxed_food_boxed_food_9" pos="0.2545 0.0892856 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+        <geom name="near_b1_d3_0164_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0165_boxed_food_boxed_food_9" pos="0.2545 0.138143 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+        <geom name="near_b1_d3_0165_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0167_boxed_food_boxed_food_9" pos="0.4035 0.0892856 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+        <geom name="near_b1_d3_0167_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0168_boxed_food_boxed_food_9" pos="0.4035 0.138143 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+        <geom name="near_b1_d3_0168_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0170_milk_milk_9" pos="0.522259 0.135579 1.5827" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="milk__milk_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_9__lambert2.003" />
+        <geom name="near_b1_d3_0170_milk_milk_9_coll" type="box" size="0.0358595 0.0412599 0.0825" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b1_d3_0171_milk_milk_9" pos="0.522259 0.215298 1.5827" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="milk__milk_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_9__lambert2.003" />
+        <geom name="near_b1_d3_0171_milk_milk_9_coll" type="box" size="0.0358595 0.0412599 0.0825" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0173_cereal_cereal_9" pos="0.724274 0.0742797 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0173_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0174_cereal_cereal_9" pos="0.724274 0.113133 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0174_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0175_cereal_cereal_9" pos="0.842823 0.0354266 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0175_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0176_cereal_cereal_9" pos="0.842823 0.0742797 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0176_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0177_cereal_cereal_9" pos="0.842823 0.113133 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0177_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0178_cereal_cereal_9" pos="0.961371 0.0354266 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0178_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0179_cereal_cereal_9" pos="0.961371 0.0742797 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0179_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0180_cereal_cereal_9" pos="0.961371 0.113133 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0180_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0181_cereal_cereal_9" pos="1.07992 0.0354266 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0181_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0182_cereal_cereal_9" pos="1.07992 0.0742797 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0182_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0183_cereal_cereal_9" pos="1.07992 0.113133 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0183_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0184_cereal_cereal_9" pos="1.19847 0.0354266 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0184_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0185_cereal_cereal_9" pos="1.19847 0.0742797 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0185_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0186_cereal_cereal_9" pos="1.19847 0.113133 1.57712" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+        <geom name="near_b2_d3_0186_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0187_boxed_food_boxed_food_1" pos="1.33224 0.0404285 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b2_d3_0187_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0188_boxed_food_boxed_food_1" pos="1.33224 0.0892856 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b2_d3_0188_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0189_boxed_food_boxed_food_1" pos="1.33224 0.138143 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b2_d3_0189_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0190_boxed_food_boxed_food_1" pos="1.48124 0.0404285 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b2_d3_0190_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0191_boxed_food_boxed_food_1" pos="1.48124 0.0892856 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b2_d3_0191_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0192_boxed_food_boxed_food_1" pos="1.48124 0.138143 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b2_d3_0192_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0193_boxed_food_boxed_food_1" pos="1.63024 0.0404285 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b2_d3_0193_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0194_boxed_food_boxed_food_1" pos="1.63024 0.0892856 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b2_d3_0194_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0195_boxed_food_boxed_food_1" pos="1.63024 0.138143 1.57155" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_1__Chicken_Ginger_Macroni_mtl" />
+        <geom name="near_b2_d3_0195_boxed_food_boxed_food_1_coll" type="box" size="0.0204285 0.0714999 0.0713467" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0196_milk_milk_9" pos="1.749 0.0558595 1.5827" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="milk__milk_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_9__lambert2.003" />
+        <geom name="near_b2_d3_0196_milk_milk_9_coll" type="box" size="0.0358595 0.0412599 0.0825" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0197_milk_milk_9" pos="1.749 0.135579 1.5827" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="milk__milk_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_9__lambert2.003" />
+        <geom name="near_b2_d3_0197_milk_milk_9_coll" type="box" size="0.0358595 0.0412599 0.0825" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="near_b2_d3_0198_milk_milk_9" pos="1.749 0.215298 1.5827" quat="0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="milk__milk_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_9__lambert2.003" />
+        <geom name="near_b2_d3_0198_milk_milk_9_coll" type="box" size="0.0358595 0.0412599 0.0825" group="3" class="static_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      </body>
+      <body name="far_b0_d2_0199_cereal_cereal_4" pos="1.77443 -1.33986 1.11697" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_4__aiStandardSurface1.007" />
+      </body>
+      <body name="far_b0_d2_0200_cereal_cereal_4" pos="1.77443 -1.38759 1.11697" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_4__aiStandardSurface1.007" />
+      </body>
+      <body name="far_b0_d2_0201_cereal_cereal_4" pos="1.65329 -1.33986 1.11697" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_4__aiStandardSurface1.007" />
+      </body>
+      <body name="far_b0_d2_0202_cereal_cereal_4" pos="1.65329 -1.38759 1.11697" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_4__aiStandardSurface1.007" />
+      </body>
+      <body name="far_b0_d2_0203_cereal_cereal_4" pos="1.53215 -1.33986 1.11697" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_4__aiStandardSurface1.007" />
+      </body>
+      <body name="far_b0_d2_0204_cereal_cereal_4" pos="1.53215 -1.38759 1.11697" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_4__aiStandardSurface1.007" />
+      </body>
+      <body name="far_b0_d2_0205_cereal_cereal_4" pos="1.41101 -1.33986 1.11697" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_4__aiStandardSurface1.007" />
+      </body>
+      <body name="far_b0_d2_0206_cereal_cereal_4" pos="1.41101 -1.38759 1.11697" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_4__aiStandardSurface1.007" />
+      </body>
+      <body name="far_b0_d2_0207_cereal_cereal_4" pos="1.28987 -1.33986 1.11697" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_4__aiStandardSurface1.007" />
+      </body>
+      <body name="far_b0_d2_0208_cereal_cereal_4" pos="1.28987 -1.38759 1.11697" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_4__aiStandardSurface1.007" />
+      </body>
+      <body name="far_b0_d2_0209_boxed_food_boxed_food_6" pos="1.15479 -1.34043 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_6__Tikka_Macroni_mtl" />
+      </body>
+      <body name="far_b0_d2_0210_boxed_food_boxed_food_6" pos="1.15479 -1.38929 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_6__Tikka_Macroni_mtl" />
+      </body>
+      <body name="far_b0_d2_0211_boxed_food_boxed_food_6" pos="1.00579 -1.34043 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_6__Tikka_Macroni_mtl" />
+      </body>
+      <body name="far_b0_d2_0212_boxed_food_boxed_food_6" pos="1.00579 -1.38929 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_6__Tikka_Macroni_mtl" />
+      </body>
+      <body name="far_b0_d2_0213_boxed_food_boxed_food_6" pos="0.856795 -1.34043 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_6__Tikka_Macroni_mtl" />
+      </body>
+      <body name="far_b0_d2_0214_boxed_food_boxed_food_6" pos="0.856795 -1.38929 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_6__Tikka_Macroni_mtl" />
+      </body>
+      <body name="far_b0_d2_0215_jam_jam_4" pos="0.745324 -1.35397 1.07817" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+      </body>
+      <body name="far_b0_d2_0216_jam_jam_4" pos="0.745324 -1.42991 1.07817" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+      </body>
+      <body name="far_b1_d2_0217_cereal_cereal_13" pos="0.522297 -1.3406 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b1_d2_0218_cereal_cereal_13" pos="0.522297 -1.3898 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b1_d2_0219_cereal_cereal_13" pos="0.396892 -1.3406 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b1_d2_0220_cereal_cereal_13" pos="0.396892 -1.3898 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b1_d2_0221_cereal_cereal_13" pos="0.271486 -1.3406 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b1_d2_0222_cereal_cereal_13" pos="0.271486 -1.3898 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b1_d2_0223_cereal_cereal_13" pos="0.14608 -1.3406 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b1_d2_0224_cereal_cereal_13" pos="0.14608 -1.3898 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b1_d2_0225_boxed_food_boxed_food_4" pos="0.0445234 -1.33863 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_4__default_tex0" />
+      </body>
+      <body name="far_b1_d2_0226_boxed_food_boxed_food_4" pos="0.0445234 -1.38388 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_4__default_tex0" />
+      </body>
+      <body name="far_b1_d2_0227_boxed_food_boxed_food_4" pos="-0.0331851 -1.33863 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_4__default_tex0" />
+      </body>
+      <body name="far_b1_d2_0228_boxed_food_boxed_food_4" pos="-0.0331851 -1.38388 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_4__default_tex0" />
+      </body>
+      <body name="far_b1_d2_0229_boxed_food_boxed_food_4" pos="-0.110894 -1.33863 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_4__default_tex0" />
+      </body>
+      <body name="far_b1_d2_0230_boxed_food_boxed_food_4" pos="-0.110894 -1.38388 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_4__default_tex0" />
+      </body>
+      <body name="far_b1_d2_0231_boxed_food_boxed_food_4" pos="-0.188602 -1.33863 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_4__default_tex0" />
+      </body>
+      <body name="far_b1_d2_0232_boxed_food_boxed_food_4" pos="-0.188602 -1.38388 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_4__default_tex0" />
+      </body>
+      <body name="far_b1_d2_0233_boxed_food_boxed_food_4" pos="-0.266311 -1.33863 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_4__default_tex0" />
+      </body>
+      <body name="far_b1_d2_0234_boxed_food_boxed_food_4" pos="-0.266311 -1.38388 1.12155" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_4__default_tex0" />
+      </body>
+      <body name="far_b1_d2_0235_jam_jam_2" pos="-0.342136 -1.35397 1.07817" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_2__Material.188" />
+      </body>
+      <body name="far_b1_d2_0236_jam_jam_2" pos="-0.342136 -1.42991 1.07817" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_2__Material.188" />
+      </body>
+      <body name="far_b1_d2_0237_jam_jam_2" pos="-0.416077 -1.35397 1.07817" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_2__Material.188" />
+      </body>
+      <body name="far_b1_d2_0238_jam_jam_2" pos="-0.416077 -1.42991 1.07817" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_2__Material.188" />
+      </body>
+      <body name="far_b1_d2_0239_jam_jam_2" pos="-0.490019 -1.35397 1.07817" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_2__Material.188" />
+      </body>
+      <body name="far_b1_d2_0240_jam_jam_2" pos="-0.490019 -1.42991 1.07817" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_2__Material.188" />
+      </body>
+      <body name="far_b2_d2_0241_cereal_cereal_13" pos="-0.727703 -1.3406 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b2_d2_0242_cereal_cereal_13" pos="-0.727703 -1.3898 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b2_d2_0243_cereal_cereal_13" pos="-0.853108 -1.3406 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b2_d2_0244_cereal_cereal_13" pos="-0.853108 -1.3898 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b2_d2_0245_cereal_cereal_13" pos="-0.978514 -1.3406 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b2_d2_0246_cereal_cereal_13" pos="-0.978514 -1.3898 1.11944" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="cereal__cereal_13__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_13__aiStandardSurface1.004" />
+      </body>
+      <body name="far_b2_d2_0247_boxed_food_boxed_food_0" pos="-1.11022 -1.34495 1.09" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_0__auto" />
+      </body>
+      <body name="far_b2_d2_0248_boxed_food_boxed_food_0" pos="-1.11022 -1.40284 1.09" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_0__auto" />
+      </body>
+      <body name="far_b2_d2_0249_boxed_food_boxed_food_0" pos="-1.24822 -1.34495 1.09" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_0__auto" />
+      </body>
+      <body name="far_b2_d2_0250_boxed_food_boxed_food_0" pos="-1.24822 -1.40284 1.09" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_0__auto" />
+      </body>
+      <body name="far_b2_d2_0251_boxed_food_boxed_food_0" pos="-1.38622 -1.34495 1.09" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_0__auto" />
+      </body>
+      <body name="far_b2_d2_0252_boxed_food_boxed_food_0" pos="-1.38622 -1.40284 1.09" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_0__auto" />
+      </body>
+      <body name="far_b2_d2_0253_boxed_food_boxed_food_0" pos="-1.52422 -1.34495 1.09" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_0__auto" />
+      </body>
+      <body name="far_b2_d2_0254_boxed_food_boxed_food_0" pos="-1.52422 -1.40284 1.09" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="boxed_food__boxed_food_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_0__auto" />
+      </body>
+      <body name="far_b2_d2_0255_jam_jam_5" pos="-1.62769 -1.35148 1.08432" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+      </body>
+      <body name="far_b2_d2_0256_jam_jam_5" pos="-1.62769 -1.42243 1.08432" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+      </body>
+      <body name="far_b2_d2_0257_jam_jam_5" pos="-1.69664 -1.35148 1.08432" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+      </body>
+      <body name="far_b2_d2_0258_jam_jam_5" pos="-1.69664 -1.42243 1.08432" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+      </body>
+      <body name="far_b2_d2_0259_jam_jam_5" pos="-1.76559 -1.35148 1.08432" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+      </body>
+      <body name="far_b2_d2_0260_jam_jam_5" pos="-1.76559 -1.42243 1.08432" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+        <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+      </body>
+      <body name="far_b0_d3_0261_boxed_drink_boxed_drink_0" pos="1.80589 -1.33677 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b0_d3_0262_boxed_drink_boxed_drink_0" pos="1.80589 -1.37832 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b0_d3_0263_boxed_drink_boxed_drink_0" pos="1.74767 -1.33677 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b0_d3_0264_boxed_drink_boxed_drink_0" pos="1.74767 -1.37832 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b0_d3_0265_boxed_drink_boxed_drink_0" pos="1.68946 -1.33677 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b0_d3_0266_boxed_drink_boxed_drink_0" pos="1.68946 -1.37832 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b0_d3_0267_boxed_drink_boxed_drink_0" pos="1.63124 -1.33677 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b0_d3_0268_boxed_drink_boxed_drink_0" pos="1.63124 -1.37832 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b0_d3_0269_milk_milk_4" pos="1.57145 -1.34768 1.58086" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_4__lambert3.001" />
+        <geom type="mesh" mesh="milk__milk_4__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_4__lambert2" />
+      </body>
+      <body name="far_b0_d3_0270_milk_milk_4" pos="1.57145 -1.41105 1.58086" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_4__lambert3.001" />
+        <geom type="mesh" mesh="milk__milk_4__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_4__lambert2" />
+      </body>
+      <body name="far_b0_d3_0271_milk_milk_4" pos="1.51008 -1.34768 1.58086" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_4__lambert3.001" />
+        <geom type="mesh" mesh="milk__milk_4__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_4__lambert2" />
+      </body>
+      <body name="far_b0_d3_0272_milk_milk_4" pos="1.51008 -1.41105 1.58086" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_4__lambert3.001" />
+        <geom type="mesh" mesh="milk__milk_4__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_4__lambert2" />
+      </body>
+      <body name="far_b0_d3_0273_milk_milk_4" pos="1.44872 -1.34768 1.58086" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_4__lambert3.001" />
+        <geom type="mesh" mesh="milk__milk_4__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_4__lambert2" />
+      </body>
+      <body name="far_b0_d3_0274_milk_milk_4" pos="1.44872 -1.41105 1.58086" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_4__lambert3.001" />
+        <geom type="mesh" mesh="milk__milk_4__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_4__lambert2" />
+      </body>
+      <body name="far_b0_d3_0275_canned_food_canned_food_6" pos="1.3842 -1.35084 1.54115" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_6__lambert1" />
+      </body>
+      <body name="far_b0_d3_0276_canned_food_canned_food_6" pos="1.3842 -1.42051 1.54115" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_6__lambert1" />
+      </body>
+      <body name="far_b0_d3_0277_canned_food_canned_food_6" pos="1.31653 -1.35084 1.54115" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_6__lambert1" />
+      </body>
+      <body name="far_b0_d3_0278_canned_food_canned_food_6" pos="1.31653 -1.42051 1.54115" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_6__lambert1" />
+      </body>
+      <body name="far_b0_d3_0279_canned_food_canned_food_6" pos="1.24886 -1.35084 1.54115" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_6__lambert1" />
+      </body>
+      <body name="far_b0_d3_0280_canned_food_canned_food_6" pos="1.24886 -1.42051 1.54115" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_6__lambert1" />
+      </body>
+      <body name="far_b0_d3_0281_canned_food_canned_food_6" pos="1.18119 -1.35084 1.54115" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_6__lambert1" />
+      </body>
+      <body name="far_b0_d3_0282_canned_food_canned_food_6" pos="1.18119 -1.42051 1.54115" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_6__lambert1" />
+      </body>
+      <body name="far_b0_d3_0283_canned_food_canned_food_6" pos="1.11352 -1.35084 1.54115" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_6__lambert1" />
+      </body>
+      <body name="far_b0_d3_0284_canned_food_canned_food_6" pos="1.11352 -1.42051 1.54115" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_6__lambert1" />
+      </body>
+      <body name="far_b0_d3_0285_yogurt_yogurt_2" pos="1.03642 -1.35431 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b0_d3_0286_yogurt_yogurt_2" pos="1.03642 -1.43093 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b0_d3_0287_yogurt_yogurt_2" pos="0.949871 -1.35431 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b0_d3_0288_yogurt_yogurt_2" pos="0.949871 -1.43093 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b0_d3_0289_yogurt_yogurt_2" pos="0.863327 -1.35431 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b0_d3_0290_yogurt_yogurt_2" pos="0.863327 -1.43093 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b0_d3_0291_yogurt_yogurt_2" pos="0.776783 -1.35431 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b0_d3_0292_yogurt_yogurt_2" pos="0.776783 -1.43093 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b0_d3_0293_boxed_drink_boxed_drink_4" pos="0.707477 -1.34041 1.55074" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_4__Material.070" />
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_4__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_4__Material.069" />
+      </body>
+      <body name="far_b0_d3_0294_boxed_drink_boxed_drink_4" pos="0.707477 -1.38923 1.55074" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_4__Material.070" />
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_4__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_4__Material.069" />
+      </body>
+      <body name="far_b1_d3_0295_boxed_drink_boxed_drink_0" pos="0.555891 -1.33677 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b1_d3_0296_boxed_drink_boxed_drink_0" pos="0.555891 -1.37832 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b1_d3_0297_boxed_drink_boxed_drink_0" pos="0.497674 -1.33677 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b1_d3_0298_boxed_drink_boxed_drink_0" pos="0.497674 -1.37832 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b1_d3_0299_boxed_drink_boxed_drink_0" pos="0.439456 -1.33677 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b1_d3_0300_boxed_drink_boxed_drink_0" pos="0.439456 -1.37832 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b1_d3_0301_milk_milk_3" pos="0.375859 -1.35066 1.56084" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_3__basic" />
+      </body>
+      <body name="far_b1_d3_0302_milk_milk_3" pos="0.375859 -1.41998 1.56084" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_3__basic" />
+      </body>
+      <body name="far_b1_d3_0303_milk_milk_3" pos="0.306882 -1.35066 1.56084" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_3__basic" />
+      </body>
+      <body name="far_b1_d3_0304_milk_milk_3" pos="0.306882 -1.41998 1.56084" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_3__basic" />
+      </body>
+      <body name="far_b1_d3_0305_milk_milk_3" pos="0.237904 -1.35066 1.56084" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_3__basic" />
+      </body>
+      <body name="far_b1_d3_0306_milk_milk_3" pos="0.237904 -1.41998 1.56084" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_3__basic" />
+      </body>
+      <body name="far_b1_d3_0307_milk_milk_3" pos="0.168927 -1.35066 1.56084" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_3__basic" />
+      </body>
+      <body name="far_b1_d3_0308_milk_milk_3" pos="0.168927 -1.41998 1.56084" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_3__basic" />
+      </body>
+      <body name="far_b1_d3_0309_milk_milk_3" pos="0.0999495 -1.35066 1.56084" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_3__basic" />
+      </body>
+      <body name="far_b1_d3_0310_milk_milk_3" pos="0.0999495 -1.41998 1.56084" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_3__basic" />
+      </body>
+      <body name="far_b1_d3_0311_canned_food_canned_food_9" pos="0.0101836 -1.35005 1.52782" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+      </body>
+      <body name="far_b1_d3_0312_canned_food_canned_food_9" pos="0.0101836 -1.41816 1.52782" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+      </body>
+      <body name="far_b1_d3_0313_canned_food_canned_food_9" pos="-0.100371 -1.35005 1.52782" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+      </body>
+      <body name="far_b1_d3_0314_canned_food_canned_food_9" pos="-0.100371 -1.41816 1.52782" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+      </body>
+      <body name="far_b1_d3_0315_canned_food_canned_food_9" pos="-0.210925 -1.35005 1.52782" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+      </body>
+      <body name="far_b1_d3_0316_canned_food_canned_food_9" pos="-0.210925 -1.41816 1.52782" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+      </body>
+      <body name="far_b1_d3_0317_canned_food_canned_food_9" pos="-0.321479 -1.35005 1.52782" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+      </body>
+      <body name="far_b1_d3_0318_canned_food_canned_food_9" pos="-0.321479 -1.41816 1.52782" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
+      </body>
+      <body name="far_b1_d3_0319_yogurt_yogurt_2" pos="-0.420029 -1.35431 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b1_d3_0320_yogurt_yogurt_2" pos="-0.420029 -1.43093 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b1_d3_0321_yogurt_yogurt_2" pos="-0.506573 -1.35431 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b1_d3_0322_yogurt_yogurt_2" pos="-0.506573 -1.43093 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b2_d3_0323_boxed_drink_boxed_drink_3" pos="-0.69313 -1.34513 1.56876" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Tappo" />
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Pack" />
+      </body>
+      <body name="far_b2_d3_0324_boxed_drink_boxed_drink_3" pos="-0.69313 -1.40339 1.56876" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Tappo" />
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Pack" />
+      </body>
+      <body name="far_b2_d3_0325_boxed_drink_boxed_drink_3" pos="-0.74939 -1.34513 1.56876" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Tappo" />
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Pack" />
+      </body>
+      <body name="far_b2_d3_0326_boxed_drink_boxed_drink_3" pos="-0.74939 -1.40339 1.56876" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Tappo" />
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Pack" />
+      </body>
+      <body name="far_b2_d3_0327_boxed_drink_boxed_drink_3" pos="-0.80565 -1.34513 1.56876" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Tappo" />
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Pack" />
+      </body>
+      <body name="far_b2_d3_0328_boxed_drink_boxed_drink_3" pos="-0.80565 -1.40339 1.56876" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Tappo" />
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Pack" />
+      </body>
+      <body name="far_b2_d3_0329_boxed_drink_boxed_drink_3" pos="-0.86191 -1.34513 1.56876" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Tappo" />
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Pack" />
+      </body>
+      <body name="far_b2_d3_0330_boxed_drink_boxed_drink_3" pos="-0.86191 -1.40339 1.56876" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Tappo" />
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_3__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_3__Pack" />
+      </body>
+      <body name="far_b2_d3_0331_milk_milk_7" pos="-0.921826 -1.34765 1.58589" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__material_0.012" />
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__Material.171" />
+      </body>
+      <body name="far_b2_d3_0332_milk_milk_7" pos="-0.921826 -1.41094 1.58589" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__material_0.012" />
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__Material.171" />
+      </body>
+      <body name="far_b2_d3_0333_milk_milk_7" pos="-0.985398 -1.34765 1.58589" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__material_0.012" />
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__Material.171" />
+      </body>
+      <body name="far_b2_d3_0334_milk_milk_7" pos="-0.985398 -1.41094 1.58589" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__material_0.012" />
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__Material.171" />
+      </body>
+      <body name="far_b2_d3_0335_milk_milk_7" pos="-1.04897 -1.34765 1.58589" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__material_0.012" />
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__Material.171" />
+      </body>
+      <body name="far_b2_d3_0336_milk_milk_7" pos="-1.04897 -1.41094 1.58589" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__material_0.012" />
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__Material.171" />
+      </body>
+      <body name="far_b2_d3_0337_milk_milk_7" pos="-1.11254 -1.34765 1.58589" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__material_0.012" />
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__Material.171" />
+      </body>
+      <body name="far_b2_d3_0338_milk_milk_7" pos="-1.11254 -1.41094 1.58589" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__material_0.012" />
+        <geom type="mesh" mesh="milk__milk_7__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="milk__milk_7__Material.171" />
+      </body>
+      <body name="far_b2_d3_0339_canned_food_canned_food_17" pos="-1.17693 -1.3496 1.5317" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_17__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_17__01___Default" />
+      </body>
+      <body name="far_b2_d3_0340_canned_food_canned_food_17" pos="-1.17693 -1.41681 1.5317" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_17__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_17__01___Default" />
+      </body>
+      <body name="far_b2_d3_0341_canned_food_canned_food_17" pos="-1.24214 -1.3496 1.5317" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_17__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_17__01___Default" />
+      </body>
+      <body name="far_b2_d3_0342_canned_food_canned_food_17" pos="-1.24214 -1.41681 1.5317" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_17__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_17__01___Default" />
+      </body>
+      <body name="far_b2_d3_0343_canned_food_canned_food_17" pos="-1.30734 -1.3496 1.5317" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_17__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_17__01___Default" />
+      </body>
+      <body name="far_b2_d3_0344_canned_food_canned_food_17" pos="-1.30734 -1.41681 1.5317" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="canned_food__canned_food_17__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_17__01___Default" />
+      </body>
+      <body name="far_b2_d3_0345_yogurt_yogurt_2" pos="-1.38322 -1.35431 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b2_d3_0346_yogurt_yogurt_2" pos="-1.38322 -1.43093 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b2_d3_0347_yogurt_yogurt_2" pos="-1.46976 -1.35431 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b2_d3_0348_yogurt_yogurt_2" pos="-1.46976 -1.43093 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b2_d3_0349_yogurt_yogurt_2" pos="-1.55631 -1.35431 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b2_d3_0350_yogurt_yogurt_2" pos="-1.55631 -1.43093 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b2_d3_0351_yogurt_yogurt_2" pos="-1.64285 -1.35431 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b2_d3_0352_yogurt_yogurt_2" pos="-1.64285 -1.43093 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b2_d3_0353_yogurt_yogurt_2" pos="-1.7294 -1.35431 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b2_d3_0354_yogurt_yogurt_2" pos="-1.7294 -1.43093 1.52017" quat="-0.707107 0 0 0.707107">
+        <geom type="mesh" mesh="yogurt__yogurt_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_2__Object001_mtl" />
+      </body>
+      <body name="far_b2_d3_0355_boxed_drink_boxed_drink_0" pos="-1.80178 -1.33677 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+      <body name="far_b2_d3_0356_boxed_drink_boxed_drink_0" pos="-1.80178 -1.37832 1.54266" quat="6.12323e-17 0 0 1">
+        <geom type="mesh" mesh="boxed_drink__boxed_drink_0__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_0__lambert1.006" />
+      </body>
+    </body>
+    <body name="near_b0_d2_0040_jam_jam_4" pos="-0.733356 0.0539708 1.07817" quat="1 0 0 0">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.28" diaginertia="0.000180778 0.000180676 0.000215416" />
+      <geom type="mesh" mesh="jam__jam_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_4__Material.187" />
+      <geom name="near_b0_d2_0040_jam_jam_4_coll" type="cylinder" size="0.0339708 0.0279705" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d2_0043_canned_food_canned_food_10" pos="-0.534271 0.0434614 1.08815" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.31" diaginertia="0.000384225 0.000205701 0.000292281" />
+      <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+      <geom name="near_b1_d2_0043_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d2_0046_canned_food_canned_food_10" pos="-0.432812 0.0434614 1.08815" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.31" diaginertia="0.000384225 0.000205701 0.000292281" />
+      <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+      <geom name="near_b1_d2_0046_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d2_0049_canned_food_canned_food_10" pos="-0.331353 0.0434614 1.08815" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.31" diaginertia="0.000384225 0.000205701 0.000292281" />
+      <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+      <geom name="near_b1_d2_0049_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d2_0052_canned_food_canned_food_10" pos="0.260729 0.0434614 1.08815" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.31" diaginertia="0.000384225 0.000205701 0.000292281" />
+      <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+      <geom name="near_b1_d2_0052_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d2_0055_canned_food_canned_food_10" pos="0.362188 0.0434614 1.08815" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.31" diaginertia="0.000384225 0.000205701 0.000292281" />
+      <geom type="mesh" mesh="canned_food__canned_food_10__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_10__material.004" />
+      <geom name="near_b1_d2_0055_canned_food_canned_food_10_coll" type="box" size="0.0234614 0.0477293 0.0379502" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d2_0058_can_can_11" pos="0.444033 0.0481153 1.10565" quat="1 0 0 0">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.35" diaginertia="0.000447801 0.000454162 0.000184498" />
+      <geom type="mesh" mesh="can__can_11__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_11__01_-_Default.016" />
+      <geom name="near_b1_d2_0058_can_can_11_coll" type="cylinder" size="0.0281153 0.0554513" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d2_0061_can_can_11" pos="0.506263 0.0481153 1.10565" quat="1 0 0 0">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.35" diaginertia="0.000447801 0.000454162 0.000184498" />
+      <geom type="mesh" mesh="can__can_11__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_11__01_-_Default.016" />
+      <geom name="near_b1_d2_0061_can_can_11_coll" type="cylinder" size="0.0281153 0.0554513" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b2_d2_0064_canned_food_canned_food_19" pos="0.6995 0.0514996 1.05969" quat="1 0 0 0">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.31" diaginertia="0.000111839 0.000111844 0.000205059" />
+      <geom type="mesh" mesh="canned_food__canned_food_19__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_19__ConserveThon" />
+      <geom name="near_b2_d2_0064_canned_food_canned_food_19_coll" type="cylinder" size="0.0314996 0.00949297" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b2_d2_0067_canned_food_canned_food_19" pos="0.768499 0.0514996 1.05969" quat="1 0 0 0">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.31" diaginertia="0.000111839 0.000111844 0.000205059" />
+      <geom type="mesh" mesh="canned_food__canned_food_19__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_19__ConserveThon" />
+      <geom name="near_b2_d2_0067_canned_food_canned_food_19_coll" type="cylinder" size="0.0314996 0.00949297" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b0_d3_0142_boxed_drink_boxed_drink_5" pos="-0.701454 0.0403776 1.5608" quat="1 0 0 0">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.25" diaginertia="0.000340674 0.000353581 8.21141e-05" />
+      <geom type="mesh" mesh="boxed_drink__boxed_drink_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_5__Cylinder.003__0" />
+      <geom type="mesh" mesh="boxed_drink__boxed_drink_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_5__Material.066" />
+      <geom name="near_b0_d3_0142_boxed_drink_boxed_drink_5_coll" type="box" size="0.0238772 0.0203776 0.060604" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d3_0145_cereal_cereal_1" pos="-0.532 0.045 1.5752" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.09" diaginertia="0.00024375 0.0001875 9.375e-05" />
+      <geom type="mesh" mesh="cereal__cereal_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_1__lambert2SG.010" />
+      <geom name="near_b1_d3_0145_cereal_cereal_1_coll" type="box" size="0.025 0.05 0.075" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d3_0148_cereal_cereal_1" pos="-0.426 0.045 1.5752" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.09" diaginertia="0.00024375 0.0001875 9.375e-05" />
+      <geom type="mesh" mesh="cereal__cereal_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_1__lambert2SG.010" />
+      <geom name="near_b1_d3_0148_cereal_cereal_1_coll" type="box" size="0.025 0.05 0.075" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d3_0151_cereal_cereal_1" pos="-0.32 0.045 1.5752" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.09" diaginertia="0.00024375 0.0001875 9.375e-05" />
+      <geom type="mesh" mesh="cereal__cereal_1__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_1__lambert2SG.010" />
+      <geom name="near_b1_d3_0151_cereal_cereal_1_coll" type="box" size="0.025 0.05 0.075" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d3_0154_boxed_food_boxed_food_9" pos="-0.1925 0.0404285 1.57155" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.35" diaginertia="0.0011903 0.000642563 0.000645116" />
+      <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+      <geom name="near_b1_d3_0154_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d3_0157_boxed_food_boxed_food_9" pos="-0.0435001 0.0404285 1.57155" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.35" diaginertia="0.0011903 0.000642563 0.000645116" />
+      <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+      <geom name="near_b1_d3_0157_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d3_0160_boxed_food_boxed_food_9" pos="0.1055 0.0404285 1.57155" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.35" diaginertia="0.0011903 0.000642563 0.000645116" />
+      <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+      <geom name="near_b1_d3_0160_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d3_0163_boxed_food_boxed_food_9" pos="0.2545 0.0404285 1.57155" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.35" diaginertia="0.0011903 0.000642563 0.000645116" />
+      <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+      <geom name="near_b1_d3_0163_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d3_0166_boxed_food_boxed_food_9" pos="0.4035 0.0404285 1.57155" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.35" diaginertia="0.0011903 0.000642563 0.000645116" />
+      <geom type="mesh" mesh="boxed_food__boxed_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_9__Qeema_Macroni_mtl" />
+      <geom name="near_b1_d3_0166_boxed_food_boxed_food_9_coll" type="box" size="0.0204285 0.0715 0.0713467" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b1_d3_0169_milk_milk_9" pos="0.522259 0.0558595 1.5827" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.54" diaginertia="0.00153155 0.00145659 0.000537891" />
+      <geom type="mesh" mesh="milk__milk_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_9__lambert2.003" />
+      <geom name="near_b1_d3_0169_milk_milk_9_coll" type="box" size="0.0358595 0.0412599 0.0825" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="near_b2_d3_0172_cereal_cereal_9" pos="0.724274 0.0354266 1.57712" quat="0.707107 0 0 0.707107">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.09" diaginertia="0.000272495 0.000184631 0.000102143" />
+      <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
+      <geom name="near_b2_d3_0172_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="cage_00_cereal_cereal_6" pos="0.56 -0.735 1.1852" quat="-0.0745126 0 0 0.99722">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.09" diaginertia="0.000269743 0.000186812 0.000119056" />
+      <geom type="mesh" mesh="cereal__cereal_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_6__Material.369" />
+      <geom name="cage_00_cereal_cereal_6_coll" type="box" size="0.0245372 0.0580211 0.075" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="cage_01_boxed_food_boxed_food_2" pos="0.76 -0.735 1.1927" quat="-0.921224 0 0 0.389033">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.35" diaginertia="0.00107044 0.000829365 0.000311677" />
+      <geom type="mesh" mesh="boxed_food__boxed_food_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_2__Box003_mtl" />
+      <geom name="cage_01_boxed_food_boxed_food_2_coll" type="box" size="0.0173953 0.0486715 0.0825" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="cage_02_milk_milk_5" pos="0.96 -0.735 1.19519" quat="-0.279869 0 0 0.960038">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.54" diaginertia="0.00140564 0.00140564 0.000210722" />
+      <geom type="mesh" mesh="milk__milk_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_5__lambert1.004" />
+      <geom name="cage_02_milk_milk_5_coll" type="box" size="0.0241938 0.0241938 0.0849929" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="cage_03_boxed_drink_boxed_drink_2" pos="1.16 -0.735 1.16478" quat="-0.545564 0 0 0.838069">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.25" diaginertia="0.000288745 0.00029982 9.20609e-05" />
+      <geom type="mesh" mesh="boxed_drink__boxed_drink_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_2__Material.068" />
+      <geom type="mesh" mesh="boxed_drink__boxed_drink_2__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_2__Material.067" />
+      <geom name="cage_03_boxed_drink_boxed_drink_2_coll" type="box" size="0.0248761 0.0220434 0.0545804" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="cage_04_canned_food_canned_food_6" pos="0.56 -0.385 1.15115" quat="-0.0599637 0 0 0.998201">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.31" diaginertia="0.000271491 0.000271493 0.0001965" />
+      <geom type="mesh" mesh="canned_food__canned_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_6__lambert1" />
+      <geom name="cage_04_canned_food_canned_food_6_coll" type="cylinder" size="0.0308352 0.0409455" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="cage_05_can_can_15" pos="0.76 -0.385 1.1602" quat="-0.740154 0 0 0.672437">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.35" diaginertia="0.000381565 0.000381565 0.000179797" />
+      <geom type="mesh" mesh="can__can_15__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_15__Material.351" />
+      <geom name="cage_05_can_can_15_coll" type="cylinder" size="0.027759 0.05" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="cage_06_jam_jam_5" pos="0.96 -0.385 1.14432" quat="0.889486 0 0 0.456961">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.28" diaginertia="0.000199328 0.000202879 0.00018495" />
+      <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
+      <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
+      <geom name="cage_06_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+    <body name="cage_07_yogurt_yogurt_3" pos="1.16 -0.385 1.15508" quat="-0.978204 0 0 0.207647">
+      <freejoint />
+      <inertial pos="0 0 0" mass="0.2" diaginertia="0.000187086 0.000186931 0.000105405" />
+      <geom type="mesh" mesh="yogurt__yogurt_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_3__material_0.013" />
+      <geom name="cage_07_yogurt_yogurt_3_coll" type="cylinder" size="0.0281165 0.0448842" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+    </body>
+  </worldbody>
+</mujoco>

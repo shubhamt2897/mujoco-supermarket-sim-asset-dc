@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="milk_34">
+  <asset>
+    <mesh file="visual/model_normalized_0.obj" name="model_normalized_0_vis" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="visual/model_normalized_1.obj" name="model_normalized_1_vis" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <texture type="2d" name="image0" file="visual/image0.png" />
+    <material name="lambert2" texture="image0" specular="0.5" shininess="0.15999998099999999" />
+    <material name="lambert3.001" texture="image0" specular="0.5" shininess="0.15999998099999999" />
+    <mesh file="collision/collision_mesh_collision_0.obj" name="milk_collision_mesh_0" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="collision/collision_mesh_collision_1.obj" name="milk_collision_mesh_1" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="collision/collision_mesh_collision_2.obj" name="milk_collision_mesh_2" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="collision/collision_mesh_collision_3.obj" name="milk_collision_mesh_3" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="collision/collision_mesh_collision_4.obj" name="milk_collision_mesh_4" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="collision/collision_mesh_collision_5.obj" name="milk_collision_mesh_5" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="collision/collision_mesh_collision_6.obj" name="milk_collision_mesh_6" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="collision/collision_mesh_collision_7.obj" name="milk_collision_mesh_7" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="collision/collision_mesh_collision_8.obj" name="milk_collision_mesh_8" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="collision/collision_mesh_collision_9.obj" name="milk_collision_mesh_9" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="collision/collision_mesh_collision_10.obj" name="milk_collision_mesh_10" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="collision/collision_mesh_collision_11.obj" name="milk_collision_mesh_11" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+    <mesh file="collision/collision_mesh_collision_12.obj" name="milk_collision_mesh_12" scale="0.15999999999999995 0.15999999999999995 0.15999999999999995" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
+  </asset>
+  <default>
+    <default class="region">
+      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0" mass="0" />
+    </default>
+    <default class="collision">
+      <geom group="0" rgba="0.5 0 0 0.5" density="1089.852086721" />
+    </default>
+  </default>
+  <worldbody>
+    <body>
+      <body name="object">
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="108.985208672" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="lambert3.001" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="108.985208672" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_1_vis" conaffinity="0" contype="0" group="1" material="lambert2" />
+        <geom class="region" name="reg_bbox" type="box" pos="0.0 0.0 -0.00022113840000000267" size="0.02768176479999999 0.02768176479999999 0.08065886479999997" />
+        <geom mesh="milk_collision_mesh_0" type="mesh" class="collision" />
+        <geom mesh="milk_collision_mesh_1" type="mesh" class="collision" />
+        <geom mesh="milk_collision_mesh_2" type="mesh" class="collision" />
+        <geom mesh="milk_collision_mesh_3" type="mesh" class="collision" />
+        <geom mesh="milk_collision_mesh_4" type="mesh" class="collision" />
+        <geom mesh="milk_collision_mesh_5" type="mesh" class="collision" />
+        <geom mesh="milk_collision_mesh_6" type="mesh" class="collision" />
+        <geom mesh="milk_collision_mesh_7" type="mesh" class="collision" />
+        <geom mesh="milk_collision_mesh_8" type="mesh" class="collision" />
+        <geom mesh="milk_collision_mesh_9" type="mesh" class="collision" />
+        <geom mesh="milk_collision_mesh_10" type="mesh" class="collision" />
+        <geom mesh="milk_collision_mesh_11" type="mesh" class="collision" />
+        <geom mesh="milk_collision_mesh_12" type="mesh" class="collision" />
+      </body>
+    </body>
+  </worldbody>
+</mujoco>
