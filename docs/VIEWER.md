@@ -26,7 +26,7 @@ If plain `python` is not the conda environment, call it by full path:
 ### Prerequisites
 
 Conda environment `shelf_sim`: Python 3.11, `mujoco` 3.13.0, `numpy`, `imageio`,
-`openarm_mujoco` 2.2.0. CPU only — no torch, jax or CUDA anywhere in this project.
+`openarm_mujoco` 2.2.0. CPU only - no torch, jax or CUDA anywhere in this project.
 
 The scene file `out/scene.xml` must exist. If it does not, generate it:
 
@@ -62,7 +62,7 @@ panels   : off -- press Tab to toggle
 
 ---
 
-## `bench.py` — the tower on its own
+## `bench.py` - the tower on its own
 
 The full aisle is a poor place to test joints: 392 bodies, slow to render, and
 the shelves and roll cage physically obstruct the slew. `bench.py` brings up the
@@ -82,15 +82,15 @@ and the sliders respond immediately.
 
 ### Driving the joints
 
-The control panel is **on by default here** — that is where the actuator sliders
+The control panel is **on by default here** - that is where the actuator sliders
 are, in the right panel under **Control**, and dragging them is the point.
 **Ctrl+drag** a slider to move a joint.
 
 | # | actuator | range |
 |---|---|---|
-| 0 | `tower_yaw_ctrl` | −3.1416 … +3.1416 rad = −180…+180° |
+| 0 | `tower_yaw_ctrl` | -3.1416 … +3.1416 rad = -180…+180° |
 | 1 | `tower_lift_ctrl` | 0.000 … 0.700 m |
-| 2–17 | arm joints and grippers | per joint |
+| 2-17 | arm joints and grippers | per joint |
 
 It prints this table with degree equivalents on startup, so there is no need to
 convert in your head.
@@ -108,7 +108,7 @@ both : (+90 deg, 0.70 m) and (-90 deg, 0.00 m) reached exactly
 
 The bench goes through the same `robot.assemble()` path as the full scene and
 uses the same `tower_base_site` name, so what you drive here is the model that
-ends up in the aisle — not a separate mock. `out/bench.xml` is a generated bare
+ends up in the aisle - not a separate mock. `out/bench.xml` is a generated bare
 world (floor, lights, three cameras, the mount site) and is rewritten each run;
 edit `BENCH_XML` in `bench.py`, not the generated file.
 
@@ -118,7 +118,7 @@ edit `BENCH_XML` in `bench.py`, not the generated file.
 
 Three objects, always the same three.
 
-### 1. `MjModel` — the compiled scene
+### 1. `MjModel` - the compiled scene
 
 Everything that does not change: geometry, masses, actuators, cameras, lights.
 Built once from the MJCF file.
@@ -127,17 +127,17 @@ Built once from the MJCF file.
 model = mujoco.MjModel.from_xml_path("out/scene.xml")
 ```
 
-### 2. `MjData` — the state
+### 2. `MjData` - the state
 
 Everything that does change: `qpos` (positions), `qvel` (velocities), `ctrl`
-(actuator targets), `contact`. One `MjModel` can back many `MjData` — that is how
+(actuator targets), `contact`. One `MjModel` can back many `MjData` - that is how
 you run parallel rollouts later.
 
 ```python
 data = mujoco.MjData(model)
 ```
 
-### 3. A viewer — a window drawing `data` against `model`
+### 3. A viewer - a window drawing `data` against `model`
 
 Two kinds, and the difference decides what you can build on top.
 
@@ -174,7 +174,7 @@ Any MJCF file can be opened without writing Python:
 python -m mujoco.viewer --mjcf="out/scene.xml"
 ```
 
-It always shows the panels, and it **cannot** load the robot — the arms are
+It always shows the panels, and it **cannot** load the robot - the arms are
 joined to the scene in memory and never written to disk, so there is no file for
 this command to open.
 
@@ -199,7 +199,7 @@ compilation, so `out/scene.xml` keeps full quality and only the window is
 affected. `--pretty` opts back in.
 
 ```python
-model.vis.quality.shadowsize = 0   # shadow map — the big one
+model.vis.quality.shadowsize = 0   # shadow map - the big one
 model.vis.quality.offsamples = 0   # anti-aliasing
 model.light_castshadow[:] = 0      # no light casts a shadow
 model.mat_reflectance[:] = 0       # no mirror-like floor
@@ -229,7 +229,7 @@ instances are 73% of that:
 | everything else combined | ~105,000 |
 
 Excluding those two from the product library would help far more than any
-display setting, and needs no mesh editing — only not selecting them when
+display setting, and needs no mesh editing - only not selecting them when
 stocking. Physics is unaffected either way: products collide as fitted boxes and
 cylinders, never as meshes.
 
@@ -237,7 +237,7 @@ cylinders, never as meshes.
 
 Measured with `tools/check_scene.py` and the robot attached: **~5.2× realtime**
 (about 2,580 steps/s at a 2 ms timestep), 119 contacts, no NaNs. Physics is not
-the bottleneck for viewing — rendering is.
+the bottleneck for viewing - rendering is.
 
 ---
 
@@ -285,7 +285,7 @@ bot = build()
 info = render_rgbd(bot.model, bot.data, "tower_ledge", Path("out/shots"))
 ```
 
-It writes three files: `<cam>_rgb.png`, `<cam>_depth.npy` (**metres**, float32 —
+It writes three files: `<cam>_rgb.png`, `<cam>_depth.npy` (**metres**, float32 -
 this is the one a policy or point-cloud step wants) and `<cam>_depth.png`
 (normalised, for looking at). The returned dict carries min/median/max depth and
 the fraction of pixels closer than `far_clip`, which is the quick way to spot a
@@ -301,7 +301,7 @@ first.
 
 **`Error opening file '../assets/products/...'`.** `out/scene.xml` refers to
 meshes by a path relative to itself (`meshdir="../assets/products"`). It only
-resolves from inside `out/`. Copying the XML elsewhere breaks every mesh — write
+resolves from inside `out/`. Copying the XML elsewhere breaks every mesh - write
 generated scenes into `out/`, or regenerate at the new location.
 
 **`conda run` fails on a `-c` snippet.** `conda run` rejects arguments containing
@@ -321,7 +321,7 @@ will not render above 640×480.
 **Esc** to return to the free camera, then `[` / `]` to step through the fixed
 cameras.
 
-**Viewer seems frozen.** It is not — `launch` blocks the terminal until the
+**Viewer seems frozen.** It is not - `launch` blocks the terminal until the
 window closes. That is expected. Run it in the background if you need the shell
 back.
 
@@ -331,15 +331,15 @@ back.
 
 | file | role |
 |---|---|
-| `view.py` | opens the viewer — panels, render quality, managed vs passive |
+| `view.py` | opens the viewer - panels, render quality, managed vs passive |
 | `bench.py` | tower + arms alone, for testing the joints |
 | `scene.py` | generates `out/scene.xml` from dataclasses |
 | `tower.xml` | **hand-authored** lift tower: rotary joint, prismatic lift, shoulder bracket, `arm_mount`, `tower_ledge` camera. `scene.py` never generates or overwrites it |
 | `robot.py` | joins scene + tower + arm in memory; `Robot` handle with `set_base`/`get_base`; `render_rgbd` |
-| `out/bench.xml` | generated bare world for the bench — rewritten each run |
+| `out/bench.xml` | generated bare world for the bench - rewritten each run |
 | `tools/check_scene.py` | contacts, NaN check, drift, steps/s |
 | `tools/render_cams.py` | one PNG per camera |
 | `tools/product_library.py` | reads product MJCFs, picks collision primitives |
 | `tools/product_spec.py` | the eight categories, corrected masses, density bands |
-| `out/scene.xml` | generated — do not hand-edit |
-| `assets/products/` | extracted RoboCasa meshes — do not modify |
+| `out/scene.xml` | generated - do not hand-edit |
+| `assets/products/` | extracted RoboCasa meshes - do not modify |
