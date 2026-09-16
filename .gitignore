@@ -40,3 +40,15 @@ MUJOCO_LOG.TXT
 .idea/
 .DS_Store
 Thumbs.db
+
+# ---------------------------------------------------------------------------
+# teleop
+# ---------------------------------------------------------------------------
+# Session recordings (--record) and the frames beside them. These contain
+# webcam footage of whoever was operating, so they are not only large but
+# personal; they are diagnostic scratch, never inputs to anything.
+out/session*
+out/rec_*
+out/teleop_*.png
+# MediaPipe model bundles, ~23 MB, re-downloaded on first run by tracking.py.
+teleop/models/*.task
