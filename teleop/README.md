@@ -55,9 +55,43 @@ in a phone pushed the built-in webcam from 0 to 1.
 
 ### 2. Run it
 
+There are two scenes. Check the camera index with step 1 first; with the phone
+connected it has been `0`.
+
+**Robot only** -- the tower and both arms on an empty floor. Use this to check
+the mapping: does the arm go where yours goes, does the tower turn the right way.
+
+```bash
+conda activate shelf_sim
+python -m teleop --camera 0 --fullscreen
 ```
-python -m teleop                          # default camera, windowed
-python -m teleop --camera 0 --fullscreen  # the usual way
+
+**Supermarket shelf** -- the full aisle with stock and the roll cage, for pick
+and place. One window: the robot's own camera with both wrist cameras docked
+under it on the left, and your camera over a view from the far end of the cage
+on the right. The wrist tiles start showing once you have calibrated. On the
+robot-only scene the wrist cameras sit under the robot view instead.
+
+```bash
+conda activate shelf_sim
+python scene.py                                             # once, and after any scene change
+python -m teleop --scene aisle --camera 0 --fullscreen
+python -m teleop --scene aisle --camera 0 --fullscreen --record out/pick_try1   # keep a log
+```
+
+`out/scene.xml` is generated from `scene.py`. A committed copy opens from a
+clone, but rerun `python scene.py` after editing `scene.py` or `tower.xml`.
+
+Picking from the cage: **turn while standing**, then **crouch** to bring the
+arms down to the stock, then pinch. Standing puts the carriage at the top, and
+the cage tray is low enough that the grippers pass over the items as the tower
+turns. Turning while crouched sweeps the arms through the cage.
+
+No camera to hand? The same two scenes with a scripted operator:
+
+```bash
+python -m teleop --source synthetic
+python -m teleop --source synthetic --scene aisle
 ```
 
 ### 3. Calibrate without touching the keyboard
@@ -92,7 +126,7 @@ That measures your real range instead of assuming 22% of frame height.
 |---|---|
 | `--camera N` | which camera; find N with `python -m teleop.cameras` |
 | `--fullscreen` | fill the screen (letterboxed, not stretched) |
-| `--scene aisle` | put the shelves and stock back; default is the robot alone |
+| `--scene aisle` | the supermarket shelf, stock and roll cage (run `python scene.py` first); default is the robot alone |
 | `--tracker pose` | body-only model: faster, but no fingers and no grippers |
 | `--mirror` | your right arm drives the robot's left |
 | `--no-wrist` | hold the three wrist joints at zero |
@@ -178,6 +212,12 @@ twist, elbow, forearm twist, wrist pitch, wrist roll — so your joint angles ma
 onto it directly. They come out in **closed form** from three landmarks per arm:
 no iteration, no null space, and it round-trips against MuJoCo's own forward
 kinematics to about 1e-13 (see `selftest.py`).
+
+The trade-off showed up once picking was tried: copying angles reproduces your
+posture, not where your hand is, so the gripper lands near the target rather
+than on it. A Cartesian mode with IK and a clutch is the planned addition for
+precise placement, alongside this one rather than instead of it -- see
+[What pick-and-place sessions showed](#what-pick-and-place-sessions-showed-why-control-is-not-precise).
 
 The two frames are deliberately identical — *x forward, y to the left, z up* —
 for the robot's arm base and for the torso frame built from your shoulders and
@@ -384,6 +424,65 @@ with genuine motion fully retained — this is noise removal, not damping.
 `j3` and `j5` remain the residual. They are the limb twists, and no amount of
 filtering makes an unobservable degree of freedom observable; `--no-wrist` pins
 the wrist joints at zero if you would rather not see them move at all.
+
+## What pick-and-place sessions showed: why control is not precise
+
+Three recorded sessions on the shelf scene (`--scene aisle`), phone as webcam,
+trying to pick items off the roll cage. The camera and tracker were healthy
+throughout -- 29-31 fps capture, 6-44 ms tracking -- so the problems below are
+not lighting or frame rate. Each was confirmed from the session log or by
+replaying the recorded joint trajectory against the scene, not guessed.
+
+### Caused by MediaPipe landmarks, and fixed in the mapping
+
+| symptom | cause | fix |
+|---|---|---|
+| hand flat and horizontal, gripper rolled 90° | the jaw axis was taken along the knuckle line (index -> pinky). A thumb pinches *through* the palm, so the jaws belong on the palm **normal** | jaw axis = palm normal; arms-down now maps to a straight wrist (`retarget.hand_dirs`) |
+| one arm out of view, both robot arms copy the visible one | the pose model always returns all 33 landmarks and **guesses** a hidden arm, usually as a copy of the other; the holistic model can also put one real hand into both hand slots | an arm whose elbow or wrist is below visibility, or out of the picture, **holds its last pose and grip**; a hand mesh counts only if it sits on that arm's wrist (`arm_seen`, `hand_seen`) |
+| gripper snapped open when the hand left the frame | no fingers tracked defaulted to "open" | the gripper holds its last value |
+
+### Caused by MediaPipe, still there
+
+- **Depth is its weakest axis.** Everything that relies on the world landmarks'
+  z -- torso turn above all -- is noisier than anything read in the image plane,
+  which is why yaw has a deadband and a gain.
+- **Wrist roll and the forearm twist are barely observable.** Roll comes from a
+  ~4 cm baseline between two knuckles, and the twists are rotations about the
+  very axis being estimated (see the shake table above). Filtering reduces the
+  jitter; it cannot add information.
+- **Calibration can be slow to accept.** In one session the "holding still"
+  check held calibration off for about 70 s before the robot engaged. Landmark
+  jitter while standing is the likely reason; not yet measured.
+
+### Not MediaPipe at all
+
+- **The simulator redraws at 1.4-5.8 fps in the aisle**, so the robot updates
+  every 0.2-0.7 s. You cannot see the gripper approach an item and stop; it
+  arrives in steps. Replaying one session, the fingers came down at 1.01-1.05 m
+  onto items centred at 0.97 m and pushed them over instead of closing around
+  them. This is the biggest single obstacle to picking right now.
+- **Copying joint angles reproduces posture, not hand position** (next section).
+  Operator and robot proportions differ, and a small shoulder-angle error becomes
+  centimetres at the gripper. Good for "the arm moves like mine", poor for
+  "put the jaws exactly here".
+- **Scene geometry.** Standing with arms forward put the grippers at item height,
+  so turning toward the cage swept the stock off. The cage tray was lowered from
+  1.10 to 0.90 m; replaying the same motion against it touches nothing. Turn
+  standing, then crouch.
+
+### What would help, in order
+
+1. **Get the simulator to 10+ fps** -- render the side views less often or
+   smaller.
+2. **A Cartesian control mode**: move the gripper by the change in your hand
+   position, solve the joints with IK, and use a clutch (a pinch that freezes the
+   robot while you reposition). This is what makes placement precise despite
+   landmark noise, and it works with any tracker.
+3. **Then compare trackers on recorded motion** -- e.g. RTMW3D, which estimates
+   3D whole-body keypoints including hands and is built for real time -- on
+   jitter, yaw and wrist error. Offline motion-capture models (GVHMR, WHAM) are
+   smoother but need future frames, so they suit converting videos into
+   demonstrations, not live control.
 
 ## Which way should the robot face?
 

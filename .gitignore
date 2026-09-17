@@ -50,5 +50,11 @@ Thumbs.db
 out/session*
 out/rec_*
 out/teleop_*.png
+out/*.npz
+# Screen recordings of teleop sessions. The ones worth showing are curated into
+# docs/media/ (GIF for the README); raw captures stay local.
+out/*.mp4
+# Scratch scene written by reach/placement probes.
+out/_probe.xml
 # MediaPipe model bundles, ~23 MB, re-downloaded on first run by tracking.py.
 teleop/models/*.task

@@ -1,16 +1,16 @@
 <h1 align="center">Dual-Arm Supermarket</h1>
 
 <p align="center">
-  <strong>A MuJoCo shelf-restocking environment for bimanual VLA data collection.</strong><br>
-  Two gondola runs, 364 real scanned products, a lift tower carrying an OpenArm v2 pair,<br>
-  and seven cameras - four fixed, three riding the robot.
+  <strong>A MuJoCo shelf-restocking environment for bimanual robot learning, with camera-based teleoperation.</strong><br>
+  Two gondola runs of real scanned products, a lift tower carrying an OpenArm v2 pair,<br>
+  cameras on the robot and around the aisle, and a webcam teleop pipeline to drive it.
 </p>
 
 <p align="center">
   <img alt="MuJoCo 3.13.0" src="https://img.shields.io/badge/MuJoCo-3.13.0-1a7f5a">
   <img alt="Python 3.11" src="https://img.shields.io/badge/Python-3.11-3776ab">
   <img alt="CPU only" src="https://img.shields.io/badge/compute-CPU%20only-555">
-  <img alt="~5x realtime" src="https://img.shields.io/badge/physics-~5%C3%97%20realtime-f28f3a">
+  <img alt="teleop under development" src="https://img.shields.io/badge/teleop-under%20development-f28f3a">
 </p>
 
 <p align="center">
@@ -18,201 +18,39 @@
        alt="Robot arm on the lift tower reaching into a stocked supermarket gondola beside the roll cage, with an empty run of facings on the middle deck">
 </p>
 
-> [!IMPORTANT]
-> **This is a simulator, not a dataset.** No episodes have been recorded. Every
-> image here is an inspection render produced by
-> [`tools/make_figures.py`](tools/make_figures.py) or, for teleoperation,
-> [`tools/make_teleop_figures.py`](tools/make_teleop_figures.py) - not training
-> data. The recording loop is deliberately not implemented - see
-> [Toward collection](#toward-collection).
+The repository has two parts, and this README follows them:
 
----
-
-## What this is
-
-A supermarket aisle you can open, drive, and grab things in. The task it is
-built around is **restocking**: a run of facings on one deck is deliberately
-left empty, a roll cage of loose product stands in the aisle, and a two-armed
-robot on a rotating, rising tower sits between them.
-
-Everything is generated from Python, so the layout, product mix, gap position
-and reachability budget are parameters rather than hand-placed geometry.
-
-```
-out/scene.xml  ──attach at tower_base_site──▶  tower.xml
-                                                  │
-                                                  └──attach at arm_mount, +90° yaw──▶  OpenArm v2
-```
-
-The robot never exists on disk. `scene.py` writes the environment; `robot.py`
-joins the scene, the tower and the arm **in memory** with `MjSpec` and compiles
-them together. That is why there is no single "scene with robot" XML.
-
----
-
-## The scene in numbers
-
-<table>
-<tr><td valign="top" width="50%">
-
-**Gondola** - real supermarket dimensions
-
-| | |
-|---|---|
-| bay length | 1.25 m |
-| bays per run | 3 → **3.75 m** |
-| runs | 2, facing each other |
-| aisle width | 1.30 m |
-| shelf depth | 0.47 m |
-| rack height | 1.80 m |
-| deck heights | 0.15 / 0.60 / 1.05 / 1.50 m |
-| stocked decks | 1.05 and 1.50 |
-| restocking gap | **420 mm**, deck 2 |
-
-</td><td valign="top" width="50%">
-
-**Robot** - tower + OpenArm v2
-
-| | |
-|---|---|
-| actuators | **18** (16 arm + 2 base) |
-| tower yaw | hinge, ±180°, error ≤ **0.0002°** |
-| tower lift | slide, 0-0.70 m, sag **≤ 1.74 mm** |
-| shoulder standoff | 190 mm off the column axis |
-| shoulder clearance | 108.4 mm |
-| reach | 0.589 m from the shoulder |
-| hands at home | 436.00 mm below the mount |
-| mirror error | **0.0000 mm** at spawn, 0.045 mm after 3 s |
-
-</td></tr>
-</table>
-
-**Interaction budget** - 364 products, but only some can move. This is
-deliberate: a free body the arm cannot reach costs solver time and buys nothing.
-
-| tier | count | joint | collides | why |
-|---|---:|---|---|---|
-| near-run front row, within reach | 21 | `freejoint` | yes | the pick/place targets |
-| roll-cage stock | 8 | `freejoint` | yes | the restocking source |
-| near-run back rows | 177 | none | yes | look right, block the gripper, cost nothing |
-| far run, across the aisle | 158 | none | **no** | 0.85 m away, outside reach - render-only scenery |
-
-Dropping the far run's colliders and gating `freejoint` on reach took the scene
-from 1.87× to **5.0× realtime**.
-
----
-
-## Cameras
-
-<p align="center">
-  <img src="docs/figures/sensor_map.png" width="100%"
-       alt="Robot front view with each camera's live feed placed beside the hardware it is mounted on: tower eye centred above the shoulders, one wrist camera per arm">
-</p>
-
-<p align="center"><sub>
-Tower eye sits above the head it is bolted to; each wrist feed sits beside its own arm.
-Front view, so the robot's left arm appears on your right.
-</sub></p>
-
-Three cameras ride the robot and move with it. `tower_eye` is a RealSense-shaped
-bar mounted on the shoulder plate between the arms; the two wrist cameras are
-eye-in-hand. All render **640×480 RGB, plus metric depth** from the same pose.
-
-| camera | mount | fovy | framing at home, by segmentation |
+| | part | what you get | start here |
 |---|---|---|---|
-| `tower_eye` | carriage, between the shoulders | 75° | 7.7% product, 89.4% shelf, **2.9% arm** |
-| `camera_wrist_left/right` | `ee_base_link` | 60° | **11.3% fingers** centred at frame row 0.74, 11.9% other arm |
+| **1** | [**Simulation: scene, assets, robot**](#part-1--simulation) | the aisle, 359 products, the tower + arms, cameras, a Python API | `python view.py --robot` |
+| **2** | [**Teleoperation**](#part-2--teleoperation-under-development) | drive the robot with your body through a webcam, in the empty bench or the aisle | `python -m teleop --scene aisle --camera 0` |
 
-`tower_eye` sits 260 mm from the shelf face, so the deck fills most of the frame
-whatever the angle - the 89% is the bay it is working on, not wasted view. Both
-wrist cameras measure identically, which is the check that the mirror is right.
-
-> [!NOTE]
-> The wrist views are **framing-correct but not yet interesting**: at the
-> `qpos=0` home the arms hang straight down with nothing in the gripper, so they
-> show forearm, fingers and floor. They frame product once an arm is raised.
-
-<p align="center">
-  <img src="docs/figures/fixed_cameras.png" width="100%"
-       alt="Three fixed observation cameras: shelf front, overhead, over shoulder">
-</p>
-
-<p align="center"><sub>
-Fixed cameras do not move with the robot. All figures are generated by
-<a href="tools/make_figures.py"><code>tools/make_figures.py</code></a>.
-</sub></p>
-
-Four fixed cameras - `aisle`, `shelf_front`, `overhead`, `over_shoulder` - give
-dataset context and debugging views that do not move with the robot.
-
-```python
-from pathlib import Path
-from robot import build, render_rgbd
-
-bot = build()
-info = render_rgbd(bot.model, bot.data, "tower_eye", Path("out/shots"))
-# -> tower_eye_rgb.png, tower_eye_depth.npy (float32 metres), tower_eye_depth.png
-```
+> [!IMPORTANT]
+> **This is a simulator, not a dataset.** No training episodes have been
+> recorded, and teleoperation is still under development.
 
 ---
 
-## The test bench
-
-The body view in the figure above is rendered here, not in the shop: a full
-front view is impossible inside a 1.30 m aisle because the camera cannot get
-far enough back.
-
-The full aisle is a bad place to test joints - 392 bodies, slow to render, and
-the shelves physically obstruct the slew. `bench.py` brings up the tower and
-arms on a bare floor: **24 bodies, 107 geoms**, instant to render, with the
-actuator sliders enabled by default.
-
-```bash
-python bench.py           # sliders on; Ctrl+drag to move a joint
-python bench.py --sweep   # scripted yaw/lift sweep, prints tracking error
-```
-
-It goes through the same `robot.assemble()` path as the aisle, so what you drive
-here is the model that ends up in the shop.
-
----
-
-## Quick start
-
-```bash
-python scene.py           # regenerate out/scene.xml
-python view.py            # aisle only
-python view.py --robot    # aisle + robot
-python bench.py           # robot alone, with sliders
-python live.py            # viewer + one live window per on-board camera
-python -m teleop --source synthetic   # teleoperation demo, no camera (under development)
-```
-
-<details>
-<summary><strong>Windows: if <code>python</code> is not the right interpreter</strong></summary>
-
-The prompt showing `(shelf_sim)` means the environment is already active - you
-do not need `conda activate`. Otherwise call the interpreter directly:
-
-```
-"C:/Users/shubh/anaconda3/envs/shelf_sim/python.exe" view.py --robot
-```
-
-In `cmd.exe`, changing drive needs `/d`: `cd /d "D:\New folder\da_supermarkt"`.
-`conda activate shelf_sim && python bench.py` are two commands - the `&&`
-matters.
-</details>
-
-### Install
-
-Conda:
+## Install (both parts)
 
 ```bash
 conda env create -f environment.yml
 conda activate shelf_sim
+python scene.py && python tools/verify_products.py && python bench.py --sweep   # check it works
 ```
 
-or pip, with Python 3.11:
+Teleoperation needs two more packages, kept out of `requirements.txt` because
+the simulator does not need them. Both install without moving the pinned
+`numpy` or `mujoco`:
+
+```bash
+pip install mediapipe==1.0.1 opencv-python==5.0.0.93
+```
+
+<details>
+<summary><strong>pip instead of conda, and Windows notes</strong></summary>
+
+With Python 3.11:
 
 ```bash
 python -m venv .venv
@@ -221,37 +59,94 @@ pip install -r requirements.txt
 ```
 
 Five pinned packages: `mujoco` 3.13.0, `openarm_mujoco` 2.2.0, `numpy` 2.4.6,
-`imageio` 2.37.4, `pillow` 12.3.0. `tkinter`, used by `live.py`, ships with
-CPython. **CPU only by design** - no Torch, JAX, Warp or CUDA anywhere.
+`imageio` 2.37.4, `pillow` 12.3.0. **CPU only by design.** `assets/products/` is
+committed, so a clone runs without downloading anything. `robocasa` is
+deliberately **not** a dependency - installing it breaks this environment; see
+[`requirements.txt`](requirements.txt).
 
-`robocasa` is deliberately **not** a dependency, and installing it breaks this
-environment - [`requirements.txt`](requirements.txt) explains why and what to do
-if you ever need to rebuild the assets.
-
-Nothing else is needed: `assets/products/` is committed, so a fresh clone runs
-without downloading anything. Verify the install with:
-
-```bash
-python scene.py && python tools/verify_products.py && python bench.py --sweep
-```
-
-Teleoperation needs two more packages, kept out of `requirements.txt` because
-the simulator does not need them. Both were checked to install without moving
-the pinned `numpy` or `mujoco`:
-
-```bash
-pip install mediapipe==1.0.1 opencv-python==5.0.0.93
-```
-
-Viewer flags, performance numbers and troubleshooting live in
-[`docs/VIEWER.md`](docs/VIEWER.md).
+If `python` is not the env's interpreter, call it directly:
+`"C:/Users/<you>/anaconda3/envs/shelf_sim/python.exe" view.py --robot`.
+In `cmd.exe`, changing drive needs `/d`: `cd /d "D:\New folder\da_supermarkt"`.
+</details>
 
 ---
 
-## Controlling the robot
+# Part 1 — Simulation
 
-`robot.build()` returns a handle that commands the base and the arms
-independently - which is what a collection script needs.
+## 1.1 Run it
+
+```bash
+conda activate shelf_sim
+python scene.py              # (re)generate the aisle -> out/scene.xml
+python view.py               # aisle only
+python view.py --robot       # aisle + robot
+python bench.py              # robot alone on an empty floor, joint sliders
+python bench.py --sweep      # scripted yaw/lift sweep, prints tracking error
+python live.py               # viewer + a live window per on-board camera
+```
+
+Use **`bench.py`** to test joints: 24 bodies instead of ~390, instant to
+render, nothing in the way of the arms. It builds the robot through the same
+code path as the aisle, so what you test there is what ends up in the shop.
+
+Viewer flags, performance numbers and troubleshooting: [`docs/VIEWER.md`](docs/VIEWER.md).
+
+## 1.2 How it fits together
+
+```
+scene.py  ──writes──▶  out/scene.xml  ──attach at tower_base_site──▶  tower.xml
+                                                                        │
+                                          OpenArm v2 ◀──attach at arm_mount, +90° yaw──┘
+```
+
+`scene.py` generates the environment: every dimension, the product mix and the
+restocking gap are dataclass parameters, not hand-placed geometry. `robot.py`
+joins scene, tower and arms **in memory** with `MjSpec`, which is why there is
+no single "scene with robot" XML on disk.
+
+| path | role |
+|---|---|
+| [`scene.py`](scene.py) | aisle generator - edit dimensions here, then rerun it |
+| [`tower.xml`](tower.xml) | hand-authored lift tower (rotary base + 0.70 m slide) |
+| [`robot.py`](robot.py) | assembly, the `Robot` handle, RGB-D rendering |
+| [`bench.py`](bench.py) · [`view.py`](view.py) · [`live.py`](live.py) | entry points |
+| [`tools/`](tools/) | asset build, verification, figures |
+| `assets/products/` | scanned product meshes, committed |
+| `out/scene.xml`, `out/bench.xml` | generated, committed so they open from a clone - **rerun the script, do not edit** |
+
+> [!WARNING]
+> `out/scene.xml` finds its meshes by a path relative to itself
+> (`meshdir="../assets/products"`). Copying it elsewhere breaks every mesh.
+
+## 1.3 The scene
+
+| gondola (real supermarket dimensions) | |
+|---|---|
+| runs | 2, facing across a **1.30 m** aisle |
+| bays per run | 3 × 1.25 m = **3.75 m** |
+| shelf depth / rack height | 0.47 m / 1.80 m |
+| decks | 0.15 / 0.60 / 1.05 / 1.50 m; stock on 1.05 and 1.50 |
+| restocking gap | **420 mm** empty on deck 2, in front of the robot |
+| roll cage | tray at 0.90 m in the aisle beside the robot, **3 loose items** spaced 18 cm apart |
+
+**Only reachable products can move.** A free body the arm cannot reach costs
+solver time and buys nothing:
+
+| tier | count | moves | collides |
+|---|---:|---|---|
+| near-run front row, within reach | 21 | yes | yes |
+| roll-cage stock | 3 | yes | yes |
+| near-run back rows | 177 | no | yes |
+| far run, across the aisle | 158 | no | no - scenery |
+
+## 1.4 The robot
+
+| | |
+|---|---|
+| actuators | **18** - 2 tower (yaw ±180°, lift 0-0.70 m) + 2 × (7 arm + 1 gripper) |
+| placement | 0.55 m out from the shelf face |
+| reach | 0.589 m from the shoulder |
+| gripper | jaws 91 → 155 mm; grasps up to **138.6 mm** wide (all 8 product categories fit) |
 
 ```python
 from robot import build
@@ -261,100 +156,55 @@ bot.set_base(yaw=1.57, lift=0.70)   # radians, metres - clipped to ctrlrange
 yaw, lift = bot.get_base()          # measured, not commanded
 bot.set_arm("left", q)              # 7 joint targets
 bot.set_gripper("right", 1.0)       # 0 = closed, 1 = fully open
-bot.home()                          # qpos=0 arms, mid-lift, grippers open
+bot.home()
 ```
 
-**The two arms are mirrored.** `RobotSpec.mirror` is `(-1,-1,-1,1,-1,-1,-1)`;
-one posture is stored and the right arm is that pattern times it. Sending both
-arms the same angles looks fine and is wrong - the joint limits are asymmetric
-(`left_joint1` spans -200…+80°, `right_joint1` -80…+200°).
+Two things that catch people out:
 
-**Gripper**, measured rather than assumed: `ctrlrange` is `[0, 0.7854]` on the
-left and `[-0.7854, 0]` on the right, and the open end is whichever is further
-from zero - verified by jaw separation, which runs **91.0 mm closed → 154.6 mm
-open**. Maximum graspable width is **138.6 mm**, found by bisection with a
-0.54 kg box. All eight product categories fit, widest being a 72 mm milk carton.
+- **The arms are mirrored.** Sending both the same angles looks fine and is
+  wrong - joint limits are asymmetric (`left_joint1` −200…+80°, `right_joint1`
+  −80…+200°). `RobotSpec.mirror` holds the sign pattern.
+- **The gripper's open end differs per side** (`[0, 0.785]` left,
+  `[−0.785, 0]` right). `set_gripper` handles it; raw `ctrl` does not.
 
----
-
-## Teleoperation (under development)
-
-> [!WARNING]
-> **Under development, not yet tested with an operator.** The camera path runs
-> end to end and has been driven in a few short sessions, but it has not been
-> properly evaluated. The images below come from the **synthetic operator** —
-> scripted landmarks fed through the real retargeting, filtering and simulation
-> code — not from a person in front of a camera. They will be replaced with real
-> teleoperation captures once the live path is tested.
-
-A camera watches the operator; the tower and both arms copy them in MuJoCo.
-Standing puts the carriage at the top of its travel and crouching lowers it,
-turning the shoulders yaws the tower, the arms copy shoulder, elbow and wrist
-angles, and pinching thumb to index finger closes that side's gripper.
+## 1.5 Cameras
 
 <p align="center">
-  <img src="docs/figures/teleop_synthetic_stages.png" width="100%"
-       alt="Six paired panels. Each shows a scripted stick-figure operator beside the robot it drives: rest, left arm forward, right arm out, crouch lowering the carriage to 0.01 m, turn yawing the tower 45 degrees, and a pinch closing both grippers">
+  <img src="docs/figures/sensor_map.png" width="100%"
+       alt="Robot front view with each camera's live feed placed beside the hardware it is mounted on: tower eye centred above the shoulders, one wrist camera per arm">
 </p>
 
-```bash
-python -m teleop --source synthetic   # no camera: watch the scripted operator drive it
-python -m teleop.selftest             # 60 checks, no camera
-python -m teleop.cameras              # measured frame rate of every camera
-python -m teleop --camera 0 --fullscreen
+| camera | where | notes |
+|---|---|---|
+| `tower_eye` | on the carriage, between the shoulders; moves with the robot | 75° fov, pitched 20° down so the grippers and the deck are in view |
+| `camera_wrist_left/right` | on each gripper | show the fingers; interesting once an arm is raised |
+| `aisle`, `shelf_front`, `overhead`, `over_shoulder` | fixed | context and debugging |
+| `cage_end` | fixed, past the far end of the roll cage | third-person view of robot, cage and shelf; used by teleop |
+
+All render 640×480 RGB plus metric depth:
+
+```python
+from pathlib import Path
+from robot import build, render_rgbd
+
+bot = build()
+render_rgbd(bot.model, bot.data, "tower_eye", Path("out/shots"))
+# -> tower_eye_rgb.png, tower_eye_depth.npy (float32 metres), tower_eye_depth.png
 ```
 
-### Pipeline stages
+## 1.6 Products
 
-| # | stage | file | what happens | status |
-|---|---|---|---|---|
-| 1 | capture | `tracking.py` | camera frame on a background thread, auto-exposure | runs |
-| 2 | tracking | `tracking.py` | MediaPipe Holistic: 33 body + 2x21 hand landmarks, 38.6 ms/frame on CPU | runs |
-| 3 | observation | `landmarks.py` | landmarks as plain numpy, image and world coordinates | verified |
-| 4 | calibration gate | `quality.py` | hands-free: hold a hand in an on-screen target, then stand still; five pose checks must pass | runs |
-| 5 | retargeting | `retarget.py` | closed-form joint angles from torso, arm and hand directions | **verified** against MuJoCo FK to ~1e-13 |
-| 6 | filtering and limits | `filters.py` | One Euro on directions and angles, clamp to `ctrlrange`, rate limit | verified |
-| 7 | actuation | `simbridge.py` | writes `data.ctrl` only, never `qpos` | verified |
-| 8 | display | `overlay.py` | operator, robot and joint gauges in one window | runs |
+Eight shelf-stable categories (`boxed_food`, `cereal`, `boxed_drink`, `milk`,
+`canned_food`, `can`, `jam`, `yogurt`), 79 scanned instances from RoboCasa.
+Masses are re-derived from each mesh's volume at a realistic density rather
+than RoboCasa's flat default, and [`tools/verify_products.py`](tools/verify_products.py)
+fails if any falls outside its band. Products **render** their scanned mesh but
+**collide** as a fitted box or cylinder, which keeps physics fast.
 
-"Verified" means covered by `teleop.selftest`. "Runs" means exercised live but
-not yet tested systematically.
+<details>
+<summary><strong>Masses by category</strong></summary>
 
-<p align="center">
-  <img src="docs/figures/teleop_synthetic_window.png" width="85%"
-       alt="The teleoperation window driven by the synthetic operator: stick figure on the left, robot seen from behind on the right, joint gauges and control buttons along the bottom">
-</p>
-
-### What is known so far
-
-- **The maths is sound.** The inverse round-trips MuJoCo's own forward
-  kinematics to ~1e-13, and a sign error that produced smooth but mirrored
-  motion was caught only by that test.
-- **Capture is the bottleneck, not the model.** A laptop webcam in dim light
-  took 60–85 ms a frame; a phone used as a webcam brought median tracking
-  latency from 40.4 ms to 17.9 ms and halved landmark jitter.
-- **The wrist and twist joints shake.** Filtering the direction vectors before
-  solving cut measured wrist shake by 75%, but joints 3 and 5 remain noisy: they
-  are rotations about an axis estimated from that same axis.
-- **Torso yaw is the weakest channel.** It comes from monocular depth, and read
-  up to 50° off with the operator largely facing the camera.
-- **It reproduces posture, not hand position.** Operator and robot proportions
-  differ, so the gripper lands in a similar pose rather than on a chosen point.
-  Precise placement needs an IK layer, which does not exist yet.
-
-Operating guide: [`teleop/README.md`](teleop/README.md). Code map and design
-decisions: [`teleop/ARCHITECTURE.md`](teleop/ARCHITECTURE.md).
-
----
-
-## Products
-
-Eight shelf-stable categories, 79 instances, 214.9 MB of scanned geometry.
-Masses are **not** the source defaults: RoboCasa ships everything at
-`density=100 kg/m³`, so each category is re-derived from its measured mesh
-volume at a plausible gross density and checked against a per-family band.
-
-| category | family | mass | implied density |
+| category | family | mass | implied density (kg/m³) |
 |---|---|---:|---:|
 | `boxed_food` | dry carton | 0.35 kg | 420 |
 | `cereal` | dry carton | 0.09 kg | 152 |
@@ -365,100 +215,142 @@ volume at a plausible gross density and checked against a per-family band.
 | `jam` | cylinder | 0.28 kg | 1381 |
 | `yogurt` | cylinder | 0.20 kg | 1074 |
 
-Bands are enforced in [`tools/verify_products.py`](tools/verify_products.py) and
-exit non-zero on violation: dry cartons 80-700, liquid cartons 900-1250,
-cylinders 900-1500 kg/m³. Cereal is mostly air, which is why it sits at 152.
-
-**Rendering and collision are separate.** Products keep their full scanned mesh
-for the camera and collide as a box or cylinder fitted to their measured
-bounding box. Two meshes alone - `canned_food_9` at 175k vertices and
-`yogurt_3` at 116k - are 73% of the scene's geometry; colliding through their
-convex hulls dropped the scene to 1.9× realtime.
-
----
-
-## Asset provenance
-
-Record which bucket an asset came from when publishing anything derived from
-this repo.
-
-| asset | source | licence |
-|---|---|---|
-| Product meshes | [RoboCasa](https://github.com/robocasa/robocasa) `objs_objaverse` pack, extracted into `assets/products/` | [MIT](https://github.com/robocasa/robocasa/blob/main/LICENSE) |
-| Upstream of those meshes | [Objaverse](https://objaverse.allenai.org/) via RoboCasa | ODC-By 1.0 |
-| Bimanual arm | [`openarm_mujoco`](https://github.com/enactic/openarm_mujoco) v2.2.0, resolved from the installed package - **not** vendored here | Apache-2.0 |
-| Lift tower | [`tower.xml`](tower.xml) - hand-authored in this repo | this repo |
-| Aisle, shelves, roll cage | generated by [`scene.py`](scene.py) | this repo |
-| Physics engine | [MuJoCo](https://github.com/google-deepmind/mujoco) 3.13.0 | Apache-2.0 |
-
-This project itself is **Apache-2.0** - see [`LICENSE`](LICENSE), with
-third-party attribution in [`NOTICE`](NOTICE). Both upstream licences (MIT and
-Apache-2.0) are permissive and compatible with it.
-
-<details>
-<summary><strong>How the products were obtained</strong></summary>
-
-`tools/build_products.py` extracts eight categories from RoboCasa's objaverse
-archive, resolving the download URL from RoboCasa's own
-`box_links_assets.json`. Mesh paths are rewritten relative so the scene has no
-runtime dependency on RoboCasa. Verified self-contained: 761 mesh/texture
-references, 0 missing, 0 pointing outside `assets/products/`.
-
-Two notes for anyone reproducing this:
-
-- RoboCasa's `download_kitchen_assets.py` probes with an HTTP **HEAD** request,
-  and the Box host answers 404 to HEAD while serving GET normally - the script
-  reports the host as unreachable when it is fine.
-- `pip install -e robocasa` pins `mujoco==3.3.1` and pulls Torch via
-  `lerobot`/`tianshou`. This project never installs it; the registry is read by
-  `ast`-parsing `kitchen_objects.py`.
-
-The eight categories are all `graspable=True` upstream. `peanut_butter` exists
-only in the AI-generated pack, so `yogurt` is used in its place.
+Bands: dry cartons 80-700, liquid cartons 900-1250, cylinders 900-1500 kg/m³,
+defined in [`tools/product_spec.py`](tools/product_spec.py). Cereal is mostly air.
 </details>
 
+The mesh simplification that made the aisle cameras usable, and render
+timings: [`docs/VIEWER.md`](docs/VIEWER.md#rendering-performance).
+
 ---
 
-## Source of truth
-
-| path | role | edit? |
-|---|---|---|
-| [`scene.py`](scene.py) | aisle generator - all dimensions are dataclasses | **yes** |
-| [`robot.py`](robot.py) | runtime assembly, `Robot` handle, RGB-D | **yes** |
-| [`tower.xml`](tower.xml) | hand-authored base MJCF - `scene.py` never writes it | **yes** |
-| [`bench.py`](bench.py) · [`view.py`](view.py) · [`live.py`](live.py) | entry points | **yes** |
-| [`tools/`](tools/) | asset build, verification, figures | **yes** |
-| [`teleop/`](teleop/) | teleoperation, under development - see its README and ARCHITECTURE | **yes** |
-| `out/scene.xml`, `out/bench.xml` | generated MJCF, committed so it opens from a clone | no - rerun the script |
-| `docs/figures/*.png` | README figures | no - `python tools/make_figures.py`; `teleop_synthetic_*` from `python tools/make_teleop_figures.py` |
-| `robocasa/` | upstream clone, gitignored - only needed to rebuild assets | no |
-
-**Committed deliberately:** `assets/products/` (211 MB) so the scene runs from a
-clone with no downloads - the upstream asset host has already proven flaky - and
-`out/scene.xml` / `out/bench.xml`, which are generated but deterministic (the
-generator is seeded), small, and openable in any MuJoCo viewer straight from a
-clone. Committing them also makes a scene change show up as a reviewable diff.
-
-**Gitignored:** `robocasa/` (81 MB, and a nested `.git` that cannot be committed
-as files), `.venv/`, depth arrays, scratch renders in `out/shots/`, and
-`MUJOCO_LOG.TXT` - a runtime log MuJoCo drops in the working directory.
+# Part 2 — Teleoperation (under development)
 
 > [!WARNING]
-> `out/scene.xml` refers to meshes by a path relative to itself
-> (`meshdir="../assets/products"`). It only resolves from inside `out/`.
-> Copying it elsewhere breaks every mesh.
+> **Under development.** The live camera path runs end to end and has been
+> used to reach and pick from the roll cage in a few sessions, but it is not
+> evaluated and control is still coarse - see [2.4](#24-known-limitations).
+
+<p align="center">
+  <a href="docs/media/teleop_live.mp4">
+    <img src="docs/media/teleop_live.gif" width="100%"
+         alt="Live teleoperation: the operator on a phone camera at top right drives the robot in the supermarket aisle; the robot's own camera, both wrist cameras and a view from the roll cage show the arms reaching toward stock">
+  </a>
+</p>
+<p align="center"><sub>
+Live session, phone as webcam. Click for the full-resolution video
+(<a href="docs/media/teleop_live.mp4">MP4, 14 s</a>).
+</sub></p>
+
+A camera watches you and the robot copies you in MuJoCo:
+
+| you | robot |
+|---|---|
+| stand / crouch | carriage to the top / lowered |
+| turn your shoulders | tower yaws the same way |
+| move your arms and wrists | both 7-DOF arms copy shoulder, elbow and wrist |
+| pinch thumb to index | that side's gripper closes |
+
+<p align="center">
+  <img src="docs/figures/teleop_synthetic_stages.png" width="100%"
+       alt="Six paired panels. Each shows a scripted stick-figure operator beside the robot it drives: rest, left arm forward, right arm out, crouch lowering the carriage to 0.01 m, turn yawing the tower 45 degrees, and a pinch closing both grippers">
+</p>
+<p align="center"><sub>The same mapping, one motion at a time, from the scripted operator (<code>--source synthetic</code>).</sub></p>
+
+## 2.1 Run it
+
+**Step 1 - find your camera.** The index changes when a phone is plugged in.
+
+```bash
+conda activate shelf_sim
+python -m teleop.cameras        # lists cameras with their measured fps
+```
+
+**Step 2 - robot only**, to check the mapping (does the arm go where yours goes,
+does the tower turn the right way):
+
+```bash
+python -m teleop --camera 0 --fullscreen
+```
+
+<p align="center">
+  <a href="docs/media/teleop_robot_only.mp4">
+    <img src="docs/media/teleop_robot_only.gif" width="85%"
+         alt="Robot-only teleoperation: the operator waves and moves both arms on the left, and the robot on its lift tower copies the arm poses on the right, with both wrist cameras below it">
+  </a>
+</p>
+<p align="center"><sub>
+Robot only, live, shown at 3× speed. Click for the
+<a href="docs/media/teleop_robot_only.mp4">full video (MP4, 48 s)</a>.
+</sub></p>
+
+**Step 3 - supermarket shelf**, for pick and place:
+
+```bash
+python scene.py                                             # after any scene change
+python -m teleop --scene aisle --camera 0 --fullscreen
+python -m teleop --scene aisle --camera 0 --fullscreen --record out/pick_try1   # keep a log
+```
+
+Everything is in one window. On the shelf: the robot's own camera with both
+wrist cameras docked under it, beside your camera and the `cage_end` view. On
+the robot-only scene the wrist cameras sit under the robot view. The wrist
+tiles start once you have calibrated.
+
+No camera? `python -m teleop --source synthetic` (add `--scene aisle` for the
+shelf) runs a scripted operator, and `python -m teleop.selftest` runs 64 checks.
+
+## 2.2 Calibrate, then pick
+
+1. Stand back until your head and shoulders are in frame.
+2. **Hold a hand in the CALIBRATE box** (top right) until it fills - no keyboard,
+   because leaning to a key twists your shoulders into the calibration.
+3. **Drop your arms, face the camera, stand still** for the countdown.
+4. To pick from the cage: **turn while standing**, then **crouch** to bring the
+   arms down, then pinch. Standing, the grippers pass over the items as the
+   tower turns; turning while crouched sweeps them off the tray.
+
+Every option, key and troubleshooting step: [`teleop/README.md`](teleop/README.md).
+
+## 2.3 How it works
+
+| # | stage | file | status |
+|---|---|---|---|
+| 1 | camera capture on its own thread, auto exposure | `tracking.py` | runs |
+| 2 | MediaPipe Holistic: 33 body + 2 × 21 hand landmarks | `tracking.py` | runs |
+| 3 | hands-free calibration gated on five pose checks | `quality.py` | runs |
+| 4 | closed-form joint angles from torso, arm and palm directions; an arm or hand out of view holds its last pose | `retarget.py` | **verified** against MuJoCo to ~1e-13 |
+| 5 | One Euro smoothing, joint limits, rate limits | `filters.py` | verified |
+| 6 | position actuators only (`data.ctrl`, never `qpos`) | `simbridge.py` | verified |
+| 7 | one window: robot POV, operator, scene view, joint gauges | `overlay.py` | runs |
+
+"Verified" = covered by `teleop.selftest`. Code map and design decisions:
+[`teleop/ARCHITECTURE.md`](teleop/ARCHITECTURE.md).
+
+## 2.4 Known limitations
+
+- **The simulator redraws slowly in the aisle** (2-6 fps), so the arm arrives in
+  steps and is easy to push into an item. The next thing to fix.
+- **It copies posture, not hand position.** Your proportions differ from the
+  robot's, so the gripper lands near, not on, where you aim. Precise placement
+  needs a Cartesian/IK control mode, which does not exist yet.
+- **Torso yaw and wrist roll are the noisiest channels** - both come from
+  single-camera depth or a short baseline between landmarks.
+- **`--record` logs telemetry for debugging, not training episodes.**
+
+What the pick-and-place sessions measured, which problems come from MediaPipe
+and which do not, and what was fixed:
+[teleop/README.md](teleop/README.md#what-pick-and-place-sessions-showed-why-control-is-not-precise).
 
 ---
 
-## Toward collection
+# Reference
 
-The recorder is intentionally not implemented - the simulator provides
-deterministic state and camera output for an external writer such as
-[LeRobot](https://github.com/huggingface/lerobot). Use a **passive** loop, not
-the managed viewer; that is where a policy or teleoperator goes. The
-[teleoperation](#teleoperation-under-development) loop in `teleop/app.py` is one
-such controller, but its `--record` flag writes debugging telemetry, not
-episodes:
+## Toward data collection
+
+There is no recorder: the simulator provides deterministic state and camera
+output for an external writer such as [LeRobot](https://github.com/huggingface/lerobot).
+Drive it from a **passive** viewer loop, which is where a policy or teleoperator goes:
 
 ```python
 import mujoco, mujoco.viewer
@@ -472,36 +364,46 @@ with mujoco.viewer.launch_passive(bot.model, bot.data) as viewer:
         viewer.sync()
 ```
 
-Per step, store observation and action under one timestamp: RGB (and optionally
-depth) per camera, `qpos`/`qvel`, `ctrl`, episode and frame index, task string,
-and the reset seed.
+Per step, store under one timestamp: RGB (and depth) per camera, `qpos`/`qvel`,
+`ctrl`, episode and frame index, task string and reset seed. Before recording,
+run `python scene.py`, `python tools/verify_products.py`, `python bench.py --sweep`
+and `python live.py`, and confirm targets are dynamic (front row or cage).
 
-**Before recording anything:**
+## Known issues in the simulation
 
-1. `python scene.py` - regenerate the aisle.
-2. `python tools/verify_products.py` - mass bands must pass.
-3. `python bench.py --sweep` - yaw error ≤ 0.0002°, lift sag ≤ 1.74 mm.
-4. `python live.py` - check all three on-board views.
-5. Confirm targets are in the dynamic front row or the roll cage, not static stock.
-6. `bot.home()` and verify both grippers travel.
-7. Record code revision, asset set, camera names, image size, timestep and
-   randomisation parameters.
+- **Wrist views are empty at the home pose** - correct framing, nothing to see
+  until an arm is raised.
+- **24 of 359 products are manipulable.** For a task needing another, promote it
+  to a free joint in `scene.py` and regenerate rather than making everything dynamic.
+- **The shipped OpenArm gripper self-collides** at the knuckle, which pins the
+  left gripper shut. `robot.py` adds the missing contact exclusions at assembly.
+  Worth reporting upstream.
 
-### Known gaps
+## Asset provenance and licence
 
-- **No recorder, no episodes.** Nothing has been collected.
-- **Teleoperation is untested with an operator.** It runs, the maths is
-  verified offline, but there is no IK, no episode recording and no systematic
-  live evaluation yet.
-- **Wrist views are empty at home.** Correct framing, nothing to look at until
-  an arm is raised.
-- **Only 29 of 364 products are manipulable**, in a band around the robot. If a
-  task needs an arbitrary product, promote it to `freejoint` at generation time
-  and regenerate, rather than making everything dynamic.
-- **The shipped OpenArm gripper self-collides.** Its two jaw bodies overlap at
-  the knuckle and the MJCF declares an empty `<contact>` block, so the left
-  gripper pins at its 7 N·m limit and will not open. `robot.py` adds the missing
-  `<contact><exclude>` per side at assembly time. Worth reporting upstream.
+| asset | source | licence |
+|---|---|---|
+| Product meshes | [RoboCasa](https://github.com/robocasa/robocasa) `objs_objaverse`, extracted into `assets/products/` | [MIT](https://github.com/robocasa/robocasa/blob/main/LICENSE) |
+| Upstream of those meshes | [Objaverse](https://objaverse.allenai.org/) via RoboCasa | ODC-By 1.0 |
+| Bimanual arm | [`openarm_mujoco`](https://github.com/enactic/openarm_mujoco) v2.2.0, from the installed package | Apache-2.0 |
+| Lift tower, aisle, shelves, roll cage | this repo ([`tower.xml`](tower.xml), [`scene.py`](scene.py)) | Apache-2.0 |
+| Physics engine | [MuJoCo](https://github.com/google-deepmind/mujoco) 3.13.0 | Apache-2.0 |
+| Pose tracking | [MediaPipe](https://github.com/google-ai-edge/mediapipe) (teleop only, not bundled) | Apache-2.0 |
+
+This project is **Apache-2.0** - see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).
+
+<details>
+<summary><strong>How the products were obtained</strong></summary>
+
+`tools/build_products.py` extracts eight categories from RoboCasa's objaverse
+archive, resolving the download URL from RoboCasa's own `box_links_assets.json`,
+and rewrites mesh paths so the scene has no runtime dependency on RoboCasa
+(761 references, 0 missing). RoboCasa's downloader probes with HTTP HEAD, which
+the host answers with 404 while serving GET fine; and `pip install -e robocasa`
+pins `mujoco==3.3.1` and pulls Torch, so this project reads its registry by
+parsing `kitchen_objects.py` instead. `peanut_butter` exists only in the
+AI-generated pack, so `yogurt` is used in its place.
+</details>
 
 ---
 

@@ -106,6 +106,20 @@ class TeleopConfig:
     # ---- simulation -------------------------------------------------------
     scene: str = "bench"              # "bench" = robot only; "aisle" = full scene
     fullscreen: bool = False
+    # "robot": your camera beside a free view of the robot -- for checking the
+    #          mapping on the bench.
+    # "shelf": the robot's own POV large, with your camera and a fixed top view
+    #          beside it -- for picking.
+    # "auto" picks shelf for the aisle and robot for the bench.
+    layout: str = "auto"
+    pov_camera: str = "tower_eye"
+    top_camera: str = "cage_end"      # third-person view; "overhead" also works
+    # The top view is for a glance at where things are, not for steering. It
+    # sees the whole aisle, so unlike the POV it cannot be culled and costs
+    # ~150 ms a render on this machine. Refreshing it every 8th drawn frame
+    # (~1.5 Hz) took the shelf layout from 9.6 to 12.2 fps, measured.
+    top_every: int = 8
+    wrist_every: int = 2              # re-render the docked wrist cameras every Nth draw
     # Hands-free calibration runs in two phases, because pressing the air
     # button needs a hand UP and calibrating needs both arms DOWN -- asking for
     # both at once is a contradiction the operator cannot satisfy.

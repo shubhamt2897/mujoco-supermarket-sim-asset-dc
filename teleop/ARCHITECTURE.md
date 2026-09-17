@@ -34,7 +34,7 @@ graph TD
     overlay[overlay.py<br/>drawing, air buttons]
     quality[quality.py<br/>is this pose fit to calibrate?]
     synthetic[synthetic.py<br/>fabricated operator]
-    selftest[selftest.py<br/>60 checks]
+    selftest[selftest.py<br/>64 checks]
     cameras[cameras.py<br/>camera probe]
     landmarks[landmarks.py<br/>indices + Observation]
     filters[filters.py<br/>One Euro, rate limit]
@@ -197,7 +197,7 @@ worst case so a tracking dropout becomes a slew rather than a full-torque lunge.
 | `retarget.py` | 616 | the maths: landmarks → joint angles | numpy only |
 | `overlay.py` | 561 | all drawing, air buttons | cv2 |
 | `app.py` | 458 | main loop, window, keys, clicks, recording | everything |
-| `selftest.py` | 452 | 60 checks | retarget, synthetic, simbridge |
+| `selftest.py` | 498 | 64 checks | retarget, synthetic, simbridge |
 | `tracking.py` | 334 | camera + mediapipe, on a thread | mediapipe, cv2 |
 | `synthetic.py` | 308 | a fabricated operator | numpy only |
 | `simbridge.py` | 190 | build robot, apply targets, render | mujoco |

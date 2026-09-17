@@ -311,7 +311,17 @@ def torso_frame(pose_world: np.ndarray, hips_ok: bool = True) -> np.ndarray | No
 
 
 def hand_dirs(obs: Observation, side: str, t_frame: np.ndarray):
-    """(approach, across) for one hand in torso coordinates, or None.
+    """(approach, jaw) for one hand in torso coordinates, or None.
+
+    `jaw` is the axis the gripper's jaws should open along: the palm NORMAL,
+    not the line across the knuckles. A thumb pinches through the palm, so
+    thumb and index close along the normal. Using the knuckle line instead --
+    which this did at first -- rolled the gripper a steady 90 deg off the hand:
+    a flat, palm-down hand gave jaws opening sideways.
+
+    The sign is chosen so a hand hanging at your side, palm to thigh, gives
+    torso +y for both hands, which is the jaw direction at the robot's zero
+    wrist. So the rest pose maps to a straight wrist instead of a quarter turn.
 
     Prefers the 21-point hand mesh; falls back to the four hand landmarks the
     pose model carries, which are coarse but always present. Both sets use the
@@ -321,17 +331,52 @@ def hand_dirs(obs: Observation, side: str, t_frame: np.ndarray):
     hw = obs.hand_world.get(side)
     if hw is not None and len(hw) >= 21:
         approach = hw[H.MIDDLE_MCP] - hw[H.WRIST]         # down the fingers
-        across = hw[H.PINKY_MCP] - hw[H.INDEX_MCP]        # across the palm
+        knuckles = hw[H.PINKY_MCP] - hw[H.INDEX_MCP]      # across the palm
     elif obs.pose_world is not None:
         idx, pw = POSE_ARM[side], obs.pose_world
-        knuckles = 0.5 * (pw[idx["index"]] + pw[idx["pinky"]])
-        approach = knuckles - pw[idx["wrist"]]
-        across = pw[idx["pinky"]] - pw[idx["index"]]
+        mid = 0.5 * (pw[idx["index"]] + pw[idx["pinky"]])
+        approach = mid - pw[idx["wrist"]]
+        knuckles = pw[idx["pinky"]] - pw[idx["index"]]
     else:
         return None
-    if np.linalg.norm(approach) < 1e-6 or np.linalg.norm(across) < 1e-6:
+    jaw = np.cross(approach, knuckles)                    # palm normal
+    if np.linalg.norm(approach) < 1e-6 or np.linalg.norm(jaw) < 1e-6:
         return None
-    return t_frame.T @ unit(approach), t_frame.T @ unit(across)
+    return t_frame.T @ unit(approach), t_frame.T @ unit(jaw)
+
+
+def arm_seen(obs: Observation, side: str, min_vis: float) -> bool:
+    """Are this arm's elbow and wrist actually in view?
+
+    The pose model always returns all 33 landmarks, including for an arm that
+    is out of frame or behind you. It fills those in by guessing, and the guess
+    is usually the visible arm's pose copied across -- so driving from it made
+    a hidden arm mimic the other one. Visibility is the model's own admission
+    that it is guessing, and a wrist outside the picture cannot be seen at all.
+    """
+    if obs.pose_vis is None:
+        return True
+    idx = POSE_ARM[side]
+    if min(obs.pose_vis[idx["elbow"]], obs.pose_vis[idx["wrist"]]) < min_vis:
+        return False
+    x, y = obs.pose_image[idx["wrist"]][:2]
+    return -0.02 <= x <= 1.02 and -0.02 <= y <= 1.02
+
+
+def hand_seen(obs: Observation, side: str, tol: float = 0.12) -> bool:
+    """Is there a hand mesh for this side, and is it really this side's hand?
+
+    The holistic model can put one real hand into both hand slots. The check is
+    that the mesh's wrist sits on the pose's wrist for the same arm, in the
+    image, within `tol` of the frame width.
+    """
+    hw, him = obs.hand_world.get(side), obs.hand_image.get(side)
+    if hw is None or len(hw) < 21:
+        return False
+    if him is None or obs.pose_image is None:
+        return True
+    pw = obs.pose_image[POSE_ARM[side]["wrist"]][:2]
+    return float(np.linalg.norm(him[H.WRIST][:2] - pw)) <= tol
 
 
 def pinch(obs: Observation, side: str) -> float | None:
@@ -526,9 +571,21 @@ class Retargeter:
                        pinch={}, arm={})
 
         # ---- arms ---------------------------------------------------------
+        out.raw["held"] = {}
         for robot_side in SIDES:
             human_side = self._human_side(robot_side)
             idx = POSE_ARM[human_side]
+
+            # An arm that is not really in view holds its last pose, gripper
+            # included. Its landmarks are the model's guess, and the guess
+            # tends to be the other arm copied, so following it makes the
+            # hidden arm mimic the visible one.
+            if not arm_seen(obs, human_side, cfg.min_visibility):
+                out.arm[robot_side] = self._q[robot_side].copy()
+                out.grip[robot_side] = self._last_grip[robot_side]
+                out.raw["held"][robot_side] = "arm"
+                continue
+
             upper = t_frame.T @ unit(pw[idx["elbow"]] - pw[idx["shoulder"]])
             fore = t_frame.T @ unit(pw[idx["wrist"]] - pw[idx["elbow"]])
             # Filter the directions, then renormalise: averaging unit vectors
@@ -537,8 +594,13 @@ class Retargeter:
             upper = unit(self._f_dir[robot_side]["upper"](upper, obs.t), upper)
             fore = unit(self._f_dir[robot_side]["fore"](fore, obs.t), fore)
 
+            # With a hand model running, a missing or misattributed hand holds
+            # the wrist and gripper where they were. The pose model's four
+            # coarse hand points are only used when there is no hand model.
+            has_hand = hand_seen(obs, human_side)
+            hold_hand = self.cfg.tracker != "pose" and not has_hand
             r_grip = None
-            if cfg.use_wrist:
+            if cfg.use_wrist and not hold_hand:
                 dirs = hand_dirs(obs, human_side, t_frame)
                 if dirs is not None:
                     appr, across = self._mirror_pair(*dirs)
@@ -548,7 +610,10 @@ class Retargeter:
 
             upper, fore = self._mirror_pair(upper, fore)
 
-            q = solve_arm(upper, fore, r_grip, robot_side, self._q[robot_side])
+            prev = self._q[robot_side]
+            q = solve_arm(upper, fore, r_grip, robot_side, prev)
+            if hold_hand and cfg.use_wrist:
+                q[4:7] = prev[4:7]
             q = clamp_to_limits(q, self.limits[robot_side])
             out.raw["arm"][robot_side] = q.copy()
 
@@ -557,12 +622,17 @@ class Retargeter:
             q = self._r_arm[robot_side](q, obs.t)
             self._q[robot_side] = q
             out.arm[robot_side] = q
+            if hold_hand:
+                out.raw["held"][robot_side] = "hand"
 
             # ---- gripper --------------------------------------------------
-            p = pinch(obs, human_side)
+            p = pinch(obs, human_side) if has_hand else None
             out.raw["pinch"][robot_side] = p
             if p is None:
-                target = 0.8                     # no fingers tracked: hold open
+                # No fingers: keep the jaws as they were. Snapping open would
+                # drop whatever the gripper is holding the moment the hand
+                # leaves the picture.
+                target = self._last_grip[robot_side]
             else:
                 target = float(np.clip(
                     (p - cfg.pinch_closed)

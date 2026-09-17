@@ -122,14 +122,17 @@ def hand_points(approach: np.ndarray, across: np.ndarray,
     a = approach / max(np.linalg.norm(approach), 1e-9)
     c = across - float(across @ a) * a
     c = c / max(np.linalg.norm(c), 1e-9)
-    side = np.cross(a, c)
+    # `across` is the jaw axis, which is the palm normal; the knuckles lie
+    # along k, chosen so cross(a, pinky - index) gives c back.
+    k = np.cross(c, a)
+    side = c
 
     hw = np.zeros((21, 3))
     hw[H.WRIST] = 0.0
-    hw[H.INDEX_MCP] = 0.085 * a - 0.040 * c
-    hw[H.PINKY_MCP] = 0.085 * a + 0.040 * c
+    hw[H.INDEX_MCP] = 0.085 * a - 0.040 * k
+    hw[H.PINKY_MCP] = 0.085 * a + 0.040 * k
     hw[H.MIDDLE_MCP] = PALM * a
-    hw[H.RING_MCP] = 0.088 * a + 0.018 * c
+    hw[H.RING_MCP] = 0.088 * a + 0.018 * k
     hw[H.INDEX_TIP] = hw[H.INDEX_MCP] + 0.070 * a
     # The thumb closes across the palm; its distance to the index tip over the
     # palm length is exactly what `retarget.pinch` reads back out.
@@ -202,8 +205,9 @@ def make_observation(t: float, *, yaw: float = 0.0, crouch: float = 0.0,
         # retarget.hand_dirs has something consistent to read.
         c_perp = c - float(c @ a) * a
         c_perp = c_perp / max(np.linalg.norm(c_perp), 1e-9)
-        body[ix_i] = wr + 0.085 * a - 0.040 * c_perp
-        body[pk_i] = wr + 0.085 * a + 0.040 * c_perp
+        k = np.cross(c_perp, a)                 # knuckle line; c_perp is the jaw
+        body[ix_i] = wr + 0.085 * a - 0.040 * k
+        body[pk_i] = wr + 0.085 * a + 0.040 * k
         body[th_i] = wr + 0.050 * a - 0.055 * c_perp
 
         if with_hands:

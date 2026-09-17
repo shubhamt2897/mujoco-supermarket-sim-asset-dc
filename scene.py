@@ -148,7 +148,14 @@ class RollCageDims:
     """
     length: float = 0.80             # along x
     width: float = 0.70              # along y
-    top_tray_height: float = 1.10
+    # Was 1.10. In a recorded teleop session, standing (carriage at the top)
+    # with the forearms reaching forward put the grippers at 1.16-1.23 m --
+    # exactly item height -- so turning toward the cage swept them off the
+    # tray. Replaying that same motion, 1.00 still touched two items and 0.95
+    # and below touched none; 0.90 keeps a margin. Standing, the grippers now
+    # pass over the stock; crouch (lower the carriage) to pick. All three items
+    # stay in IK reach.
+    top_tray_height: float = 0.90
     base_tray_height: float = 0.18
     tray_thickness: float = 0.020
     upright_section: float = 0.030
@@ -156,21 +163,43 @@ class RollCageDims:
     n_panel_bars: int = 3
     caster_radius: float = 0.050
     caster_width: float = 0.028
-    n_loose_products: int = 8
+    # Three easy picks, all mid-height (~11 cm) and ~5-6 cm across, so they
+    # stand firmly and fit the jaws: a can in front of each arm and a drink
+    # carton on the centreline. 18 cm centre to centre leaves ~12 cm of air
+    # between neighbours. Went 8 packed -> 5 spread -> 3; the jam jar and
+    # canned food were too short to grip over the tray, and tall thin boxes
+    # toppled.
+    n_loose_products: int = 3
+    load_categories: tuple[str, ...] = ("can", "boxed_drink", "can")
+    load_pitch: float = 0.18         # centre-to-centre, across the tray
+    load_margin: float = 0.03        # stock kept this far in from the tray edge
     # Clear of the tower's slew circle. The arms sweep a ~0.35 m radius about
     # the tower axis; with the cage at x = 0.66 its near edge sat 0.26 m out and
     # the right arm fouled it at -14 deg of yaw, so the base could not turn.
     # At x = 0.86 the near edge is 0.46 m out and yaw is free through +/-180 deg.
     # The cage no longer needs to be in reach at yaw = 0 -- that is what the
     # rotary joint is for: the robot turns to face the cage, then unloads it.
-    pos_x: float = 0.86
+    #
+    # Tried bringing it in to x = 0.80 for teleoperation: one more tray item in
+    # reach (4/8 against 3/8), but the arms then hit it from -45 deg of yaw, so
+    # the tower could no longer turn to face it.
+    #
+    # Then moved OUT to 0.92 after teleoperating. At 0.86, turning toward the
+    # cage with the forearms held forward -- the natural teleop pose -- caught
+    # the tray edge at -36 deg; at 0.92 that turn is free at every lift height.
+    # Reach is kept by packing the stock at the tray's near end (plan_cage),
+    # which puts all 8 items within 1 cm of an IK solve (yaw, lift and arm),
+    # against 2 of 8 with the old full-tray grid.
+    pos_x: float = 0.92
     pos_y: float = -0.56            # negative = out in the aisle
 
 
 @dataclass(frozen=True)
 class RobotMountDims:
     """Where the lift tower stands. Its geometry comes from tower.xml."""
-    standoff: float = 0.45          # out from the near bay face, into the aisle
+    # Out from the near bay face, into the aisle. Was 0.45, which put the
+    # shoulders 0.26 m from the shelf: too close to teleoperate comfortably.
+    standoff: float = 0.55
     pos_x: float = 0.0
     # Measured reach of the OpenArm v2 from the shoulder (see robot.py), plus
     # margin. Front-row stock outside this band can never be touched, so it is
@@ -355,23 +384,52 @@ def plan_bay_deck(cfg: SceneConfig, run: ShelfRun, bay: int, deck_index: int,
 
 
 def plan_cage(cfg: SceneConfig, library, rng):
-    """Loose stock lying on the cage top tray, all of it free to be picked up."""
+    """Loose stock lying on the cage top tray, all of it free to be picked up.
+
+    Packed against the end of the tray nearest the robot, not spread over the
+    whole tray. Facing the cage, the shoulders are 0.27 m short of the tray's
+    near edge, and the arm reaches only ~0.2 m past that edge: a grid over the
+    full 0.80 m tray put 6 of the 8 items out of reach, the last column by
+    half a metre.
+
+    One row, with the centres spread evenly across the tray, so every item
+    has room for the jaws on both sides. The first teleop version packed 8
+    items side by side 1.5 cm apart: grasping one knocked its neighbours over
+    and the whole row went down. A second row does not fit either -- it sits
+    13 cm beyond reach -- so there are fewer items instead, chosen to stand
+    firmly: the tall thin cartons (cereal, and a 3.5 cm-thick food box) were
+    the ones that toppled.
+    """
     c = cfg.cage
     top = c.top_tray_height + c.tray_thickness / 2.0
-    cats = ["cereal", "boxed_food", "milk", "boxed_drink",
-            "canned_food", "can", "jam", "yogurt"]
-    placements = []
-    cols, rows = 4, 2
+    cats = list(c.load_categories)
+    near_x = c.pos_x - c.length / 2.0 + c.load_margin
+    y_lo = c.pos_y - c.width / 2.0 + c.load_margin
+    y_hi = c.pos_y + c.width / 2.0 - c.load_margin
+    prods = []
     for i in range(c.n_loose_products):
         pool = library[cats[i % len(cats)]]
-        prod = pool[int(rng.integers(len(pool)))]
-        gx = (i % cols - (cols - 1) / 2.0) * (c.length / cols)
-        gy = (i // cols - (rows - 1) / 2.0) * (c.width / rows)
+        prods.append(pool[int(rng.integers(len(pool)))])
+
+    # Centres a fixed pitch apart, centred on the robot's line of approach, so
+    # the outer items sit in front of each arm rather than out at the tray
+    # corners. Clamped to the tray if the pitch would overhang it.
+    n = len(prods)
+    ys = c.pos_y + (np.arange(n) - (n - 1) / 2.0) * c.load_pitch
+    ys = np.clip(ys, y_lo, y_hi)
+
+    placements = []
+    for i, prod in enumerate(prods):
+        bx, by = float(prod.bbox[0]), float(prod.bbox[1])
+        # yaw 0 keeps bbox x along world x; 90 deg swaps them. The long side
+        # points away from the robot, so the jaws close across the narrow one.
+        yaw = 0.0 if by <= bx else math.pi / 2.0
+        along_x = max(bx, by)
         placements.append(Placement(
             product=prod,
-            pos=np.array([c.pos_x + gx, c.pos_y + gy,
+            pos=np.array([near_x + along_x / 2.0, ys[i],
                           top + prod.height / 2.0 + SEAT_CLEARANCE]),
-            yaw=float(rng.uniform(0, 2 * math.pi)),
+            yaw=yaw,
             dynamic=True,
             collide=True,
             run="cage",
@@ -574,7 +632,7 @@ def emit_lights(worldbody: ET.Element, cfg: SceneConfig) -> None:
 
 
 def emit_cameras(worldbody: ET.Element, cfg: SceneConfig) -> None:
-    """Four fixed views.
+    """Five fixed views.
 
     `shelf_front` sits above the top of the robot column and looks down past it,
     so the column does not stand in front of the stock it is meant to show.
@@ -591,13 +649,26 @@ def emit_cameras(worldbody: ET.Element, cfg: SceneConfig) -> None:
     E(worldbody, "camera", name="shelf_front", mode="fixed", fovy="60",
       pos=fmt(eye), xyaxes=look_at(eye, near_face))
 
-    eye = np.array([0.0, aisle_y, 3.55])
+    # Lowered from 3.55 m and shifted toward the cage, so the robot, the cage
+    # and the near shelf fill the frame instead of the whole aisle.
+    eye = np.array([0.30, aisle_y, 2.60])
     E(worldbody, "camera", name="overhead", mode="fixed", fovy="62",
       pos=fmt(eye), xyaxes=look_at(eye, eye - [0, 0, 1], up=(0, 1, 0)))
 
     eye = np.array([-0.32, -s.aisle_width * 0.80, 1.78])
     E(worldbody, "camera", name="over_shoulder", mode="fixed", fovy="56",
       pos=fmt(eye), xyaxes=look_at(eye, [0.10, 0.25, 1.15]))
+
+    # Standing past the far end of the roll cage, looking back at the robot at
+    # an angle: the teleop third-person view. It shows the arms, the cage tray
+    # and the shelf face together, which a straight-down view flattens.
+    c, rb = cfg.cage, cfg.robot
+    # High and out into the aisle, so the view clears the tower column: lower or
+    # closer to the cage and the column hides the right arm.
+    eye = np.array([c.pos_x + c.length / 2 + 0.34, c.pos_y - 0.44, 2.05])
+    target = np.array([rb.pos_x + 0.25, -0.55 * rb.standoff, 1.00])
+    E(worldbody, "camera", name="cage_end", mode="fixed", fovy="60",
+      pos=fmt(eye), xyaxes=look_at(eye, target))
 
 
 # --------------------------------------------------------------------------

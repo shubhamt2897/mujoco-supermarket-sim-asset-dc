@@ -18,6 +18,13 @@ pillow==12.3.0
 
 
 # ---------------------------------------------------------------------------
+# pymeshlab -- build-time only, NOT a dependency.
+# ---------------------------------------------------------------------------
+# Used once by tools/simplify_meshes.py to reduce over-detailed product meshes.
+# Nothing at runtime imports it. Checked to install without moving numpy or
+# mujoco:  pip install pymeshlab==2025.7.post1
+
+# ---------------------------------------------------------------------------
 # robocasa -- deliberately NOT a dependency. Do not add it here.
 # ---------------------------------------------------------------------------
 # The product meshes in assets/products/ were extracted from RoboCasa's

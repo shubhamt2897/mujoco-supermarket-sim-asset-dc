@@ -74,6 +74,9 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--scene", choices=("bench", "aisle"), default=d.scene,
                     help="bench = the robot on its own (default)")
     ap.add_argument("--fullscreen", action="store_true", help="start full screen")
+    ap.add_argument("--layout", choices=("auto", "robot", "shelf"), default="auto",
+                    help="shelf = robot POV + top view, for picking. "
+                         "auto picks shelf for --scene aisle")
     ap.add_argument("--viewer", action="store_true",
                     help="also open the interactive MuJoCo window")
     ap.add_argument("--mirror", action="store_true",
@@ -106,7 +109,7 @@ def main(argv=None) -> int:
     cfg = TeleopConfig(camera=args.camera, tracker=args.tracker, scene=args.scene,
                        mirror=args.mirror, use_wrist=not args.no_wrist,
                        lock_exposure=args.lock_exposure,
-                       fullscreen=args.fullscreen,
+                       fullscreen=args.fullscreen, layout=args.layout,
                        render_width=args.render, render_height=args.render)
 
     from . import overlay
@@ -123,6 +126,29 @@ def main(argv=None) -> int:
     # it can never disagree with the robot it is driving.
     retarget = Retargeter(cfg, sim.limits)
     limits = sim.limits
+
+    layout = cfg.layout
+    if layout == "auto":
+        layout = "shelf" if cfg.scene == "aisle" else "robot"
+    if layout == "shelf":
+        missing = [c for c in (cfg.pov_camera, cfg.top_camera)
+                   if not sim.has_camera(c)]
+        if missing:
+            # The bench has no fixed cameras; say so rather than crash mid-draw.
+            print(f"  cameras {missing} are not in this scene -- "
+                  f"use --scene aisle for the shelf layout. Falling back.")
+            layout = "robot"
+    print(f"  layout: {layout}")
+    top_img = None
+    draws = 0
+    # The wrist cameras are docked in the main window, under the POV in the
+    # shelf layout and under the robot view on the bench. They render only once
+    # calibrated: before that the arms hang at rest and the views show forearm
+    # and floor. These are the views a policy trained on teleop data would see,
+    # which is the point of watching them while driving.
+    wrist_cams = ("camera_wrist_left", "camera_wrist_right")
+    has_wrists = all(sim.has_camera(c) for c in wrist_cams)
+    wrist_imgs = None
 
     tracker = make_tracker(cfg, args.source)
     print(f"starting the {args.source} tracker ...")
@@ -334,10 +360,15 @@ def main(argv=None) -> int:
 
             if fullscreen:
                 panel_h = overlay.panel_height_for(
-                    screen[0], screen[1], cam.shape[1] / max(cam.shape[0], 1))
+                    screen[0], screen[1], cam.shape[1] / max(cam.shape[0], 1),
+                    layout=layout)
                 fit = screen
             else:
                 panel_h, fit = args.panel, None
+                if layout == "shelf":
+                    # The shelf layout is narrower for its height (14:9); below
+                    # ~700 px tall the joint gauges in the HUD run into each other.
+                    panel_h = max(panel_h, 700)
 
             info = dict(cam_fps=tracker.fps, sim_fps=sim_fps,
                         latency_ms=0.0 if last_obs is None else last_obs.latency_ms,
@@ -349,8 +380,24 @@ def main(argv=None) -> int:
                                     wrist=cfg.use_wrist, follow=sim.follow,
                                     fullscreen=fullscreen,
                                     countdown=countdown_left is not None))
-            shown, rects = overlay.compose(cam, sim.render(), targets, sim.state(),
-                                           info, panel_h=panel_h, fit=fit)
+            if not has_wrists or retarget.cal is None:
+                wrist_imgs = None
+            elif wrist_imgs is None or draws % max(cfg.wrist_every, 1) == 0:
+                wrist_imgs = [sim.render_camera(c) for c in wrist_cams]
+            if layout == "shelf":
+                if top_img is None or draws % max(cfg.top_every, 1) == 0:
+                    top_img = sim.render_camera(cfg.top_camera)
+                views = dict(pov=sim.render_camera(cfg.pov_camera), top=top_img)
+                shown, rects = overlay.compose(cam, None, targets, sim.state(),
+                                               info, panel_h=panel_h, fit=fit,
+                                               views=views, wrists=wrist_imgs)
+            else:
+                shown, rects = overlay.compose(cam, sim.render(), targets,
+                                               sim.state(), info,
+                                               panel_h=panel_h, fit=fit,
+                                               wrists=wrist_imgs,
+                                               show_wrists=has_wrists)
+            draws += 1
 
             if args.record and targets is not None:
                 st = sim.state()
@@ -388,6 +435,7 @@ def main(argv=None) -> int:
                 continue
 
             cv2.imshow(win, shown)
+
             if not fullscreen:
                 # Keep the window the same size as the image, so a click lands
                 # where the buttons were drawn.

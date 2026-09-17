@@ -217,21 +217,44 @@ Measured at 1280×720 on the `over_shoulder` camera:
 A 9.6× improvement. Shadows dominate; `scene.py` sets `shadowsize="4096"` and
 `offsamples="8"`, which are right for stills and punishing for a live window.
 
-### The deeper cost
+Re-measured after the over-detailed product meshes were simplified (below), same
+camera and settings: **181 ms, 5.5 fps**.
 
-Display flags only go so far. The scene carries **396k mesh vertices**, and two
-instances are 73% of that:
+### The deeper cost - and what was done about it
 
-| instance | vertices |
-|---|---|
-| `canned_food_9` | 175,262 |
-| `yogurt_3` | 116,144 |
-| everything else combined | ~105,000 |
+Display flags only go so far. Two scanned products shipped with absurd detail
+for objects about 7 cm across: `canned_food_9` at 197,956 triangles and
+`yogurt_3` at 194,470. With their copies on the shelves they were **79% of the
+7.49 million triangles drawn every frame**.
 
-Excluding those two from the product library would help far more than any
-display setting, and needs no mesh editing - only not selecting them when
-stocking. Physics is unaffected either way: products collide as fitted boxes and
-cylinders, never as meshes.
+They were simplified rather than dropped from stocking, with
+[`tools/simplify_meshes.py`](../tools/simplify_meshes.py). Seven visual meshes
+over 12,000 triangles were reduced; smaller ones were deliberately left alone.
+
+| | before | after |
+|---|---|---|
+| triangles drawn per frame | 7,490,650 | 1,650,062 |
+| `canned_food_9` | 197,956 | 4,000 |
+| `yogurt_3` | 194,470 | 8,000 |
+| `assets/products/` on disk | 214.9 MB | 135.0 MB |
+| `over_shoulder`, 1280×720, display options off | 363 ms | 181 ms |
+
+Only visual meshes changed. Physics is unaffected: products collide as fitted
+boxes and cylinders, never as meshes, and each product's density was rescaled so
+its mass still matches its target exactly (`tools/verify_products.py` passes).
+
+Each simplified mesh was rendered from four sides against its original and also
+**checked by eye** - the automatic comparison alone is not enough. It passed a
+one-pixel seam line on `canned_food_18` and a warped label on `boxed_food_4`,
+both of which were reverted.
+
+### MuJoCo does not cull
+
+Every geom is sent to the GPU whatever the camera is pointed at. `tower_eye`,
+which sees one bay, cost the same as `overhead`, which sees the whole aisle. The
+teleop window culls geoms outside each camera's view before rendering
+(`teleop/simbridge.py`), which took `tower_eye` from 141 ms to **17 ms** with a
+pixel-identical image. The managed viewer and `live.py` do not do this.
 
 ### Physics speed (separate from rendering)
 
@@ -342,4 +365,4 @@ back.
 | `tools/product_library.py` | reads product MJCFs, picks collision primitives |
 | `tools/product_spec.py` | the eight categories, corrected masses, density bands |
 | `out/scene.xml` | generated - do not hand-edit |
-| `assets/products/` | extracted RoboCasa meshes - do not modify |
+| `assets/products/` | extracted RoboCasa meshes - edit only through `tools/simplify_meshes.py`, and look at its `--sheet` before committing |

@@ -505,7 +505,7 @@ def draw_hud(width: int, height: int, targets, sim_state, info: dict) -> np.ndar
 
 # --------------------------------------------------------------------------
 def panel_height_for(screen_w: int, screen_h: int, cam_aspect: float,
-                     hud_h: int = 178) -> int:
+                     hud_h: int = 178, layout: str = "robot") -> int:
     """The tallest panel that lets the whole composite fit on the screen.
 
     The two panels sit side by side, so the layout is limited by width as often
@@ -515,34 +515,140 @@ def panel_height_for(screen_w: int, screen_h: int, cam_aspect: float,
     somewhere other than where the mouse says they are.
     """
     by_height = screen_h - hud_h
-    by_width = int((screen_w - 2) / (cam_aspect + 1.0))
+    if layout == "shelf":
+        # left: 4:3 POV over a row of two 4:3 wrist tiles -> 8/9 panel heights
+        # wide; right: two 4:3 views stacked -> 2/3. Total 14/9.
+        by_width = int((screen_w - 4) / (14.0 / 9.0))
+    else:
+        # operator at full height, beside a square robot view over the wrist
+        # row -> the square is 8/11 of the panel height
+        by_width = int((screen_w - 2) / (cam_aspect + 8.0 / 11.0))
     return max(200, min(by_height, by_width))
 
 
-def compose(cam_bgr: np.ndarray, robot_rgb: np.ndarray, targets, sim_state,
+# Split the wrist row takes from a column of width w: a pair of 4:3 tiles, each
+# w/2 wide, is 3w/8 tall.
+def _wrist_h(w: int) -> int:
+    return int(round(w * 3 / 8))
+
+
+def wrist_row(rgbs, width: int, labels=("LEFT wrist", "RIGHT wrist"),
+              waiting: str = "wrist cameras start after calibration") -> np.ndarray:
+    """The two wrist cameras as one docked strip, robot-left on the left.
+
+    `rgbs` None draws the empty strip with a note instead. Before calibration
+    the arms hang at rest and these views show forearm and floor, so they are
+    not worth their render time until then.
+    """
+    h = _wrist_h(width)
+    gap = 2
+    tw = (width - gap) // 2
+    strip = np.full((h, width, 3), BG, np.uint8)
+    if rgbs is None:
+        cv2.rectangle(strip, (0, 0), (width - 1, h - 1), (60, 60, 60), 1)
+        _text(strip, waiting, (14, h // 2 + 6), 0.5, DIM, 1)
+        return strip
+    for i, (rgb, label) in enumerate(zip(rgbs, labels)):
+        tile = _fit(cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR), tw, h)
+        x = i * (tw + gap)
+        strip[:, x:x + tw] = tile
+        _text(strip, label, (x + 12, 24), 0.55, ROBOT, 2)
+    return strip
+
+
+def _fit(img: np.ndarray, w: int, h: int) -> np.ndarray:
+    return cv2.resize(img, (max(1, w), max(1, h)), interpolation=cv2.INTER_AREA)
+
+
+def shelf_block(cam_bgr: np.ndarray, pov_rgb: np.ndarray, top_rgb: np.ndarray,
+                panel_h: int, wrists=None) -> np.ndarray:
+    """The picking layout: POV and wrist cameras left, operator and scene right.
+
+        +--------------------------+--------------+
+        |   ROBOT POV (tower_eye)  |   OPERATOR   |
+        |                          |              |
+        +------------+-------------+--------------+
+        | LEFT wrist | RIGHT wrist |  SCENE VIEW  |
+        +------------+-------------+--------------+
+
+    The POV is what you steer by, so it is the largest view; the wrist cameras
+    sit directly under it because they answer the question it cannot -- is the
+    item actually between the jaws. The scene view shows where robot and cage
+    are relative to each other. Your own camera is only there to confirm the
+    tracker still has you.
+    """
+    left_w = int(round(panel_h * 8 / 9))
+    wr_h = _wrist_h(left_w)
+    pov_h = panel_h - wr_h - 2
+    pov = _fit(cv2.cvtColor(pov_rgb, cv2.COLOR_RGB2BGR), left_w, pov_h)
+    left = np.vstack([pov, np.full((2, left_w, 3), BG, np.uint8),
+                      wrist_row(wrists, left_w)])
+
+    half = (panel_h - 2) // 2
+    col_w = int(round(half * 4 / 3))
+    op = _fit(cam_bgr, col_w, half)
+    top = _fit(cv2.cvtColor(top_rgb, cv2.COLOR_RGB2BGR), col_w, panel_h - half - 2)
+    column = np.vstack([op, np.full((2, col_w, 3), BG, np.uint8), top])
+
+    block = np.hstack([left, np.full((panel_h, 2, 3), BG, np.uint8), column])
+    _text(block, "ROBOT POV  tower_eye", (14, 26), 0.6, ROBOT, 2)
+    _text(block, "OPERATOR", (left_w + 16, 24), 0.55, ACCENT, 2)
+    _text(block, "SCENE VIEW  trolley end", (left_w + 16, half + 26), 0.55, ROBOT, 2)
+    return block
+
+
+def compose(cam_bgr: np.ndarray, robot_rgb: np.ndarray | None, targets, sim_state,
             info: dict, panel_h: int = 540, hud_h: int = 178,
-            fit: tuple[int, int] | None = None):
-    """Camera half, robot half, HUD strip.
+            fit: tuple[int, int] | None = None, views: dict | None = None,
+            wrists=None, show_wrists: bool = True):
+    """The panels, then the HUD strip.
+
+    With `views` holding "pov" and "top" images, the picking layout is used
+    instead of operator-beside-robot; see `shelf_block`. `wrists` is the pair of
+    wrist camera images, or None before they are running; the strip is docked
+    in both layouts unless `show_wrists` is off.
 
     Returns (image, button_rects). The rectangles are in the coordinates of the
     image actually returned -- including any letterbox offset -- so a click at
     (x, y) on screen hit-tests directly against them.
     """
+    if views is not None:
+        top = shelf_block(cam_bgr, views["pov"], views["top"], panel_h, wrists)
+        return _finish(top, panel_h, hud_h, targets, sim_state, info, fit)
+
     ch, cw = cam_bgr.shape[:2]
     cam_w = max(1, int(round(cw * panel_h / max(ch, 1))))
     cam = cv2.resize(cam_bgr, (cam_w, panel_h), interpolation=cv2.INTER_AREA)
 
+    #   +------------+----------------+
+    #   |            |     ROBOT      |
+    #   |  OPERATOR  +--------+-------+
+    #   |            | L wrist|R wrist|
+    #   +------------+--------+-------+
     rob = cv2.cvtColor(robot_rgb, cv2.COLOR_RGB2BGR)
-    rh, rw = rob.shape[:2]
-    rob_w = max(1, int(round(rw * panel_h / max(rh, 1))))
-    rob = cv2.resize(rob, (rob_w, panel_h), interpolation=cv2.INTER_AREA)
+    if show_wrists:
+        rob_w = int(round(panel_h * 8 / 11))
+        rob_h = panel_h - _wrist_h(rob_w) - 2
+        right = np.vstack([_fit(rob, rob_w, rob_h),
+                           np.full((2, rob_w, 3), BG, np.uint8),
+                           wrist_row(wrists, rob_w)])
+        right = right[:panel_h]
+    else:
+        rh, rw = rob.shape[:2]
+        rob_w = max(1, int(round(rw * panel_h / max(rh, 1))))
+        right = _fit(rob, rob_w, panel_h)
 
-    top = np.hstack([cam, np.full((panel_h, 2, 3), BG, np.uint8), rob])
-    width = top.shape[1]
+    top = np.hstack([cam, np.full((panel_h, 2, 3), BG, np.uint8), right])
 
     _text(top, "OPERATOR", (14, 26), 0.6, ACCENT, 2)
     _text(top, "ROBOT", (cam_w + 18, 26), 0.6, ROBOT, 2)
+    return _finish(top, panel_h, hud_h, targets, sim_state, info, fit)
 
+
+def _finish(top: np.ndarray, panel_h: int, hud_h: int, targets, sim_state,
+            info: dict, fit):
+    """Add the HUD under whichever panels were built, and letterbox."""
+    width = top.shape[1]
     hud, rects = draw_hud(width, hud_h, targets, sim_state, info)
     out = np.vstack([top, hud])
 

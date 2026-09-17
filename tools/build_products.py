@@ -4,6 +4,11 @@ Produces assets/products/<category>/<instance>/ holding a self-contained MJCF:
 mesh paths stay relative, RoboCasa's per-category scale is baked in, and the
 density is rescaled so the object's total mass matches the value in
 product_spec.py rather than RoboCasa's uniform density=100 kg/m^3.
+
+Rebuilding from the zip restores RoboCasa's original visual meshes, including two
+scans at ~195k triangles each that make the aisle cameras ~4x slower. Run
+`python tools/simplify_meshes.py --apply --sheet out/shots/simplify.png` after a
+rebuild, and look at the sheet before committing.
 """
 
 import argparse

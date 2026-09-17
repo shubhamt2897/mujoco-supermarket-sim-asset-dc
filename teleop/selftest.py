@@ -230,6 +230,16 @@ def test_limits(rep: Report) -> None:
               "everything lands inside the limits")
 
 
+def run_with(r, obs, n: int = 140):
+    """Feed one observation to a retargeter for n ticks, 20 ms apart."""
+    out = None
+    for i in range(n):
+        out = r(SY.Observation(t=obs.t + i * 0.02, pose_world=obs.pose_world,
+                               pose_image=obs.pose_image, pose_vis=obs.pose_vis,
+                               hand_world=obs.hand_world, hand_image=obs.hand_image))
+    return out
+
+
 def test_mapping(sim: SimBridge, rep: Report) -> None:
     print("\n4. the operator mapping, on the fabricated operator")
     cfg = TeleopConfig()
@@ -380,6 +390,42 @@ def test_mapping(sim: SimBridge, rep: Report) -> None:
     rep.check(worst_rate <= cfg.lift_rate * 1.15,
               "and the lift still slews, rather than stepping",
               f"peak {worst_rate:.3f} m/s against a {cfg.lift_rate:.2f} limit")
+
+    # --- a hidden arm holds its last pose instead of copying the other ---
+    # Seen live: with one arm out of frame, both robot arms followed the one
+    # that was visible, because the pose model's guess for a hidden arm is
+    # roughly the other arm copied across.
+    r4 = RT.Retargeter(cfg, sim.limits)
+    r4.calibrate(SY.make_observation(0.0))
+    r_fwd = {"right": SY.arm_dir(90, 0, "right")}
+    t = run_with(r4, SY.make_observation(1.0, upper=r_fwd, fore=r_fwd, pinch={"right": 0.2}))
+    held_q, held_grip = t.arm["right"].copy(), t.grip["right"]
+    # Right arm hidden, and the model's guess for it copies the left arm.
+    l_side = {"left": SY.arm_dir(0, 90, "left"), "right": SY.arm_dir(0, 90, "right")}
+    hidden = SY.make_observation(5.0, upper=l_side, fore=l_side, pinch={"left": 1.4, "right": 1.4})
+    hidden.pose_vis = hidden.pose_vis.copy()
+    hidden.pose_vis[[14, 16]] = 0.2             # right elbow and wrist
+    t = run_with(r4, hidden)
+    moved = math.degrees(float(np.abs(t.arm["right"] - held_q).max()))
+    rep.check(moved < 0.5, "a hidden arm holds its last pose", f"moved {moved:.2f} deg")
+    rep.check(abs(t.grip["right"] - held_grip) < 1e-6, "and keeps its grip",
+              f"grip {held_grip:.3f} -> {t.grip['right']:.3f}")
+    rep.check(abs(t.arm["left"][1]) > math.radians(60),
+              "while the visible arm still follows",
+              f"left joint2 {math.degrees(t.arm['left'][1]):+.1f} deg")
+
+    # One real hand reported in both hand slots: the copy is not on the right
+    # wrist, so the right wrist and gripper hold instead of following it.
+    # The right gripper is shut from above; the copied left hand is open, so
+    # following the copy would open it.
+    dup = SY.make_observation(9.0, pinch={"left": 1.4, "right": 1.4})
+    dup.hand_world = {"left": dup.hand_world["left"], "right": dup.hand_world["left"]}
+    dup.hand_image = {"left": dup.hand_image["left"], "right": dup.hand_image["left"]}
+    before = r4._last_grip["right"]
+    t = run_with(r4, dup)
+    rep.check(before < 0.05 and abs(t.grip["right"] - before) < 1e-6 and t.grip["left"] > 0.95,
+              "a hand mesh on the wrong wrist is ignored",
+              f"right grip {before:.3f} -> {t.grip['right']:.3f}, left {t.grip['left']:.3f}")
 
     # --- the deadman ---
     r.engaged = False

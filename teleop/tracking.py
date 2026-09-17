@@ -126,6 +126,19 @@ def _to_array(landmarks, n: int) -> np.ndarray | None:
     return out
 
 
+def _to_display(landmarks, n: int) -> np.ndarray | None:
+    """Image-space landmarks, mirrored left-right to match the displayed picture.
+
+    Only for image coordinates, which are drawn and hit-tested against the air
+    buttons on the mirrored display. World coordinates are never mirrored: they
+    are the geometry the robot is driven from.
+    """
+    out = _to_array(landmarks, n)
+    if out is not None:
+        out[:, 0] = 1.0 - out[:, 0]
+    return out
+
+
 def _visibility(landmarks, n: int) -> np.ndarray | None:
     if not landmarks:
         return None
@@ -243,11 +256,22 @@ class Tracker:
             if not ok:
                 time.sleep(0.005)
                 continue
-            # Mirror the picture. You are looking at yourself, so a raised left
-            # hand should rise on the left of the screen; the landmark labels
-            # are anatomical and unaffected, so nothing downstream changes.
-            frame = cv2.flip(frame, 1)
-            self._pending = (frame, time.perf_counter())
+            # Track the REAL image; mirror only what is shown.
+            #
+            # This used to flip the frame before mediapipe saw it, on the belief
+            # that landmark labels are anatomical and so unaffected. They are
+            # not. A mirror image of you is a different person to the tracker:
+            # your left arm appears where a right arm would, so it is labelled
+            # "right", and a turn to your left has the depth signature of a turn
+            # to the right. The tower yawed the wrong way, and the arms were
+            # silently in mirror mode.
+            #
+            # So mediapipe gets the camera's own frame, which is what it is
+            # built for, and the display gets a mirrored copy -- a selfie view,
+            # where your raised left hand rises on the left of the screen.
+            # Image-space landmarks are mirrored to match in the callbacks.
+            shown = cv2.flip(frame, 1)
+            self._pending = (shown, time.perf_counter())
             rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             self._landmarker.detect_async(
                 mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb),
@@ -271,7 +295,7 @@ class Tracker:
         world = result.pose_world_landmarks[0] if result.pose_world_landmarks else None
         self._publish(Observation(
             t=time.perf_counter(),
-            pose_image=_to_array(pose, 33), pose_world=_to_array(world, 33),
+            pose_image=_to_display(pose, 33), pose_world=_to_array(world, 33),
             pose_vis=_visibility(pose, 33), frame=frame,
             latency_ms=(time.perf_counter() - t_cap) * 1000.0))
 
@@ -284,12 +308,12 @@ class Tracker:
         world = result.pose_world_landmarks
         self._publish(Observation(
             t=time.perf_counter(),
-            pose_image=_to_array(pose, 33), pose_world=_to_array(world, 33),
+            pose_image=_to_display(pose, 33), pose_world=_to_array(world, 33),
             pose_vis=_visibility(pose, 33),
             hand_world={"left": _to_array(result.left_hand_world_landmarks, 21),
                         "right": _to_array(result.right_hand_world_landmarks, 21)},
-            hand_image={"left": _to_array(result.left_hand_landmarks, 21),
-                        "right": _to_array(result.right_hand_landmarks, 21)},
+            hand_image={"left": _to_display(result.left_hand_landmarks, 21),
+                        "right": _to_display(result.right_hand_landmarks, 21)},
             frame=frame,
             latency_ms=(time.perf_counter() - t_cap) * 1000.0))
 

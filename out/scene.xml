@@ -132,23 +132,14 @@
     <texture name="canned_food__canned_food_17__image0" file="canned_food/canned_food_17/visual/image0.png" type="2d" />
     <material name="canned_food__canned_food_17__01___Default" texture="canned_food__canned_food_17__image0" specular="0.5" shininess="0.25" />
     <mesh name="canned_food__canned_food_17__model_normalized_0_vis" file="canned_food/canned_food_17/visual/model_normalized_0.obj" scale="0.06299999999999996 0.06299999999999996 0.06299999999999996" refquat="1.0 0.0 0.0 0.0" />
-    <texture name="cereal__cereal_6__image0" file="cereal/cereal_6/visual/image0.png" type="2d" />
-    <material name="cereal__cereal_6__Material.369" texture="cereal__cereal_6__image0" specular="0.5" shininess="0.103378196" />
-    <mesh name="cereal__cereal_6__model_normalized_0_vis" file="cereal/cereal_6/visual/model_normalized_0.obj" scale="0.14999999999999997 0.14999999999999997 0.14999999999999997" refquat="1.0 0.0 0.0 0.0" />
-    <texture name="boxed_food__boxed_food_2__image0" file="boxed_food/boxed_food_2/visual/image0.png" type="2d" />
-    <material name="boxed_food__boxed_food_2__Box003_mtl" texture="boxed_food__boxed_food_2__image0" specular="0.5" shininess="0.359999993" />
-    <mesh name="boxed_food__boxed_food_2__model_normalized_0_vis" file="boxed_food/boxed_food_2/visual/model_normalized_0.obj" scale="0.16499999999999998 0.16499999999999998 0.16499999999999998" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
-    <texture name="milk__milk_5__image0" file="milk/milk_5/visual/image0.png" type="2d" />
-    <material name="milk__milk_5__lambert1.004" texture="milk__milk_5__image0" specular="0.5" shininess="0.25" />
-    <mesh name="milk__milk_5__model_normalized_0_vis" file="milk/milk_5/visual/model_normalized_0.obj" scale="0.16999999999999996 0.16999999999999996 0.16999999999999996" refquat="1.0 0.0 0.0 0.0" />
+    <texture name="can__can_4__image0" file="can/can_4/visual/image0.png" type="2d" />
+    <material name="can__can_4__Material_001" texture="can__can_4__image0" specular="0.5" shininess="0.25" />
+    <mesh name="can__can_4__model_normalized_0_vis" file="can/can_4/visual/model_normalized_0.obj" scale="0.11 0.11 0.11" refquat="1.0 0.0 0.0 0.0" />
     <texture name="boxed_drink__boxed_drink_2__image0" file="boxed_drink/boxed_drink_2/visual/image0.png" type="2d" />
     <material name="boxed_drink__boxed_drink_2__Material.067" texture="boxed_drink__boxed_drink_2__image0" specular="0.5" shininess="0.032000008" />
     <material name="boxed_drink__boxed_drink_2__Material.068" texture="boxed_drink__boxed_drink_2__image0" specular="0.5" shininess="0.0052724140000000004" />
     <mesh name="boxed_drink__boxed_drink_2__model_normalized_0_vis" file="boxed_drink/boxed_drink_2/visual/model_normalized_0.obj" scale="0.10799999999999997 0.10799999999999997 0.10799999999999997" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
     <mesh name="boxed_drink__boxed_drink_2__model_normalized_1_vis" file="boxed_drink/boxed_drink_2/visual/model_normalized_1.obj" scale="0.10799999999999997 0.10799999999999997 0.10799999999999997" refquat="0.7071067811865475 0.0 0.0 0.7071067811865476" />
-    <texture name="can__can_15__image0" file="can/can_15/visual/image0.png" type="2d" />
-    <material name="can__can_15__Material.351" texture="can__can_15__image0" specular="0.5" shininess="0.25" />
-    <mesh name="can__can_15__model_normalized_0_vis" file="can/can_15/visual/model_normalized_0.obj" scale="0.1 0.1 0.1" refquat="1.0 0.0 0.0 0.0" />
   </asset>
   <worldbody>
     <geom name="floor" type="plane" material="floor_tile" class="structure" pos="0 0 0" size="9 9 0.1" condim="3" friction="1 0.005 0.0001" />
@@ -161,8 +152,9 @@
     <light name="fill_far" pos="0 -0.65 1.55" dir="0 -1 -0.1" directional="false" castshadow="false" diffuse="0.26 0.26 0.27" specular="0.02 0.02 0.02" />
     <camera name="aisle" mode="fixed" fovy="55" pos="-3.325 -0.65 1.62" xyaxes="0 -1 0 0.135471 0 0.990781" />
     <camera name="shelf_front" mode="fixed" fovy="60" pos="0 -1.17 1.72" xyaxes="1 -0 0 0 0.35486 0.934919" />
-    <camera name="overhead" mode="fixed" fovy="62" pos="0 -0.65 3.55" xyaxes="1 -0 0 0 1 0" />
+    <camera name="overhead" mode="fixed" fovy="62" pos="0.3 -0.65 2.6" xyaxes="1 -0 0 0 1 0" />
     <camera name="over_shoulder" mode="fixed" fovy="56" pos="-0.32 -1.04 1.78" xyaxes="0.950871 -0.309586 0 0.130392 0.400489 0.906977" />
+    <camera name="cage_end" mode="fixed" fovy="60" pos="1.66 -1 2.05" xyaxes="0.443395 0.896326 -0 -0.49761 0.246158 0.831739" />
     <body name="gondola_near" pos="0 0 0" quat="1 0 0 0">
       <geom name="near_back_panel" class="structure" type="box" material="shelf_metal" pos="0 0.461 0.9" size="1.875 0.009 0.9" />
       <geom name="near_upright_0" class="structure" type="box" material="shelf_metal" pos="-1.855 0.235 0.9" size="0.02 0.235 0.9" />
@@ -251,28 +243,28 @@
       <geom name="lip_far_b2_3" class="structure" type="box" material="shelf_metal" pos="1.25 0.006 1.5125" size="0.585 0.006 0.0125" />
       <geom name="rail_far_b2_3" class="structure" type="box" material="price_rail" pos="1.25 -0.003 1.491" size="0.585 0.003 0.015" />
     </body>
-    <body name="roll_cage" pos="0.86 -0.56 0">
+    <body name="roll_cage" pos="0.92 -0.56 0">
       <geom name="cage_base_tray" class="structure" type="box" material="cage_metal" pos="0 0 0.18" size="0.4 0.35 0.01" />
-      <geom name="cage_top_tray" class="structure" type="box" material="cage_metal" pos="0 0 1.1" size="0.4 0.35 0.01" />
-      <geom name="cage_upright_00" class="structure" type="box" material="cage_metal" pos="-0.385 -0.335 0.64" size="0.015 0.015 0.46" />
+      <geom name="cage_top_tray" class="structure" type="box" material="cage_metal" pos="0 0 0.9" size="0.4 0.35 0.01" />
+      <geom name="cage_upright_00" class="structure" type="box" material="cage_metal" pos="-0.385 -0.335 0.54" size="0.015 0.015 0.36" />
       <geom name="cage_caster_00" class="structure" type="cylinder" material="cage_dark" euler="0 1.5708 0" pos="-0.33 -0.28 0.05" size="0.05 0.014" />
-      <geom name="cage_upright_01" class="structure" type="box" material="cage_metal" pos="-0.385 0.335 0.64" size="0.015 0.015 0.46" />
+      <geom name="cage_upright_01" class="structure" type="box" material="cage_metal" pos="-0.385 0.335 0.54" size="0.015 0.015 0.36" />
       <geom name="cage_caster_01" class="structure" type="cylinder" material="cage_dark" euler="0 1.5708 0" pos="-0.33 0.28 0.05" size="0.05 0.014" />
-      <geom name="cage_upright_10" class="structure" type="box" material="cage_metal" pos="0.385 -0.335 0.64" size="0.015 0.015 0.46" />
+      <geom name="cage_upright_10" class="structure" type="box" material="cage_metal" pos="0.385 -0.335 0.54" size="0.015 0.015 0.36" />
       <geom name="cage_caster_10" class="structure" type="cylinder" material="cage_dark" euler="0 1.5708 0" pos="0.33 -0.28 0.05" size="0.05 0.014" />
-      <geom name="cage_upright_11" class="structure" type="box" material="cage_metal" pos="0.385 0.335 0.64" size="0.015 0.015 0.46" />
+      <geom name="cage_upright_11" class="structure" type="box" material="cage_metal" pos="0.385 0.335 0.54" size="0.015 0.015 0.36" />
       <geom name="cage_caster_11" class="structure" type="cylinder" material="cage_dark" euler="0 1.5708 0" pos="0.33 0.28 0.05" size="0.05 0.014" />
-      <geom name="cage_bar_end0_0" class="structure" type="box" material="cage_metal" pos="-0.385 0 0.41" size="0.006 0.335 0.006" />
-      <geom name="cage_bar_end1_0" class="structure" type="box" material="cage_metal" pos="0.385 0 0.41" size="0.006 0.335 0.006" />
-      <geom name="cage_bar_back_0" class="structure" type="box" material="cage_metal" pos="0 0.335 0.41" size="0.385 0.006 0.006" />
-      <geom name="cage_bar_end0_1" class="structure" type="box" material="cage_metal" pos="-0.385 0 0.64" size="0.006 0.335 0.006" />
-      <geom name="cage_bar_end1_1" class="structure" type="box" material="cage_metal" pos="0.385 0 0.64" size="0.006 0.335 0.006" />
-      <geom name="cage_bar_back_1" class="structure" type="box" material="cage_metal" pos="0 0.335 0.64" size="0.385 0.006 0.006" />
-      <geom name="cage_bar_end0_2" class="structure" type="box" material="cage_metal" pos="-0.385 0 0.87" size="0.006 0.335 0.006" />
-      <geom name="cage_bar_end1_2" class="structure" type="box" material="cage_metal" pos="0.385 0 0.87" size="0.006 0.335 0.006" />
-      <geom name="cage_bar_back_2" class="structure" type="box" material="cage_metal" pos="0 0.335 0.87" size="0.385 0.006 0.006" />
+      <geom name="cage_bar_end0_0" class="structure" type="box" material="cage_metal" pos="-0.385 0 0.36" size="0.006 0.335 0.006" />
+      <geom name="cage_bar_end1_0" class="structure" type="box" material="cage_metal" pos="0.385 0 0.36" size="0.006 0.335 0.006" />
+      <geom name="cage_bar_back_0" class="structure" type="box" material="cage_metal" pos="0 0.335 0.36" size="0.385 0.006 0.006" />
+      <geom name="cage_bar_end0_1" class="structure" type="box" material="cage_metal" pos="-0.385 0 0.54" size="0.006 0.335 0.006" />
+      <geom name="cage_bar_end1_1" class="structure" type="box" material="cage_metal" pos="0.385 0 0.54" size="0.006 0.335 0.006" />
+      <geom name="cage_bar_back_1" class="structure" type="box" material="cage_metal" pos="0 0.335 0.54" size="0.385 0.006 0.006" />
+      <geom name="cage_bar_end0_2" class="structure" type="box" material="cage_metal" pos="-0.385 0 0.72" size="0.006 0.335 0.006" />
+      <geom name="cage_bar_end1_2" class="structure" type="box" material="cage_metal" pos="0.385 0 0.72" size="0.006 0.335 0.006" />
+      <geom name="cage_bar_back_2" class="structure" type="box" material="cage_metal" pos="0 0.335 0.72" size="0.385 0.006 0.006" />
     </body>
-    <site name="tower_base_site" pos="0 -0.45 0" size="0.010" rgba="0.95 0.4 0.1 0.35" />
+    <site name="tower_base_site" pos="0 -0.55 0" size="0.010" rgba="0.95 0.4 0.1 0.35" />
     <body name="static_stock" pos="0 0 0">
       <body name="near_b0_d2_0001_canned_food_canned_food_9" pos="-1.77972 0.0500547 1.07782" quat="0.707107 0 0 0.707107">
         <geom type="mesh" mesh="canned_food__canned_food_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_9__material0.001" />
@@ -1631,55 +1623,24 @@
       <geom type="mesh" mesh="cereal__cereal_9__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_9__Material__25.007" />
       <geom name="near_b2_d3_0172_cereal_cereal_9_coll" type="box" size="0.0154266 0.0562743 0.076918" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
     </body>
-    <body name="cage_00_cereal_cereal_6" pos="0.56 -0.735 1.1852" quat="-0.0745126 0 0 0.99722">
+    <body name="cage_00_can_can_4" pos="0.580174 -0.74 0.965676" quat="0.707107 0 0 0.707107">
       <freejoint />
-      <inertial pos="0 0 0" mass="0.09" diaginertia="0.000269743 0.000186812 0.000119056" />
-      <geom type="mesh" mesh="cereal__cereal_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="cereal__cereal_6__Material.369" />
-      <geom name="cage_00_cereal_cereal_6_coll" type="box" size="0.0245372 0.0580211 0.075" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      <inertial pos="0 0 0" mass="0.35" diaginertia="0.000465273 0.000465233 0.000212403" />
+      <geom type="mesh" mesh="can__can_4__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_4__Material_001" />
+      <geom name="cage_00_can_can_4_coll" type="cylinder" size="0.0301711 0.055476" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
     </body>
-    <body name="cage_01_boxed_food_boxed_food_2" pos="0.76 -0.735 1.1927" quat="-0.921224 0 0 0.389033">
-      <freejoint />
-      <inertial pos="0 0 0" mass="0.35" diaginertia="0.00107044 0.000829365 0.000311677" />
-      <geom type="mesh" mesh="boxed_food__boxed_food_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_food__boxed_food_2__Box003_mtl" />
-      <geom name="cage_01_boxed_food_boxed_food_2_coll" type="box" size="0.0173953 0.0486715 0.0825" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
-    </body>
-    <body name="cage_02_milk_milk_5" pos="0.96 -0.735 1.19519" quat="-0.279869 0 0 0.960038">
-      <freejoint />
-      <inertial pos="0 0 0" mass="0.54" diaginertia="0.00140564 0.00140564 0.000210722" />
-      <geom type="mesh" mesh="milk__milk_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="milk__milk_5__lambert1.004" />
-      <geom name="cage_02_milk_milk_5_coll" type="box" size="0.0241938 0.0241938 0.0849929" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
-    </body>
-    <body name="cage_03_boxed_drink_boxed_drink_2" pos="1.16 -0.735 1.16478" quat="-0.545564 0 0 0.838069">
+    <body name="cage_01_boxed_drink_boxed_drink_2" pos="0.574876 -0.56 0.96478" quat="1 0 0 0">
       <freejoint />
       <inertial pos="0 0 0" mass="0.25" diaginertia="0.000288745 0.00029982 9.20609e-05" />
       <geom type="mesh" mesh="boxed_drink__boxed_drink_2__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_2__Material.068" />
       <geom type="mesh" mesh="boxed_drink__boxed_drink_2__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="boxed_drink__boxed_drink_2__Material.067" />
-      <geom name="cage_03_boxed_drink_boxed_drink_2_coll" type="box" size="0.0248761 0.0220434 0.0545804" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      <geom name="cage_01_boxed_drink_boxed_drink_2_coll" type="box" size="0.0248761 0.0220434 0.0545804" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
     </body>
-    <body name="cage_04_canned_food_canned_food_6" pos="0.56 -0.385 1.15115" quat="-0.0599637 0 0 0.998201">
+    <body name="cage_02_can_can_11" pos="0.5786 -0.38 0.965651" quat="1 0 0 0">
       <freejoint />
-      <inertial pos="0 0 0" mass="0.31" diaginertia="0.000271491 0.000271493 0.0001965" />
-      <geom type="mesh" mesh="canned_food__canned_food_6__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="canned_food__canned_food_6__lambert1" />
-      <geom name="cage_04_canned_food_canned_food_6_coll" type="cylinder" size="0.0308352 0.0409455" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
-    </body>
-    <body name="cage_05_can_can_15" pos="0.76 -0.385 1.1602" quat="-0.740154 0 0 0.672437">
-      <freejoint />
-      <inertial pos="0 0 0" mass="0.35" diaginertia="0.000381565 0.000381565 0.000179797" />
-      <geom type="mesh" mesh="can__can_15__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_15__Material.351" />
-      <geom name="cage_05_can_can_15_coll" type="cylinder" size="0.027759 0.05" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
-    </body>
-    <body name="cage_06_jam_jam_5" pos="0.96 -0.385 1.14432" quat="0.889486 0 0 0.456961">
-      <freejoint />
-      <inertial pos="0 0 0" mass="0.28" diaginertia="0.000199328 0.000202879 0.00018495" />
-      <geom type="mesh" mesh="jam__jam_5__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__Glass" />
-      <geom type="mesh" mesh="jam__jam_5__model_normalized_1_vis" group="2" contype="0" conaffinity="0" material="jam__jam_5__recheio" />
-      <geom name="cage_06_jam_jam_5_coll" type="cylinder" size="0.0314755 0.0341157" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
-    </body>
-    <body name="cage_07_yogurt_yogurt_3" pos="1.16 -0.385 1.15508" quat="-0.978204 0 0 0.207647">
-      <freejoint />
-      <inertial pos="0 0 0" mass="0.2" diaginertia="0.000187086 0.000186931 0.000105405" />
-      <geom type="mesh" mesh="yogurt__yogurt_3__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="yogurt__yogurt_3__material_0.013" />
-      <geom name="cage_07_yogurt_yogurt_3_coll" type="cylinder" size="0.0281165 0.0448842" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
+      <inertial pos="0 0 0" mass="0.35" diaginertia="0.000447801 0.000454162 0.000184498" />
+      <geom type="mesh" mesh="can__can_11__model_normalized_0_vis" group="2" contype="0" conaffinity="0" material="can__can_11__01_-_Default.016" />
+      <geom name="cage_02_can_can_11_coll" type="cylinder" size="0.0281153 0.0554513" group="3" class="dyn_stock" rgba="0.5 0.5 0.5 0" friction="0.95 0.3 0.1" solimp="0.99 0.999 0.001" />
     </body>
   </worldbody>
 </mujoco>

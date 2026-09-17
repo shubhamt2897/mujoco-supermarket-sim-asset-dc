@@ -41,6 +41,8 @@ def _make_fast(model) -> None:
 class SimBridge:
     """Owns the robot, the physics clock and the offscreen camera."""
 
+    _HIDDEN_GROUP = 5          # a geom group the default scene option never draws
+
     def __init__(self, cfg: TeleopConfig | None = None, pretty: bool = False):
         self.cfg = cfg or TeleopConfig()
         if self.cfg.scene == "aisle":
@@ -82,6 +84,10 @@ class SimBridge:
         self._fixed_lookat = np.array(self.cam.lookat)
 
         self.viewer = None
+        self._cam_renderer = None
+        # Camera culling for render_camera; see _cull_outside.
+        self.cull = True
+        self._geom_group = self.model.geom_group.copy()
         self.home()
 
     # ---- limits, straight from the compiled model -------------------------
@@ -148,6 +154,66 @@ class SimBridge:
             self.renderer.update_scene(self.data, camera=camera)
         return self.renderer.render()
 
+    def render_camera(self, name: str) -> np.ndarray:
+        """One of the model's own cameras, at the 4:3 the onboard sensors use.
+
+        A separate renderer from the square one behind `render()`, created on
+        first use, so the bench layout never pays for it. One renderer serves
+        every named camera in turn; there is no benefit to one each.
+        """
+        if self._cam_renderer is None:
+            w = min(640, int(self.model.vis.global_.offwidth))
+            h = min(480, int(self.model.vis.global_.offheight))
+            self._cam_renderer = mujoco.Renderer(self.model, height=h, width=w)
+        r = self._cam_renderer
+        hidden = self._cull_outside(name, r.width / r.height) if self.cull else None
+        try:
+            r.update_scene(self.data, camera=name)
+        finally:
+            if hidden is not None:
+                self.model.geom_group[hidden] = self._geom_group[hidden]
+        return r.render()
+
+    def _cull_outside(self, name: str, aspect: float) -> np.ndarray:
+        """Hide every geom whose bounding sphere is outside the camera's view.
+
+        MuJoCo does no culling of its own: every geom in the scene goes to the
+        GPU whatever the camera is pointed at. Measured, `tower_eye` -- which
+        sees one bay of one shelf -- cost 722 ms, the same as `overhead`, which
+        sees the whole aisle. So the POV was paying for 1.6 million triangles it
+        could not see.
+
+        The test is a sphere against the four side planes and the near and far
+        planes, using `geom_rbound`, which is conservative: a geom partly in
+        view is kept. Hiding is done by moving the geom to a group the scene
+        does not draw and putting it straight back after the scene is built.
+        Group only affects visualisation; contacts use contype/conaffinity, so
+        the physics never sees this.
+        """
+        m, d = self.model, self.data
+        cid = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_CAMERA, name)
+        pos = d.cam_xpos[cid]
+        rot = d.cam_xmat[cid].reshape(3, 3)      # columns: camera x, y, z in world
+        rel = (d.geom_xpos - pos) @ rot           # geom centres in camera frame
+        depth = -rel[:, 2]                        # the camera looks down its -z
+        tan_y = np.tan(np.radians(m.cam_fovy[cid]) / 2.0)
+        tan_x = tan_y * aspect
+        rad = m.geom_rbound
+        near = m.vis.map.znear * m.stat.extent
+        far = m.vis.map.zfar * m.stat.extent
+        visible = (
+            (depth + rad > near) & (depth - rad < far)
+            & (np.abs(rel[:, 0]) <= depth * tan_x + rad * np.sqrt(1 + tan_x ** 2))
+            & (np.abs(rel[:, 1]) <= depth * tan_y + rad * np.sqrt(1 + tan_y ** 2)))
+        # rbound 0 means unbounded (planes): always keep
+        visible |= rad <= 0.0
+        hidden = np.where(~visible & (self._geom_group <= 2))[0]
+        m.geom_group[hidden] = self._HIDDEN_GROUP
+        return hidden
+
+    def has_camera(self, name: str) -> bool:
+        return mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_CAMERA, name) >= 0
+
     def orbit(self, d_azimuth: float = 0.0, d_elevation: float = 0.0,
               d_distance: float = 0.0) -> None:
         self.cam.azimuth = (self.cam.azimuth + d_azimuth) % 360.0
@@ -169,10 +235,13 @@ class SimBridge:
         return True
 
     def close(self) -> None:
-        try:
-            self.renderer.close()
-        except Exception:
-            pass
+        for r in (self.renderer, self._cam_renderer):
+            if r is None:
+                continue
+            try:
+                r.close()
+            except Exception:
+                pass
         if self.viewer is not None:
             try:
                 self.viewer.close()
