@@ -21,8 +21,9 @@
 > [!IMPORTANT]
 > **This is a simulator, not a dataset.** No episodes have been recorded. Every
 > image here is an inspection render produced by
-> [`tools/make_figures.py`](tools/make_figures.py), not training data. The
-> recording loop is deliberately not implemented - see
+> [`tools/make_figures.py`](tools/make_figures.py) or, for teleoperation,
+> [`tools/make_teleop_figures.py`](tools/make_teleop_figures.py) - not training
+> data. The recording loop is deliberately not implemented - see
 > [Toward collection](#toward-collection).
 
 ---
@@ -184,6 +185,7 @@ python view.py            # aisle only
 python view.py --robot    # aisle + robot
 python bench.py           # robot alone, with sliders
 python live.py            # viewer + one live window per on-board camera
+python -m teleop --source synthetic   # teleoperation demo, no camera (under development)
 ```
 
 <details>
@@ -233,6 +235,14 @@ without downloading anything. Verify the install with:
 python scene.py && python tools/verify_products.py && python bench.py --sweep
 ```
 
+Teleoperation needs two more packages, kept out of `requirements.txt` because
+the simulator does not need them. Both were checked to install without moving
+the pinned `numpy` or `mujoco`:
+
+```bash
+pip install mediapipe==1.0.1 opencv-python==5.0.0.93
+```
+
 Viewer flags, performance numbers and troubleshooting live in
 [`docs/VIEWER.md`](docs/VIEWER.md).
 
@@ -264,6 +274,76 @@ left and `[-0.7854, 0]` on the right, and the open end is whichever is further
 from zero - verified by jaw separation, which runs **91.0 mm closed → 154.6 mm
 open**. Maximum graspable width is **138.6 mm**, found by bisection with a
 0.54 kg box. All eight product categories fit, widest being a 72 mm milk carton.
+
+---
+
+## Teleoperation (under development)
+
+> [!WARNING]
+> **Under development, not yet tested with an operator.** The camera path runs
+> end to end and has been driven in a few short sessions, but it has not been
+> properly evaluated. The images below come from the **synthetic operator** —
+> scripted landmarks fed through the real retargeting, filtering and simulation
+> code — not from a person in front of a camera. They will be replaced with real
+> teleoperation captures once the live path is tested.
+
+A camera watches the operator; the tower and both arms copy them in MuJoCo.
+Standing puts the carriage at the top of its travel and crouching lowers it,
+turning the shoulders yaws the tower, the arms copy shoulder, elbow and wrist
+angles, and pinching thumb to index finger closes that side's gripper.
+
+<p align="center">
+  <img src="docs/figures/teleop_synthetic_stages.png" width="100%"
+       alt="Six paired panels. Each shows a scripted stick-figure operator beside the robot it drives: rest, left arm forward, right arm out, crouch lowering the carriage to 0.01 m, turn yawing the tower 45 degrees, and a pinch closing both grippers">
+</p>
+
+```bash
+python -m teleop --source synthetic   # no camera: watch the scripted operator drive it
+python -m teleop.selftest             # 60 checks, no camera
+python -m teleop.cameras              # measured frame rate of every camera
+python -m teleop --camera 0 --fullscreen
+```
+
+### Pipeline stages
+
+| # | stage | file | what happens | status |
+|---|---|---|---|---|
+| 1 | capture | `tracking.py` | camera frame on a background thread, auto-exposure | runs |
+| 2 | tracking | `tracking.py` | MediaPipe Holistic: 33 body + 2x21 hand landmarks, 38.6 ms/frame on CPU | runs |
+| 3 | observation | `landmarks.py` | landmarks as plain numpy, image and world coordinates | verified |
+| 4 | calibration gate | `quality.py` | hands-free: hold a hand in an on-screen target, then stand still; five pose checks must pass | runs |
+| 5 | retargeting | `retarget.py` | closed-form joint angles from torso, arm and hand directions | **verified** against MuJoCo FK to ~1e-13 |
+| 6 | filtering and limits | `filters.py` | One Euro on directions and angles, clamp to `ctrlrange`, rate limit | verified |
+| 7 | actuation | `simbridge.py` | writes `data.ctrl` only, never `qpos` | verified |
+| 8 | display | `overlay.py` | operator, robot and joint gauges in one window | runs |
+
+"Verified" means covered by `teleop.selftest`. "Runs" means exercised live but
+not yet tested systematically.
+
+<p align="center">
+  <img src="docs/figures/teleop_synthetic_window.png" width="85%"
+       alt="The teleoperation window driven by the synthetic operator: stick figure on the left, robot seen from behind on the right, joint gauges and control buttons along the bottom">
+</p>
+
+### What is known so far
+
+- **The maths is sound.** The inverse round-trips MuJoCo's own forward
+  kinematics to ~1e-13, and a sign error that produced smooth but mirrored
+  motion was caught only by that test.
+- **Capture is the bottleneck, not the model.** A laptop webcam in dim light
+  took 60–85 ms a frame; a phone used as a webcam brought median tracking
+  latency from 40.4 ms to 17.9 ms and halved landmark jitter.
+- **The wrist and twist joints shake.** Filtering the direction vectors before
+  solving cut measured wrist shake by 75%, but joints 3 and 5 remain noisy: they
+  are rotations about an axis estimated from that same axis.
+- **Torso yaw is the weakest channel.** It comes from monocular depth, and read
+  up to 50° off with the operator largely facing the camera.
+- **It reproduces posture, not hand position.** Operator and robot proportions
+  differ, so the gripper lands in a similar pose rather than on a chosen point.
+  Precise placement needs an IK layer, which does not exist yet.
+
+Operating guide: [`teleop/README.md`](teleop/README.md). Code map and design
+decisions: [`teleop/ARCHITECTURE.md`](teleop/ARCHITECTURE.md).
 
 ---
 
@@ -348,8 +428,9 @@ only in the AI-generated pack, so `yogurt` is used in its place.
 | [`tower.xml`](tower.xml) | hand-authored base MJCF - `scene.py` never writes it | **yes** |
 | [`bench.py`](bench.py) · [`view.py`](view.py) · [`live.py`](live.py) | entry points | **yes** |
 | [`tools/`](tools/) | asset build, verification, figures | **yes** |
+| [`teleop/`](teleop/) | teleoperation, under development - see its README and ARCHITECTURE | **yes** |
 | `out/scene.xml`, `out/bench.xml` | generated MJCF, committed so it opens from a clone | no - rerun the script |
-| `docs/figures/*.png` | README figures | no - `python tools/make_figures.py` |
+| `docs/figures/*.png` | README figures | no - `python tools/make_figures.py`; `teleop_synthetic_*` from `python tools/make_teleop_figures.py` |
 | `robocasa/` | upstream clone, gitignored - only needed to rebuild assets | no |
 
 **Committed deliberately:** `assets/products/` (211 MB) so the scene runs from a
@@ -374,7 +455,10 @@ as files), `.venv/`, depth arrays, scratch renders in `out/shots/`, and
 The recorder is intentionally not implemented - the simulator provides
 deterministic state and camera output for an external writer such as
 [LeRobot](https://github.com/huggingface/lerobot). Use a **passive** loop, not
-the managed viewer; that is where a policy or teleoperator goes:
+the managed viewer; that is where a policy or teleoperator goes. The
+[teleoperation](#teleoperation-under-development) loop in `teleop/app.py` is one
+such controller, but its `--record` flag writes debugging telemetry, not
+episodes:
 
 ```python
 import mujoco, mujoco.viewer
@@ -406,6 +490,9 @@ and the reset seed.
 ### Known gaps
 
 - **No recorder, no episodes.** Nothing has been collected.
+- **Teleoperation is untested with an operator.** It runs, the maths is
+  verified offline, but there is no IK, no episode recording and no systematic
+  live evaluation yet.
 - **Wrist views are empty at home.** Correct framing, nothing to look at until
   an arm is raised.
 - **Only 29 of 364 products are manipulable**, in a band around the robot. If a
