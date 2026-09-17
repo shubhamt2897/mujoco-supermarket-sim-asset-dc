@@ -45,39 +45,39 @@
   <worldbody>
     <body>
       <body name="object">
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="material_0.013" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_22._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_23._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_21._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_20._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_24._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_30._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_18._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_19._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_31._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_25._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_27._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_26._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_9._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_8._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_6._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_7._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_5._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_4._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_0._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_1._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_3._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_2._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_17._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_16._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_28._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_14._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_15._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_29._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_11._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_10._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_12._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="594.307096880" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_13._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="material_0.013" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_22._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_23._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_21._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_20._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_24._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_30._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_18._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_19._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_31._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_25._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_27._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_26._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_9._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_8._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_6._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_7._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_5._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_4._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_0._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_1._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_3._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_2._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_17._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_16._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_28._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_14._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_15._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_29._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_11._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_10._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_12._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="595.014771264" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_collision_13._coll" group="0" rgba="0.8 0.8 0.8 0.0" />
         <geom class="region" name="reg_bbox" type="box" pos="-0.00023401102999999991 -2.6776723750001224e-05 -5.0373037499959125e-06" size="0.028095791577500005 0.028137147737500007 0.04488423240375001" />
       </body>
     </body>

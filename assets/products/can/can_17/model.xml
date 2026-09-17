@@ -25,17 +25,17 @@
       <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0" mass="0" />
     </default>
     <default class="collision">
-      <geom group="0" rgba="0.5 0 0 0.5" density="1121.691768750" />
+      <geom group="0" rgba="0.5 0 0 0.5" density="1123.929658581" />
     </default>
   </default>
   <worldbody>
     <body>
       <body name="object">
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="112.169176875" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="metal_pepsi" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="112.169176875" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_1_vis" conaffinity="0" contype="0" group="1" material="metal.002" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="112.169176875" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_2_vis" conaffinity="0" contype="0" group="1" material="drops" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="112.169176875" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_3_vis" conaffinity="0" contype="0" group="1" material="858A-CL2" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="112.169176875" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_4_vis" conaffinity="0" contype="0" group="1" material="Material_3K" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="112.392965858" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="metal_pepsi" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="112.392965858" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_1_vis" conaffinity="0" contype="0" group="1" material="metal.002" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="112.392965858" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_2_vis" conaffinity="0" contype="0" group="1" material="drops" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="112.392965858" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_3_vis" conaffinity="0" contype="0" group="1" material="858A-CL2" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="112.392965858" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_4_vis" conaffinity="0" contype="0" group="1" material="Material_3K" />
         <geom class="region" name="reg_bbox" type="box" pos="-2.6838899999999944e-05 -7.5812000000000105e-06 -2.94189499999975e-05" size="0.0290639668 0.029044548499999996 0.05543297265" />
         <geom mesh="can_collision_mesh_0" type="mesh" class="collision" />
         <geom mesh="can_collision_mesh_1" type="mesh" class="collision" />

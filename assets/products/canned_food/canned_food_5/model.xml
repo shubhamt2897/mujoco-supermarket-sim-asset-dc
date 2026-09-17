@@ -26,13 +26,13 @@
       <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0" mass="0" />
     </default>
     <default class="collision">
-      <geom group="0" rgba="0.5 0 0 0.5" density="1207.037282504" />
+      <geom group="0" rgba="0.5 0 0 0.5" density="1207.312043323" />
     </default>
   </default>
   <worldbody>
     <body>
       <body name="object">
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="120.703728250" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="DefaultMaterial_1001" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="120.731204332" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="DefaultMaterial_1001" />
         <geom class="region" name="reg_bbox" type="box" pos="0.0 -2.0348999999968136e-07 -1.2824999993249483e-09" size="0.03064919696999999 0.03064934744999999 0.04274999871749999" />
         <geom mesh="canned_collision_mesh_0" type="mesh" class="collision" />
         <geom mesh="canned_collision_mesh_1" type="mesh" class="collision" />

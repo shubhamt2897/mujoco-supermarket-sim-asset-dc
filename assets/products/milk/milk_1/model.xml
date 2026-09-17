@@ -13,13 +13,13 @@
       <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0" mass="0" />
     </default>
     <default class="collision">
-      <geom group="0" rgba="0.5 0 0 0.5" density="1768.580982901" />
+      <geom group="0" rgba="0.5 0 0 0.5" density="1770.216134385" />
     </default>
   </default>
   <worldbody>
     <body>
       <body name="object">
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="176.858098290" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="lambert2.001" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="177.021613438" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="lambert2.001" />
         <geom class="region" name="reg_bbox" type="box" pos="-2.5798200000000084e-05 -2.5409999999997915e-06 -3.286619999999682e-05" size="0.026955388199999982 0.027797561399999976 0.060622036199999965" />
         <geom mesh="milk_collision_mesh_0" type="mesh" class="collision" />
         <geom mesh="milk_collision_mesh_1" type="mesh" class="collision" />

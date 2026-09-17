@@ -14,14 +14,14 @@
       <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0" mass="0" />
     </default>
     <default class="collision">
-      <geom group="0" rgba="0.5 0 0 0.5" density="726.186278723" />
+      <geom group="0" rgba="0.5 0 0 0.5" density="726.178366203" />
     </default>
   </default>
   <worldbody>
     <body>
       <body name="object">
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="72.618627872" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="Tappo" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="72.618627872" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_1_vis" conaffinity="0" contype="0" group="1" material="Pack" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="72.617836620" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="Tappo" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="72.617836620" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_1_vis" conaffinity="0" contype="0" group="1" material="Pack" />
         <geom class="region" name="reg_bbox" type="box" pos="-2.040000000813613e-09 0.0 -0.00018720875999999408" size="0.025130053480000004 0.02512944624 0.06856005547999999" />
         <geom mesh="boxed_collision_mesh_0" type="mesh" class="collision" />
         <geom mesh="boxed_collision_mesh_1" type="mesh" class="collision" />

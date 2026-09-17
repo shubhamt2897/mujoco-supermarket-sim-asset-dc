@@ -20,14 +20,14 @@
       <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0" mass="0" />
     </default>
     <default class="collision">
-      <geom group="0" rgba="0.5 0 0 0.5" density="904.204300209" />
+      <geom group="0" rgba="0.5 0 0 0.5" density="904.208042313" />
     </default>
   </default>
   <worldbody>
     <body>
       <body name="object">
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="90.420430021" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="Opaco" />
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="90.420430021" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_1_vis" conaffinity="0" contype="0" group="1" material="Materiale_tappo" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="90.420804231" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_0_vis" conaffinity="0" contype="0" group="1" material="Opaco" />
+        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="90.420804231" friction="0.95 0.3 0.1" type="mesh" mesh="model_normalized_1_vis" conaffinity="0" contype="0" group="1" material="Materiale_tappo" />
         <geom class="region" name="reg_bbox" type="box" pos="0.0 0.0 -0.0002480561999999997" size="0.028773512999999997 0.028773512999999997 0.09074194740000001" />
         <geom mesh="milk_collision_mesh_0" type="mesh" class="collision" />
         <geom mesh="milk_collision_mesh_1" type="mesh" class="collision" />
